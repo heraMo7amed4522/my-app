@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package auth;
+
+option go_package = "auth-services/proto";
+
+service AuthService {
+    rpc AuthenticateWithFirebase(FirebaseAuthRequest) returns (FirebaseAuthResponse);
+}
+
+message FirebaseAuthRequest {
+    string idToken = 1;
+    string provider = 2; 
+}
+
+message UserInfo {
+    string id = 1;
+    string email = 2;
+    string fullName = 3;
+    string role = 4;
+}
+
+message FirebaseAuthResponse {
+    int32 statusCode = 1;
+    string message = 2;
+    oneof result {
+        AuthTokens tokens = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message AuthTokens {
+    string accessToken = 1;
+    int64 expiresIn = 2;
+    UserInfo user = 3;
+}
+
+message ErrorDetails {
+    int32 code = 1;
+    string message = 2;
+    repeated string details = 3;
+    string timestamp = 4;
+}
