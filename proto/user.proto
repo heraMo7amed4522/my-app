@@ -1,0 +1,146 @@
+syntax= "proto3";
+
+package users;
+
+service UserService {
+    rpc GetUserByEmail(GetUserByEmailRequest) returns (GetUserByEmialResponse);
+    rpc CreateNewUser(CreateNewUserRequest) returns (CreateNewUserResponse);
+    rpc ForgetPassword(ForgetPasswordRequest) returns (ForgetPasswordResponse);
+    rpc VerifyCode(VerifyCodeRequest) returns (VerifyCodeResponse);
+    rpc ResetPassword(ResetPasswordRequest) returns (ResetPasswordResponse);
+    rpc LoginUser(LoginUserRequest) returns (LoginUserResponse);
+    rpc UpdateUserData(UpdateUserRequest) returns (UpdateUserResponse);
+    rpc DeleteUserData(DeleteUserDatatRequest) returns (DeleteUserDataResponse);
+ }
+ message User {
+    string id = 1;
+    string fullName = 2;
+    string email = 3;
+    string countryCode = 4;
+    string phoneNumber = 5;
+    string role = 6;
+    string verifiyCode = 7;
+    string createAt=8;
+    string updateAt =9;
+}
+
+ message GetUserByEmailRequest {
+    string email = 1; 
+ }
+ message ErrorDetails {
+    int32 code = 1;
+    string message = 2;
+    repeated string details = 3;
+    string timestamp = 4;
+}
+message GetUserByEmialResponse {
+    int32 statusCode = 1;
+    string message = 2;
+    oneof result {
+        User user = 3;     
+        ErrorDetails error = 4;
+    }
+}
+
+message CreateNewUserRequest{
+    string fullName = 1;
+    string email = 2;
+    string password = 3;
+    string countryCode = 4;
+    string phoneNumber = 5;
+    string role = 6;
+    string verifiyCode = 7;
+}
+
+message CreateNewUserResponse {
+    int32 statusCode = 1;
+    string message = 2;
+    oneof result {
+        User user = 3;     
+        ErrorDetails error = 4;
+    }
+}
+
+message ForgetPasswordRequest {
+    string email = 1;
+    string type = 2;
+}
+message ForgetPasswordResponse{
+    int32 statusCode = 1;
+    string message = 2;
+    oneof result {
+        string verifyCode = 3;
+        ErrorDetails error = 4;
+    }
+}
+message VerifyCodeRequest {
+    string email = 1;
+    string verifyCode = 2;
+}
+
+message VerifyCodeResponse {
+    int32 statusCode = 1;
+    string message = 2;
+    oneof result {
+        string response = 3;     
+        ErrorDetails error = 4;
+    }
+}
+message ResetPasswordRequest {
+    string email = 1;
+    string password = 2;
+}
+message ResetPasswordResponse {
+    int32 statusCode = 1;
+    string message = 2;
+    oneof result {
+        string response = 3;     
+        ErrorDetails error = 4;
+    }
+}
+message LoginUserRequest {
+    string email = 1;
+    string password = 2;
+}
+
+message LoginUserResponse{
+    int32 statusCode = 1;
+    string message = 2;
+    string accessToken = 3;
+    oneof result {
+        User user = 4; 
+        ErrorDetails error = 5;
+    }
+}
+
+
+
+message UpdateUserRequest {
+    string fullName = 1;
+    string email = 2;
+    string countryCode = 3;
+    string phoneNumber = 4;
+    string role = 5; 
+}
+
+message UpdateUserResponse {
+    int32 statusCode = 1;
+    string message = 2;
+    oneof result {
+        User user = 3;     
+        ErrorDetails error = 4;
+    }
+}
+
+message DeleteUserDatatRequest {
+    string id = 1;
+}
+
+message DeleteUserDataResponse {
+    int32 statusCode = 1;
+    string message = 2;
+     oneof result {
+        string response = 3;     
+        ErrorDetails error = 4;
+    }
+}

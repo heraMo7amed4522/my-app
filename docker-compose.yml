@@ -1,0 +1,89 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:17-alpine
+    container_name: user_postgres
+    environment:
+      POSTGRES_DB: userdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 2521
+    ports:
+      - "5420:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db/db.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - user_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # User Service (GO)
+  user-service:
+    build:
+      context: ./services/user-services
+      dockerfile: Dockerfile
+    container_name: user_service
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: 2521
+      DB_NAME: userdb
+      JWT_SECRET: bc295e25dc110117ccd1ac9750e74efed887bce6165557d15a777b5f60f15df0d83932d66dd4223260c1f0e68a7f204d01e4cdd984fca614249af42ebaf32f30
+    ports:
+      - "50051:50051"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - user_network
+    restart: unless-stopped
+
+  # Auth Service (GO)
+  auth-service:
+    build:
+      context: .
+      dockerfile: ./services/auth-services/Dockerfile
+    container_name: auth_service
+    env_file:
+      - ./services/auth-services/.env
+    environment:
+      USER_SERVICE_ADDR: user-service:50051  
+      FIREBASE_CREDENTIALS_PATH: ./firebase-credentials.json
+    ports:
+      - "50052:50052"
+    depends_on:
+      - user-service
+    networks:
+      - user_network
+    restart: unless-stopped
+
+  # Gateway Service (NestJS)
+  gateway:
+    build:
+      context: ./getway
+      dockerfile: Dockerfile
+    container_name: api_gateway
+    environment:
+      USER_SERVICE_URL: user-service:50051
+      AUTH_SERVICE_URL: auth-service:50052
+    ports:
+      - "3000:3000"
+    depends_on:
+      - user-service
+      - auth-service
+    networks:
+      - user_network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  user_network:
+    driver: bridge
