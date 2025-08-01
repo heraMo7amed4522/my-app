@@ -266,6 +266,295 @@
             ]
         },
         {
+            "name": "Card Queries",
+            "item": [
+                {
+                    "name": "Get Card By ID",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetCardById($id: String!) {\n  getCardById(id: $id) {\n    statusCode\n    message\n    card {\n      id\n      userId\n      cardNumber\n      cardHolderName\n      expirationDate\n      cvv\n      status\n      cardType\n      balance\n      createAt\n      updateAt\n    }\n    error {\n      code\n      message\n      details\n      timestamp\n    }\n  }\n}",
+                                "variables": "{\n  \"id\": \"{{cardId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Cards By User",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetCardsByUser($input: GetCardsByUserInput!) {\n  getCardsByUser(input: $input) {\n    statusCode\n    message\n    cards {\n      id\n      userId\n      cardNumber\n      cardHolderName\n      expirationDate\n      status\n      cardType\n      balance\n      createAt\n      updateAt\n    }\n    totalCount\n    currentPage\n    totalPages\n    error {\n      code\n      message\n      details\n      timestamp\n    }\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"userId\": \"{{userId}}\",\n    \"page\": 1,\n    \"limit\": 10\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Search Cards",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query SearchCards($input: SearchCardInput!) {\n  searchCards(input: $input) {\n    statusCode\n    message\n    cards {\n      id\n      userId\n      cardNumber\n      cardHolderName\n      expirationDate\n      status\n      cardType\n      balance\n      createAt\n      updateAt\n    }\n    totalCount\n    currentPage\n    totalPages\n    error {\n      code\n      message\n      details\n      timestamp\n    }\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"userId\": \"{{userId}}\",\n    \"cardHolderName\": \"John\",\n    \"status\": \"ACTIVE\",\n    \"page\": 1,\n    \"limit\": 10\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Find Cards By Status",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query FindCardsByStatus($input: FindCardsByStatusInput!) {\n  findCardsByStatus(input: $input) {\n    statusCode\n    message\n    cards {\n      id\n      userId\n      cardNumber\n      cardHolderName\n      expirationDate\n      status\n      cardType\n      balance\n      createAt\n      updateAt\n    }\n    totalCount\n    currentPage\n    totalPages\n    error {\n      code\n      message\n      details\n      timestamp\n    }\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"status\": \"ACTIVE\",\n    \"page\": 1,\n    \"limit\": 10\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Card Mutations",
+            "item": [
+                {
+                    "name": "Create New Card",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation CreateCard($input: CreateCardInput!) {\n  createCard(input: $input) {\n    statusCode\n    message\n    card {\n      id\n      userId\n      cardNumber\n      cardHolderName\n      expirationDate\n      cvv\n      status\n      cardType\n      balance\n      createAt\n      updateAt\n    }\n    error {\n      code\n      message\n      details\n      timestamp\n    }\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"userId\": \"{{userId}}\",\n    \"cardNumber\": \"4111111111111111\",\n    \"cardHolderName\": \"John Doe\",\n    \"expirationDate\": \"12/25\",\n    \"cvv\": \"123\",\n    \"cardType\": \"VISA\",\n    \"balance\": \"1000.00\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Card",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation UpdateCard($input: UpdateCardInput!) {\n  updateCard(input: $input) {\n    statusCode\n    message\n    card {\n      id\n      userId\n      cardNumber\n      cardHolderName\n      expirationDate\n      cvv\n      status\n      cardType\n      balance\n      createAt\n      updateAt\n    }\n    error {\n      code\n      message\n      details\n      timestamp\n    }\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"id\": \"{{cardId}}\",\n    \"cardHolderName\": \"John Updated Doe\",\n    \"expirationDate\": \"12/26\",\n    \"cvv\": \"456\",\n    \"cardType\": \"MASTERCARD\",\n    \"balance\": \"1500.00\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Card Status",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation UpdateCardStatus($input: UpdateCardStatusInput!) {\n  updateCardStatus(input: $input) {\n    statusCode\n    message\n    card {\n      id\n      userId\n      cardNumber\n      cardHolderName\n      expirationDate\n      status\n      cardType\n      balance\n      createAt\n      updateAt\n    }\n    error {\n      code\n      message\n      details\n      timestamp\n    }\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"id\": \"{{cardId}}\",\n    \"status\": \"INACTIVE\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Delete Card",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation DeleteCard($id: String!) {\n  deleteCard(id: $id) {\n    statusCode\n    message\n    card {\n      id\n      userId\n      cardNumber\n      cardHolderName\n      status\n    }\n    error {\n      code\n      message\n      details\n      timestamp\n    }\n  }\n}",
+                                "variables": "{\n  \"id\": \"{{cardId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Process Stripe Payment",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation ProcessStripePayment($input: StripePaymentInput!) {\n  processStripePayment(input: $input) {\n    statusCode\n    message\n    paymentIntentId\n    clientSecret\n    error {\n      code\n      message\n      details\n      timestamp\n    }\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"cardId\": \"{{cardId}}\",\n    \"amount\": 2000,\n    \"currency\": \"usd\",\n    \"description\": \"Test payment for card service\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
             "name": "GraphQL Introspection",
             "item": [
                 {

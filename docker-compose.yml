@@ -63,6 +63,29 @@ services:
       - user_network
     restart: unless-stopped
 
+  # Card Service (GO)
+  card-service:
+    build:
+      context: ./services/card-services
+      dockerfile: Dockerfile
+    container_name: card_service
+    env_file:
+      - ./services/card-services/.env
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: 2521
+      DB_NAME: userdb
+      USER_SERVICE_ADDR: user-service:50051
+    ports:
+      - "50053:50053"
+    depends_on:
+      - user-service
+    networks:
+      - user_network
+    restart: unless-stopped
+
   # Gateway Service (NestJS)
   gateway:
     build:
@@ -72,11 +95,13 @@ services:
     environment:
       USER_SERVICE_URL: user-service:50051
       AUTH_SERVICE_URL: auth-service:50052
+      CARD_SERVICE_URL: card-service:50053
     ports:
       - "3000:3000"
     depends_on:
       - user-service
       - auth-service
+      - card-service
     networks:
       - user_network
     restart: unless-stopped

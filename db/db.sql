@@ -18,24 +18,36 @@ CREATE TABLE
     cards (
         id UUID PRIMARY KEY DEFAULT gen_random_uuid (),
         user_id UUID NOT NULL,
-        cardholder_name VARCHAR(255) NOT NULL,
-        card_brand VARCHAR(50) NOT NULL,
-        card_type VARCHAR(50) NOT NULL,
+        encrypted_cardholder_name TEXT NOT NULL,
+        encrypted_card_number TEXT NOT NULL,
+        encrypted_cvv TEXT NOT NULL,
         masked_card_number VARCHAR(20) NOT NULL,
-        card_expiry_month INTEGER NOT NULL,
-        card_expiry_year INTEGER NOT NULL,
-        payment_gateway VARCHAR(100) NOT NULL,
-        is_default BOOLEAN DEFAULT FALSE,
+        expiration_date VARCHAR(7) NOT NULL, -- MM/YYYY format
+        card_type VARCHAR(50) NOT NULL,
+        status VARCHAR(20) DEFAULT 'ACTIVE',
+        balance DECIMAL(15,2) DEFAULT 0.00,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        -- Foreign key constraint
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
         -- Indexes for performance
         INDEX idx_user_id (user_id),
-        INDEX idx_card_brand (card_brand),
         INDEX idx_card_type (card_type),
-        UNIQUE KEY unique_user_card (
-            user_id,
-            masked_card_number,
-            card_expiry_month,
-            card_expiry_year
-        )
+        INDEX idx_status (status),
+        INDEX idx_masked_card_number (masked_card_number)
     );
+
+-- Add trigger to update updated_at timestamp
+CREATE OR REPLACE FUNCTION update_updated_at_column()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = CURRENT_TIMESTAMP;
+    RETURN NEW;
+END;
+$$ language 'plpgsql';
+
+CREATE TRIGGER update_cards_updated_at BEFORE UPDATE ON cards
+    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER update_users_updated_at BEFORE UPDATE ON users
+    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();

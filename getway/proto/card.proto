@@ -1,0 +1,149 @@
+syntax= "proto3";
+package  cards;
+service CardService {
+    rpc GetCardByID(GetCardByIDRequest) returns (GetCardByIDResponse);
+    rpc CreateNewCard(CreateNewCardRequest) returns (CreateNewCardResponse);
+    rpc UpdateCardData(UpdateCardDataRequest) returns (UpdateCardDataResponse);
+    rpc DeleteCardData(DeleteCardDataRequest) returns (DeleteCardDataResponse);
+    rpc UpdateCardStatus(UpdateCardStatusRequest) returns (UpdateCardStatusResponse);
+    rpc GetCardByUserID(GetCardByUserIDRequest) returns (GetCardByUserIDResponse);
+    rpc SearchCard(SearchCardRequest) returns (SearchCardResponse);
+    rpc FindCardByStatus(FindCardByStatusRequest) returns (FindCardByStatusResponse);
+    rpc StripePayment(StripePaymentRequest) returns (StripePaymentResponse);
+}
+message Card {
+    string id = 1;
+    string userId = 2;
+    string cardNumber = 3;
+    string cardHolderName = 4;
+    string expirationDate = 5;
+    string cvv = 6;
+    string status = 7;
+    string cardType = 8;
+    string balance = 9;
+    string createAt = 10;
+    string updateAt = 11;
+}
+message ErrorDetails {
+    int32 code = 1;
+    string message = 2;
+    repeated string details = 3;
+    string timestamp = 4;
+}
+message GetCardByIDRequest {
+    string id = 1;
+}
+message GetCardByIDResponse {
+    int32 statusCode = 1;
+    string message = 2;
+    oneof result {
+        Card card = 3;     
+        ErrorDetails error = 4;
+    }
+}
+
+message CreateNewCardRequest {
+    string userId = 1;
+    string cardNumber = 2;
+    string cardHolderName = 3;
+    string expirationDate = 4;
+    string cvv = 5;
+    string status = 6;
+    string cardType = 7;
+    string balance = 8;
+}
+message CreateNewCardResponse {
+    int32 statusCode = 1;
+    string message = 2;
+    oneof result {
+        Card card = 3;     
+        ErrorDetails error = 4;
+    }
+}
+message UpdateCardDataRequest {
+    string id = 1;
+    string cardNumber = 2;
+    string cardHolderName = 3;
+    string expirationDate = 4;
+    string cvv = 5;
+    string status = 6;
+    string cardType = 7;
+    string balance = 8;
+}
+message UpdateCardDataResponse {
+    int32 statusCode = 1;
+    string message = 2;
+    oneof result {
+        Card card = 3;     
+        ErrorDetails error = 4;
+    }
+}
+message UpdateCardStatusRequest{
+    string id = 1;
+    string status = 2;
+}
+message UpdateCardStatusResponse {
+    int32 statusCode = 1;
+    string message = 2;
+    oneof result {
+        Card card = 3;     
+        ErrorDetails error = 4;
+    }
+}
+message DeleteCardDataRequest {
+    string id = 1;
+}
+message DeleteCardDataResponse {
+    int32 statusCode = 1;
+    string message = 2;
+    oneof result {
+        Card card = 3;     
+        ErrorDetails error = 4;
+    }
+}
+message GetCardByUserIDRequest {
+    string userId = 1;
+}
+message GetCardByUserIDResponse {
+    int32 statusCode = 1;
+    string message = 2;
+    oneof result {
+        Card card = 3;
+        ErrorDetails error = 4;
+    }
+}
+message SearchCardRequest {
+    string cardNumber = 1;
+}
+message SearchCardResponse {
+    int32 statusCode = 1;
+    string message = 2;
+    oneof result {
+        Card cards = 3;     
+        ErrorDetails error = 4;
+    }
+}
+message FindCardByStatusRequest {
+    string status = 1;
+}
+message FindCardByStatusResponse {
+    int32 statusCode = 1;
+    string message = 2;
+    oneof result {
+        Card cards = 3;     
+        ErrorDetails error = 4;
+    }
+}
+message StripePaymentRequest {
+    string cardId = 1;
+    string amount = 2;
+    string currency = 3;
+}
+message StripePaymentResponse {
+    int32 statusCode = 1;
+    string message = 2;
+    oneof result {
+        Card card = 3;     
+        ErrorDetails error = 4;
+    }
+}
