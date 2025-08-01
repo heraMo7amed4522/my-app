@@ -16,11 +16,8 @@ import (
 func getEncryptionKey() []byte {
 	key := os.Getenv("ENCRYPTION_KEY")
 	if key == "" {
-		// Use a default key for development - in production, this should be from env
 		key = "card-service-encryption-key-2024"
 	}
-	
-	// Create a 32-byte key using SHA256
 	hash := sha256.Sum256([]byte(key))
 	return hash[:]
 }
@@ -98,20 +95,15 @@ func MaskCardNumber(cardNumber string) string {
 
 // ValidateCardNumber performs basic card number validation
 func ValidateCardNumber(cardNumber string) bool {
-	// Remove spaces and dashes
 	cleaned := ""
 	for _, char := range cardNumber {
 		if char >= '0' && char <= '9' {
 			cleaned += string(char)
 		}
 	}
-
-	// Check length (13-19 digits for most cards)
 	if len(cleaned) < 13 || len(cleaned) > 19 {
 		return false
 	}
-
-	// Luhn algorithm check
 	return luhnCheck(cleaned)
 }
 
@@ -119,8 +111,6 @@ func ValidateCardNumber(cardNumber string) bool {
 func luhnCheck(cardNumber string) bool {
 	sum := 0
 	alternate := false
-
-	// Process digits from right to left
 	for i := len(cardNumber) - 1; i >= 0; i-- {
 		digit := int(cardNumber[i] - '0')
 		if alternate {

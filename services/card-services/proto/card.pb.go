@@ -1469,164 +1469,6 @@ func (*FindCardByStatusResponse_Cards) isFindCardByStatusResponse_Result() {}
 
 func (*FindCardByStatusResponse_Error) isFindCardByStatusResponse_Result() {}
 
-type StripePaymentRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	CardId        string                 `protobuf:"bytes,1,opt,name=cardId,proto3" json:"cardId,omitempty"`
-	Amount        string                 `protobuf:"bytes,2,opt,name=amount,proto3" json:"amount,omitempty"`
-	Currency      string                 `protobuf:"bytes,3,opt,name=currency,proto3" json:"currency,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *StripePaymentRequest) Reset() {
-	*x = StripePaymentRequest{}
-	mi := &file_proto_card_proto_msgTypes[18]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *StripePaymentRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*StripePaymentRequest) ProtoMessage() {}
-
-func (x *StripePaymentRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_card_proto_msgTypes[18]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use StripePaymentRequest.ProtoReflect.Descriptor instead.
-func (*StripePaymentRequest) Descriptor() ([]byte, []int) {
-	return file_proto_card_proto_rawDescGZIP(), []int{18}
-}
-
-func (x *StripePaymentRequest) GetCardId() string {
-	if x != nil {
-		return x.CardId
-	}
-	return ""
-}
-
-func (x *StripePaymentRequest) GetAmount() string {
-	if x != nil {
-		return x.Amount
-	}
-	return ""
-}
-
-func (x *StripePaymentRequest) GetCurrency() string {
-	if x != nil {
-		return x.Currency
-	}
-	return ""
-}
-
-type StripePaymentResponse struct {
-	state      protoimpl.MessageState `protogen:"open.v1"`
-	StatusCode int32                  `protobuf:"varint,1,opt,name=statusCode,proto3" json:"statusCode,omitempty"`
-	Message    string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	// Types that are valid to be assigned to Result:
-	//
-	//	*StripePaymentResponse_Card
-	//	*StripePaymentResponse_Error
-	Result        isStripePaymentResponse_Result `protobuf_oneof:"result"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *StripePaymentResponse) Reset() {
-	*x = StripePaymentResponse{}
-	mi := &file_proto_card_proto_msgTypes[19]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *StripePaymentResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*StripePaymentResponse) ProtoMessage() {}
-
-func (x *StripePaymentResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_card_proto_msgTypes[19]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use StripePaymentResponse.ProtoReflect.Descriptor instead.
-func (*StripePaymentResponse) Descriptor() ([]byte, []int) {
-	return file_proto_card_proto_rawDescGZIP(), []int{19}
-}
-
-func (x *StripePaymentResponse) GetStatusCode() int32 {
-	if x != nil {
-		return x.StatusCode
-	}
-	return 0
-}
-
-func (x *StripePaymentResponse) GetMessage() string {
-	if x != nil {
-		return x.Message
-	}
-	return ""
-}
-
-func (x *StripePaymentResponse) GetResult() isStripePaymentResponse_Result {
-	if x != nil {
-		return x.Result
-	}
-	return nil
-}
-
-func (x *StripePaymentResponse) GetCard() *Card {
-	if x != nil {
-		if x, ok := x.Result.(*StripePaymentResponse_Card); ok {
-			return x.Card
-		}
-	}
-	return nil
-}
-
-func (x *StripePaymentResponse) GetError() *ErrorDetails {
-	if x != nil {
-		if x, ok := x.Result.(*StripePaymentResponse_Error); ok {
-			return x.Error
-		}
-	}
-	return nil
-}
-
-type isStripePaymentResponse_Result interface {
-	isStripePaymentResponse_Result()
-}
-
-type StripePaymentResponse_Card struct {
-	Card *Card `protobuf:"bytes,3,opt,name=card,proto3,oneof"`
-}
-
-type StripePaymentResponse_Error struct {
-	Error *ErrorDetails `protobuf:"bytes,4,opt,name=error,proto3,oneof"`
-}
-
-func (*StripePaymentResponse_Card) isStripePaymentResponse_Result() {}
-
-func (*StripePaymentResponse_Error) isStripePaymentResponse_Result() {}
-
 var File_proto_card_proto protoreflect.FileDescriptor
 
 const file_proto_card_proto_rawDesc = "" +
@@ -1752,19 +1594,7 @@ const file_proto_card_proto_rawDesc = "" +
 	"\amessage\x18\x02 \x01(\tR\amessage\x12#\n" +
 	"\x05cards\x18\x03 \x01(\v2\v.cards.CardH\x00R\x05cards\x12+\n" +
 	"\x05error\x18\x04 \x01(\v2\x13.cards.ErrorDetailsH\x00R\x05errorB\b\n" +
-	"\x06result\"b\n" +
-	"\x14StripePaymentRequest\x12\x16\n" +
-	"\x06cardId\x18\x01 \x01(\tR\x06cardId\x12\x16\n" +
-	"\x06amount\x18\x02 \x01(\tR\x06amount\x12\x1a\n" +
-	"\bcurrency\x18\x03 \x01(\tR\bcurrency\"\xab\x01\n" +
-	"\x15StripePaymentResponse\x12\x1e\n" +
-	"\n" +
-	"statusCode\x18\x01 \x01(\x05R\n" +
-	"statusCode\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage\x12!\n" +
-	"\x04card\x18\x03 \x01(\v2\v.cards.CardH\x00R\x04card\x12+\n" +
-	"\x05error\x18\x04 \x01(\v2\x13.cards.ErrorDetailsH\x00R\x05errorB\b\n" +
-	"\x06result2\xc8\x05\n" +
+	"\x06result2\xfc\x04\n" +
 	"\vCardService\x12D\n" +
 	"\vGetCardByID\x12\x19.cards.GetCardByIDRequest\x1a\x1a.cards.GetCardByIDResponse\x12J\n" +
 	"\rCreateNewCard\x12\x1b.cards.CreateNewCardRequest\x1a\x1c.cards.CreateNewCardResponse\x12M\n" +
@@ -1774,8 +1604,7 @@ const file_proto_card_proto_rawDesc = "" +
 	"\x0fGetCardByUserID\x12\x1d.cards.GetCardByUserIDRequest\x1a\x1e.cards.GetCardByUserIDResponse\x12A\n" +
 	"\n" +
 	"SearchCard\x12\x18.cards.SearchCardRequest\x1a\x19.cards.SearchCardResponse\x12S\n" +
-	"\x10FindCardByStatus\x12\x1e.cards.FindCardByStatusRequest\x1a\x1f.cards.FindCardByStatusResponse\x12J\n" +
-	"\rStripePayment\x12\x1b.cards.StripePaymentRequest\x1a\x1c.cards.StripePaymentResponseB\tZ\a./protob\x06proto3"
+	"\x10FindCardByStatus\x12\x1e.cards.FindCardByStatusRequest\x1a\x1f.cards.FindCardByStatusResponseB\tZ\a./protob\x06proto3"
 
 var (
 	file_proto_card_proto_rawDescOnce sync.Once
@@ -1789,7 +1618,7 @@ func file_proto_card_proto_rawDescGZIP() []byte {
 	return file_proto_card_proto_rawDescData
 }
 
-var file_proto_card_proto_msgTypes = make([]protoimpl.MessageInfo, 20)
+var file_proto_card_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
 var file_proto_card_proto_goTypes = []any{
 	(*Card)(nil),                     // 0: cards.Card
 	(*ErrorDetails)(nil),             // 1: cards.ErrorDetails
@@ -1809,8 +1638,6 @@ var file_proto_card_proto_goTypes = []any{
 	(*SearchCardResponse)(nil),       // 15: cards.SearchCardResponse
 	(*FindCardByStatusRequest)(nil),  // 16: cards.FindCardByStatusRequest
 	(*FindCardByStatusResponse)(nil), // 17: cards.FindCardByStatusResponse
-	(*StripePaymentRequest)(nil),     // 18: cards.StripePaymentRequest
-	(*StripePaymentResponse)(nil),    // 19: cards.StripePaymentResponse
 }
 var file_proto_card_proto_depIdxs = []int32{
 	0,  // 0: cards.GetCardByIDResponse.card:type_name -> cards.Card
@@ -1829,31 +1656,27 @@ var file_proto_card_proto_depIdxs = []int32{
 	1,  // 13: cards.SearchCardResponse.error:type_name -> cards.ErrorDetails
 	0,  // 14: cards.FindCardByStatusResponse.cards:type_name -> cards.Card
 	1,  // 15: cards.FindCardByStatusResponse.error:type_name -> cards.ErrorDetails
-	0,  // 16: cards.StripePaymentResponse.card:type_name -> cards.Card
-	1,  // 17: cards.StripePaymentResponse.error:type_name -> cards.ErrorDetails
-	2,  // 18: cards.CardService.GetCardByID:input_type -> cards.GetCardByIDRequest
-	4,  // 19: cards.CardService.CreateNewCard:input_type -> cards.CreateNewCardRequest
-	6,  // 20: cards.CardService.UpdateCardData:input_type -> cards.UpdateCardDataRequest
-	10, // 21: cards.CardService.DeleteCardData:input_type -> cards.DeleteCardDataRequest
-	8,  // 22: cards.CardService.UpdateCardStatus:input_type -> cards.UpdateCardStatusRequest
-	12, // 23: cards.CardService.GetCardByUserID:input_type -> cards.GetCardByUserIDRequest
-	14, // 24: cards.CardService.SearchCard:input_type -> cards.SearchCardRequest
-	16, // 25: cards.CardService.FindCardByStatus:input_type -> cards.FindCardByStatusRequest
-	18, // 26: cards.CardService.StripePayment:input_type -> cards.StripePaymentRequest
-	3,  // 27: cards.CardService.GetCardByID:output_type -> cards.GetCardByIDResponse
-	5,  // 28: cards.CardService.CreateNewCard:output_type -> cards.CreateNewCardResponse
-	7,  // 29: cards.CardService.UpdateCardData:output_type -> cards.UpdateCardDataResponse
-	11, // 30: cards.CardService.DeleteCardData:output_type -> cards.DeleteCardDataResponse
-	9,  // 31: cards.CardService.UpdateCardStatus:output_type -> cards.UpdateCardStatusResponse
-	13, // 32: cards.CardService.GetCardByUserID:output_type -> cards.GetCardByUserIDResponse
-	15, // 33: cards.CardService.SearchCard:output_type -> cards.SearchCardResponse
-	17, // 34: cards.CardService.FindCardByStatus:output_type -> cards.FindCardByStatusResponse
-	19, // 35: cards.CardService.StripePayment:output_type -> cards.StripePaymentResponse
-	27, // [27:36] is the sub-list for method output_type
-	18, // [18:27] is the sub-list for method input_type
-	18, // [18:18] is the sub-list for extension type_name
-	18, // [18:18] is the sub-list for extension extendee
-	0,  // [0:18] is the sub-list for field type_name
+	2,  // 16: cards.CardService.GetCardByID:input_type -> cards.GetCardByIDRequest
+	4,  // 17: cards.CardService.CreateNewCard:input_type -> cards.CreateNewCardRequest
+	6,  // 18: cards.CardService.UpdateCardData:input_type -> cards.UpdateCardDataRequest
+	10, // 19: cards.CardService.DeleteCardData:input_type -> cards.DeleteCardDataRequest
+	8,  // 20: cards.CardService.UpdateCardStatus:input_type -> cards.UpdateCardStatusRequest
+	12, // 21: cards.CardService.GetCardByUserID:input_type -> cards.GetCardByUserIDRequest
+	14, // 22: cards.CardService.SearchCard:input_type -> cards.SearchCardRequest
+	16, // 23: cards.CardService.FindCardByStatus:input_type -> cards.FindCardByStatusRequest
+	3,  // 24: cards.CardService.GetCardByID:output_type -> cards.GetCardByIDResponse
+	5,  // 25: cards.CardService.CreateNewCard:output_type -> cards.CreateNewCardResponse
+	7,  // 26: cards.CardService.UpdateCardData:output_type -> cards.UpdateCardDataResponse
+	11, // 27: cards.CardService.DeleteCardData:output_type -> cards.DeleteCardDataResponse
+	9,  // 28: cards.CardService.UpdateCardStatus:output_type -> cards.UpdateCardStatusResponse
+	13, // 29: cards.CardService.GetCardByUserID:output_type -> cards.GetCardByUserIDResponse
+	15, // 30: cards.CardService.SearchCard:output_type -> cards.SearchCardResponse
+	17, // 31: cards.CardService.FindCardByStatus:output_type -> cards.FindCardByStatusResponse
+	24, // [24:32] is the sub-list for method output_type
+	16, // [16:24] is the sub-list for method input_type
+	16, // [16:16] is the sub-list for extension type_name
+	16, // [16:16] is the sub-list for extension extendee
+	0,  // [0:16] is the sub-list for field type_name
 }
 
 func init() { file_proto_card_proto_init() }
@@ -1893,17 +1716,13 @@ func file_proto_card_proto_init() {
 		(*FindCardByStatusResponse_Cards)(nil),
 		(*FindCardByStatusResponse_Error)(nil),
 	}
-	file_proto_card_proto_msgTypes[19].OneofWrappers = []any{
-		(*StripePaymentResponse_Card)(nil),
-		(*StripePaymentResponse_Error)(nil),
-	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_card_proto_rawDesc), len(file_proto_card_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   20,
+			NumMessages:   18,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

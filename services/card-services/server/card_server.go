@@ -64,8 +64,6 @@ func (s *CardServer) validateRequest(ctx context.Context) (*TokenClaims, error) 
 // GetCardByID retrieves a card by its ID
 func (s *CardServer) GetCardByID(ctx context.Context, req *pb.GetCardByIDRequest) (*pb.GetCardByIDResponse, error) {
 	log.Printf("GetCardByID called with ID: %s", req.Id)
-
-	// Validate token
 	claims, err := s.validateRequest(ctx)
 	if err != nil {
 		return &pb.GetCardByIDResponse{
@@ -175,8 +173,6 @@ func (s *CardServer) GetCardByID(ctx context.Context, req *pb.GetCardByIDRequest
 // CreateNewCard creates a new card with encrypted sensitive data
 func (s *CardServer) CreateNewCard(ctx context.Context, req *pb.CreateNewCardRequest) (*pb.CreateNewCardResponse, error) {
 	log.Printf("CreateNewCard called for user: %s", req.UserId)
-
-	// Validate token
 	claims, err := s.validateRequest(ctx)
 	if err != nil {
 		return &pb.CreateNewCardResponse{
@@ -192,8 +188,6 @@ func (s *CardServer) CreateNewCard(ctx context.Context, req *pb.CreateNewCardReq
 			},
 		}, nil
 	}
-
-	// Validate input
 	if req.CardNumber == "" || req.CardHolderName == "" || req.ExpirationDate == "" || req.Cvv == "" {
 		return &pb.CreateNewCardResponse{
 			StatusCode: 400,
@@ -208,8 +202,6 @@ func (s *CardServer) CreateNewCard(ctx context.Context, req *pb.CreateNewCardReq
 			},
 		}, nil
 	}
-
-	// Validate card number
 	if !ValidateCardNumber(req.CardNumber) {
 		return &pb.CreateNewCardResponse{
 			StatusCode: 400,
@@ -224,8 +216,6 @@ func (s *CardServer) CreateNewCard(ctx context.Context, req *pb.CreateNewCardReq
 			},
 		}, nil
 	}
-
-	// Encrypt sensitive data
 	encryptedName, err := EncryptData(req.CardHolderName)
 	if err != nil {
 		return &pb.CreateNewCardResponse{
@@ -273,12 +263,8 @@ func (s *CardServer) CreateNewCard(ctx context.Context, req *pb.CreateNewCardReq
 			},
 		}, nil
 	}
-
-	// Generate card ID and mask card number
 	cardID := uuid.New().String()
 	maskedNumber := MaskCardNumber(req.CardNumber)
-
-	// Insert into database
 	query := `
 		INSERT INTO cards (id, user_id, encrypted_cardholder_name, encrypted_card_number, 
 		                   encrypted_cvv, masked_card_number, expiration_date, card_type, 
@@ -314,7 +300,7 @@ func (s *CardServer) CreateNewCard(ctx context.Context, req *pb.CreateNewCardReq
 		CardNumber:     maskedNumber,
 		CardHolderName: req.CardHolderName,
 		ExpirationDate: req.ExpirationDate,
-		Cvv:            "***", // Never return real CVV
+		Cvv:            "***",
 		Status:         req.Status,
 		CardType:       req.CardType,
 		Balance:        req.Balance,

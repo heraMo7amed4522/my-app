@@ -8,10 +8,10 @@ require (
 	google.golang.org/api v0.244.0
 	google.golang.org/grpc v1.74.2
 	google.golang.org/protobuf v1.36.6
-	user-services v0.0.0-00010101000000-000000000000 // Add this line
+	user-services v0.0.0-00010101000000-000000000000 
 )
 
-replace user-services => ../user-services // Add this line
+replace user-services => ../user-services 
 
 toolchain go1.24.5
 

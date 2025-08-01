@@ -27,7 +27,6 @@ const (
 	CardService_GetCardByUserID_FullMethodName  = "/cards.CardService/GetCardByUserID"
 	CardService_SearchCard_FullMethodName       = "/cards.CardService/SearchCard"
 	CardService_FindCardByStatus_FullMethodName = "/cards.CardService/FindCardByStatus"
-	CardService_StripePayment_FullMethodName    = "/cards.CardService/StripePayment"
 )
 
 // CardServiceClient is the client API for CardService service.
@@ -42,7 +41,6 @@ type CardServiceClient interface {
 	GetCardByUserID(ctx context.Context, in *GetCardByUserIDRequest, opts ...grpc.CallOption) (*GetCardByUserIDResponse, error)
 	SearchCard(ctx context.Context, in *SearchCardRequest, opts ...grpc.CallOption) (*SearchCardResponse, error)
 	FindCardByStatus(ctx context.Context, in *FindCardByStatusRequest, opts ...grpc.CallOption) (*FindCardByStatusResponse, error)
-	StripePayment(ctx context.Context, in *StripePaymentRequest, opts ...grpc.CallOption) (*StripePaymentResponse, error)
 }
 
 type cardServiceClient struct {
@@ -133,16 +131,6 @@ func (c *cardServiceClient) FindCardByStatus(ctx context.Context, in *FindCardBy
 	return out, nil
 }
 
-func (c *cardServiceClient) StripePayment(ctx context.Context, in *StripePaymentRequest, opts ...grpc.CallOption) (*StripePaymentResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(StripePaymentResponse)
-	err := c.cc.Invoke(ctx, CardService_StripePayment_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // CardServiceServer is the server API for CardService service.
 // All implementations must embed UnimplementedCardServiceServer
 // for forward compatibility.
@@ -155,7 +143,6 @@ type CardServiceServer interface {
 	GetCardByUserID(context.Context, *GetCardByUserIDRequest) (*GetCardByUserIDResponse, error)
 	SearchCard(context.Context, *SearchCardRequest) (*SearchCardResponse, error)
 	FindCardByStatus(context.Context, *FindCardByStatusRequest) (*FindCardByStatusResponse, error)
-	StripePayment(context.Context, *StripePaymentRequest) (*StripePaymentResponse, error)
 	mustEmbedUnimplementedCardServiceServer()
 }
 
@@ -189,9 +176,6 @@ func (UnimplementedCardServiceServer) SearchCard(context.Context, *SearchCardReq
 }
 func (UnimplementedCardServiceServer) FindCardByStatus(context.Context, *FindCardByStatusRequest) (*FindCardByStatusResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FindCardByStatus not implemented")
-}
-func (UnimplementedCardServiceServer) StripePayment(context.Context, *StripePaymentRequest) (*StripePaymentResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method StripePayment not implemented")
 }
 func (UnimplementedCardServiceServer) mustEmbedUnimplementedCardServiceServer() {}
 func (UnimplementedCardServiceServer) testEmbeddedByValue()                     {}
@@ -358,24 +342,6 @@ func _CardService_FindCardByStatus_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CardService_StripePayment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(StripePaymentRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(CardServiceServer).StripePayment(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: CardService_StripePayment_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CardServiceServer).StripePayment(ctx, req.(*StripePaymentRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // CardService_ServiceDesc is the grpc.ServiceDesc for CardService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -414,10 +380,6 @@ var CardService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "FindCardByStatus",
 			Handler:    _CardService_FindCardByStatus_Handler,
-		},
-		{
-			MethodName: "StripePayment",
-			Handler:    _CardService_StripePayment_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

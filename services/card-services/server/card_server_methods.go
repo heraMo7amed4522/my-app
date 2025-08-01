@@ -5,14 +5,9 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
-	"os"
-	"strconv"
 	"time"
 
 	pb "card-services/proto"
-
-	"github.com/stripe/stripe-go/v79"
-	"github.com/stripe/stripe-go/v79/paymentintent"
 )
 
 // UpdateCardData updates card information
@@ -225,14 +220,11 @@ func (s *CardServer) UpdateCardData(ctx context.Context, req *pb.UpdateCardDataR
 		}, nil
 	}
 
-	// Add updated_at field
 	updateFields = append(updateFields, fmt.Sprintf("updated_at = $%d", argIndex))
 	args = append(args, time.Now())
 	argIndex++
-
-	// Add WHERE clause
 	args = append(args, req.Id)
-	query := fmt.Sprintf("UPDATE cards SET %s WHERE id = $%d", 
+	query := fmt.Sprintf("UPDATE cards SET %s WHERE id = $%d",
 		string(updateFields[0]), argIndex)
 	for i := 1; i < len(updateFields); i++ {
 		query = fmt.Sprintf("%s, %s", query, updateFields[i])
@@ -253,8 +245,6 @@ func (s *CardServer) UpdateCardData(ctx context.Context, req *pb.UpdateCardDataR
 			},
 		}, nil
 	}
-
-	// Fetch updated card
 	updatedCard, err := s.GetCardByID(ctx, &pb.GetCardByIDRequest{Id: req.Id})
 	if err != nil || updatedCard.Result.(*pb.GetCardByIDResponse_Card) == nil {
 		return &pb.UpdateCardDataResponse{
@@ -283,8 +273,6 @@ func (s *CardServer) UpdateCardData(ctx context.Context, req *pb.UpdateCardDataR
 // DeleteCardData deletes a card
 func (s *CardServer) DeleteCardData(ctx context.Context, req *pb.DeleteCardDataRequest) (*pb.DeleteCardDataResponse, error) {
 	log.Printf("DeleteCardData called for card ID: %s", req.Id)
-
-	// Validate token
 	claims, err := s.validateRequest(ctx)
 	if err != nil {
 		return &pb.DeleteCardDataResponse{
@@ -315,8 +303,6 @@ func (s *CardServer) DeleteCardData(ctx context.Context, req *pb.DeleteCardDataR
 			},
 		}, nil
 	}
-
-	// Get card before deletion to return it
 	cardResponse, err := s.GetCardByID(ctx, &pb.GetCardByIDRequest{Id: req.Id})
 	if err != nil || cardResponse.StatusCode != 200 {
 		return &pb.DeleteCardDataResponse{
@@ -332,8 +318,6 @@ func (s *CardServer) DeleteCardData(ctx context.Context, req *pb.DeleteCardDataR
 			},
 		}, nil
 	}
-
-	// Delete the card
 	query := "DELETE FROM cards WHERE id = $1 AND user_id = $2"
 	result, err := s.db.GetDB().Exec(query, req.Id, claims.UserID)
 	if err != nil {
@@ -379,8 +363,6 @@ func (s *CardServer) DeleteCardData(ctx context.Context, req *pb.DeleteCardDataR
 // UpdateCardStatus updates only the card status
 func (s *CardServer) UpdateCardStatus(ctx context.Context, req *pb.UpdateCardStatusRequest) (*pb.UpdateCardStatusResponse, error) {
 	log.Printf("UpdateCardStatus called for card ID: %s", req.Id)
-
-	// Validate token
 	claims, err := s.validateRequest(ctx)
 	if err != nil {
 		return &pb.UpdateCardStatusResponse{
@@ -411,8 +393,6 @@ func (s *CardServer) UpdateCardStatus(ctx context.Context, req *pb.UpdateCardSta
 			},
 		}, nil
 	}
-
-	// Update card status
 	query := "UPDATE cards SET status = $1, updated_at = $2 WHERE id = $3 AND user_id = $4"
 	result, err := s.db.GetDB().Exec(query, req.Status, time.Now(), req.Id, claims.UserID)
 	if err != nil {
@@ -445,8 +425,6 @@ func (s *CardServer) UpdateCardStatus(ctx context.Context, req *pb.UpdateCardSta
 			},
 		}, nil
 	}
-
-	// Fetch updated card
 	updatedCard, err := s.GetCardByID(ctx, &pb.GetCardByIDRequest{Id: req.Id})
 	if err != nil || updatedCard.StatusCode != 200 {
 		return &pb.UpdateCardStatusResponse{
@@ -475,8 +453,6 @@ func (s *CardServer) UpdateCardStatus(ctx context.Context, req *pb.UpdateCardSta
 // GetCardByUserID retrieves all cards for a specific user
 func (s *CardServer) GetCardByUserID(ctx context.Context, req *pb.GetCardByUserIDRequest) (*pb.GetCardByUserIDResponse, error) {
 	log.Printf("GetCardByUserID called for user: %s", req.UserId)
-
-	// Validate token
 	claims, err := s.validateRequest(ctx)
 	if err != nil {
 		return &pb.GetCardByUserIDResponse{
@@ -492,8 +468,6 @@ func (s *CardServer) GetCardByUserID(ctx context.Context, req *pb.GetCardByUserI
 			},
 		}, nil
 	}
-
-	// Users can only access their own cards
 	if req.UserId != claims.UserID {
 		return &pb.GetCardByUserIDResponse{
 			StatusCode: 403,
@@ -551,8 +525,6 @@ func (s *CardServer) GetCardByUserID(ctx context.Context, req *pb.GetCardByUserI
 			log.Printf("Error scanning card row: %v", err)
 			continue
 		}
-
-		// Decrypt sensitive data
 		cardHolderName, err := DecryptData(encryptedName)
 		if err != nil {
 			log.Printf("Failed to decrypt cardholder name: %v", err)
@@ -560,7 +532,7 @@ func (s *CardServer) GetCardByUserID(ctx context.Context, req *pb.GetCardByUserI
 		}
 
 		card.CardHolderName = cardHolderName
-		card.Cvv = "***" // Never return real CVV in list
+		card.Cvv = "***"
 		card.CreateAt = createdAt.Format(time.RFC3339)
 		card.UpdateAt = updatedAt.Format(time.RFC3339)
 
@@ -596,8 +568,6 @@ func (s *CardServer) GetCardByUserID(ctx context.Context, req *pb.GetCardByUserI
 			},
 		}, nil
 	}
-
-	// Return first card (the proto expects a single card, not a list)
 	return &pb.GetCardByUserIDResponse{
 		StatusCode: 200,
 		Message:    fmt.Sprintf("Found %d cards", len(cards)),
@@ -610,8 +580,6 @@ func (s *CardServer) GetCardByUserID(ctx context.Context, req *pb.GetCardByUserI
 // SearchCard searches for cards by card number (masked)
 func (s *CardServer) SearchCard(ctx context.Context, req *pb.SearchCardRequest) (*pb.SearchCardResponse, error) {
 	log.Printf("SearchCard called with card number: %s", req.CardNumber)
-
-	// Validate token
 	claims, err := s.validateRequest(ctx)
 	if err != nil {
 		return &pb.SearchCardResponse{
@@ -642,8 +610,6 @@ func (s *CardServer) SearchCard(ctx context.Context, req *pb.SearchCardRequest) 
 			},
 		}, nil
 	}
-
-	// Search by masked card number (users can only search their own cards)
 	query := `
 		SELECT id, user_id, encrypted_cardholder_name, encrypted_card_number, 
 		       encrypted_cvv, masked_card_number, expiration_date, card_type, 
@@ -685,8 +651,6 @@ func (s *CardServer) SearchCard(ctx context.Context, req *pb.SearchCardRequest) 
 			log.Printf("Error scanning card row: %v", err)
 			continue
 		}
-
-		// Decrypt sensitive data
 		cardHolderName, err := DecryptData(encryptedName)
 		if err != nil {
 			log.Printf("Failed to decrypt cardholder name: %v", err)
@@ -699,7 +663,7 @@ func (s *CardServer) SearchCard(ctx context.Context, req *pb.SearchCardRequest) 
 		c.UpdateAt = updatedAt.Format(time.RFC3339)
 
 		card = &c
-		break // Return first match
+		break
 	}
 
 	if card == nil {
@@ -729,8 +693,6 @@ func (s *CardServer) SearchCard(ctx context.Context, req *pb.SearchCardRequest) 
 // FindCardByStatus finds cards by status
 func (s *CardServer) FindCardByStatus(ctx context.Context, req *pb.FindCardByStatusRequest) (*pb.FindCardByStatusResponse, error) {
 	log.Printf("FindCardByStatus called with status: %s", req.Status)
-
-	// Validate token
 	claims, err := s.validateRequest(ctx)
 	if err != nil {
 		return &pb.FindCardByStatusResponse{
@@ -761,8 +723,6 @@ func (s *CardServer) FindCardByStatus(ctx context.Context, req *pb.FindCardBySta
 			},
 		}, nil
 	}
-
-	// Find cards by status (users can only see their own cards)
 	query := `
 		SELECT id, user_id, encrypted_cardholder_name, encrypted_card_number, 
 		       encrypted_cvv, masked_card_number, expiration_date, card_type, 
@@ -812,8 +772,6 @@ func (s *CardServer) FindCardByStatus(ctx context.Context, req *pb.FindCardBySta
 			},
 		}, nil
 	}
-
-	// Decrypt sensitive data
 	cardHolderName, err := DecryptData(encryptedName)
 	if err != nil {
 		log.Printf("Failed to decrypt cardholder name: %v", err)
@@ -830,149 +788,6 @@ func (s *CardServer) FindCardByStatus(ctx context.Context, req *pb.FindCardBySta
 		Message:    "Card found",
 		Result: &pb.FindCardByStatusResponse_Cards{
 			Cards: &card,
-		},
-	}, nil
-}
-
-// StripePayment processes a payment using Stripe
-func (s *CardServer) StripePayment(ctx context.Context, req *pb.StripePaymentRequest) (*pb.StripePaymentResponse, error) {
-	log.Printf("StripePayment called for card ID: %s, amount: %s", req.CardId, req.Amount)
-
-	// Validate token
-	claims, err := s.validateRequest(ctx)
-	if err != nil {
-		return &pb.StripePaymentResponse{
-			StatusCode: 401,
-			Message:    "Unauthorized",
-			Result: &pb.StripePaymentResponse_Error{
-				Error: &pb.ErrorDetails{
-					Code:      401,
-					Message:   "Token validation failed",
-					Details:   []string{err.Error()},
-					Timestamp: time.Now().Format(time.RFC3339),
-				},
-			},
-		}, nil
-	}
-
-	if req.CardId == "" || req.Amount == "" || req.Currency == "" {
-		return &pb.StripePaymentResponse{
-			StatusCode: 400,
-			Message:    "Missing required fields",
-			Result: &pb.StripePaymentResponse_Error{
-				Error: &pb.ErrorDetails{
-					Code:      400,
-					Message:   "Card ID, amount, and currency are required",
-					Details:   []string{"Missing required payment fields"},
-					Timestamp: time.Now().Format(time.RFC3339),
-				},
-			},
-		}, nil
-	}
-
-	// Get card details
-	cardResponse, err := s.GetCardByID(ctx, &pb.GetCardByIDRequest{Id: req.CardId})
-	if err != nil || cardResponse.StatusCode != 200 {
-		return &pb.StripePaymentResponse{
-			StatusCode: 404,
-			Message:    "Card not found",
-			Result: &pb.StripePaymentResponse_Error{
-				Error: &pb.ErrorDetails{
-					Code:      404,
-					Message:   "Card not found or access denied",
-					Details:   []string{"Invalid card ID"},
-					Timestamp: time.Now().Format(time.RFC3339),
-				},
-			},
-		}, nil
-	}
-
-	card := cardResponse.Result.(*pb.GetCardByIDResponse_Card).Card
-
-	// Check if card is active
-	if card.Status != "ACTIVE" {
-		return &pb.StripePaymentResponse{
-			StatusCode: 400,
-			Message:    "Card is not active",
-			Result: &pb.StripePaymentResponse_Error{
-				Error: &pb.ErrorDetails{
-					Code:      400,
-					Message:   "Card must be active to process payments",
-					Details:   []string{"Inactive card"},
-					Timestamp: time.Now().Format(time.RFC3339),
-				},
-			},
-		}, nil
-	}
-
-	// Convert amount to cents for Stripe
-	amountFloat, err := strconv.ParseFloat(req.Amount, 64)
-	if err != nil {
-		return &pb.StripePaymentResponse{
-			StatusCode: 400,
-			Message:    "Invalid amount format",
-			Result: &pb.StripePaymentResponse_Error{
-				Error: &pb.ErrorDetails{
-					Code:      400,
-					Message:   "Amount must be a valid number",
-					Details:   []string{err.Error()},
-					Timestamp: time.Now().Format(time.RFC3339),
-				},
-			},
-		}, nil
-	}
-
-	amountCents := int64(amountFloat * 100)
-
-	// Set Stripe API key
-	stripe.Key = os.Getenv("STRIPE_SECRET_KEY")
-	if stripe.Key == "" {
-		// For development, use a test key or skip actual Stripe call
-		log.Println("Warning: STRIPE_SECRET_KEY not set, simulating payment")
-		
-		// Simulate successful payment
-		return &pb.StripePaymentResponse{
-			StatusCode: 200,
-			Message:    "Payment processed successfully (simulated)",
-			Result: &pb.StripePaymentResponse_Card{
-				Card: card,
-			},
-		}, nil
-	}
-
-	// Create Stripe payment intent
-	params := &stripe.PaymentIntentParams{
-		Amount:   stripe.Int64(amountCents),
-		Currency: stripe.String(req.Currency),
-		Metadata: map[string]string{
-			"card_id": req.CardId,
-			"user_id": claims.UserID,
-		},
-	}
-
-	pi, err := paymentintent.New(params)
-	if err != nil {
-		return &pb.StripePaymentResponse{
-			StatusCode: 500,
-			Message:    "Payment processing failed",
-			Result: &pb.StripePaymentResponse_Error{
-				Error: &pb.ErrorDetails{
-					Code:      500,
-					Message:   "Stripe payment failed",
-					Details:   []string{err.Error()},
-					Timestamp: time.Now().Format(time.RFC3339),
-				},
-			},
-		}, nil
-	}
-
-	log.Printf("Stripe payment intent created: %s", pi.ID)
-
-	return &pb.StripePaymentResponse{
-		StatusCode: 200,
-		Message:    "Payment processed successfully",
-		Result: &pb.StripePaymentResponse_Card{
-			Card: card,
 		},
 	}, nil
 }
