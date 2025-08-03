@@ -4,6 +4,8 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { CardModule } from './card/card.module';
+import { TransactionModule } from './transaction/transaction.module';
+import { WalletModule } from './wallet/wallet.module';
 
 @Module({
   imports: [
@@ -16,6 +18,8 @@ import { CardModule } from './card/card.module';
     UserModule,
     AuthModule,
     CardModule,
+    TransactionModule,
+    WalletModule,
   ],
 })
 export class AppModule {}

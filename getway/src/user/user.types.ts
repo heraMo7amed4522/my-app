@@ -1,4 +1,5 @@
 import { ObjectType, Field, InputType, Int } from '@nestjs/graphql';
+import { AuthTokens } from '../auth/auth.types';
 
 @ObjectType()
 export class User {
@@ -30,11 +31,7 @@ export class User {
   updateAt: string;
 }
 
-@ObjectType()
-export class AuthTokens {
-  @Field()
-  accessToken: string;
-}
+
 
 @ObjectType()
 export class UserResponse {
@@ -50,6 +47,10 @@ export class UserResponse {
   // Updated: Use AuthTokens instead of simple accessToken
   @Field(() => AuthTokens, { nullable: true })
   tokens?: AuthTokens;
+
+  // Add direct accessToken field for GraphQL compatibility
+  @Field({ nullable: true })
+  accessToken?: string;
 
   @Field({ nullable: true })
   verifyCode?: string;

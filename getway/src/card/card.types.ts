@@ -1,4 +1,5 @@
 import { ObjectType, Field, InputType, Int } from '@nestjs/graphql';
+import { ErrorDetails } from '../shared/shared.types';
 
 @ObjectType()
 export class Card {
@@ -36,20 +37,7 @@ export class Card {
   updateAt: string;
 }
 
-@ObjectType()
-export class ErrorDetails {
-  @Field(() => Int)
-  code: number;
 
-  @Field()
-  message: string;
-
-  @Field(() => [String])
-  details: string[];
-
-  @Field()
-  timestamp: string;
-}
 
 @ObjectType()
 export class CardResponse {

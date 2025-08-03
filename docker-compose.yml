@@ -86,6 +86,51 @@ services:
       - user_network
     restart: unless-stopped
 
+  # Transaction Service (GO)
+  transaction-service:
+    build:
+      context: .
+      dockerfile: ./services/transaction-services/Dockerfile
+    container_name: transaction_service
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: 2521
+      DB_NAME: userdb
+      USER_SERVICE_ADDR: user-service:50051
+    ports:
+      - "50054:50054"
+    depends_on:
+      - user-service
+      - card-service
+    networks:
+      - user_network
+    restart: unless-stopped
+
+  # Wallet Service (GO)
+  wallet-service:
+    build:
+      context: .
+      dockerfile: ./services/wallet-services/Dockerfile
+    container_name: wallet_service
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: 2521
+      DB_NAME: userdb
+      USER_SERVICE_ADDR: user-service:50051
+      ENCRYPTION_KEY: wallet-service-encryption-key-2024
+    ports:
+      - "50055:50055"
+    depends_on:
+      - user-service
+      - postgres
+    networks:
+      - user_network
+    restart: unless-stopped
+
   # Gateway Service (NestJS)
   gateway:
     build:
@@ -96,12 +141,16 @@ services:
       USER_SERVICE_URL: user-service:50051
       AUTH_SERVICE_URL: auth-service:50052
       CARD_SERVICE_URL: card-service:50053
+      TRANSACTION_SERVICE_URL: transaction-service:50054
+      WALLET_SERVICE_URL: wallet-service:50055
     ports:
       - "3000:3000"
     depends_on:
       - user-service
       - auth-service
       - card-service
+      - transaction-service
+      - wallet-service
     networks:
       - user_network
     restart: unless-stopped

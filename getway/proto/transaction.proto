@@ -1,0 +1,90 @@
+syntax="proto3";
+package transaction;
+service TransactionService {
+    rpc GetTransactionByID(GetTransactionByIDRequest) returns (GetTransactionByIDResponse);
+    rpc GetTransactionByUserID(GetTransactionByUserIDRequest) returns (GetTransactionByUserIDResponse);
+    rpc GetTransactionByCardID(GetTransactionByCardIDRequest) returns (GetTransactionByCardIDResponse);
+    rpc GetTransactionByStatus(GetTransactionByStatusRequest) returns (GetTransactionByStatusResponse);
+    rpc GetTransactionByDate(GetTransactionByDateRequest) returns (GetTransactionByDateResponse);
+}  
+message Transaction {
+    string id = 1;
+    string userID = 2;
+    string cardID = 3;
+    string merchantID = 4;
+    string merchantName = 5;
+    string cardNumber = 6;
+    string merchantCategory = 7;
+    string amount = 8;
+    string currency = 9;
+    string status = 10;
+    string createAt = 11;
+    string updateAt = 12;
+}
+message ErrorDetails {
+    int32 code = 1;
+    string message = 2;
+    repeated string details = 3;
+    string timestamp = 4;
+}
+message GetTransactionByIDRequest {
+    string id = 1;
+}
+message GetTransactionByIDResponse{
+     int32 statusCode = 1;
+    string message = 2;
+    oneof result {
+        Transaction transaction = 3;     
+        ErrorDetails error = 4;
+    }
+}
+message GetTransactionByUserIDRequest {
+    string userID = 1;
+}
+message GetTransactionByUserIDResponse{
+    int32 statusCode = 1;
+    string message = 2;
+    repeated Transaction transactions = 3;
+}
+message GetTransactionByCardIDRequest {
+    string cardID = 1;
+}
+message GetTransactionByCardIDResponse{
+    int32 statusCode = 1;
+    string message = 2;
+    repeated Transaction transactions = 3;
+}
+message GetTransactionByStatusRequest {
+    string status = 1;
+}
+message GetTransactionByStatusResponse{
+    int32 statusCode = 1;
+    string message = 2;
+    repeated Transaction transactions = 3;
+}
+message GetTransactionByDateRequest {
+    string date = 1;
+}
+message GetTransactionByDateResponse{
+    int32 statusCode = 1;
+    string message = 2;
+    repeated Transaction transactions = 3;
+}
+message CreateNewTransactionRequest {
+    string userID = 1;
+    string cardID = 2;
+    string merchantID = 3;
+    string merchantName = 4;
+    string cardNumber = 5;
+    string merchantCategory = 6;
+    string amount = 7;
+    string currency = 8;
+}
+message CreateNewTransactionResponse{
+    int32 statusCode = 1;
+    string message = 2;
+    oneof result {
+        Transaction transaction = 3;     
+        ErrorDetails error = 4;
+    }
+}

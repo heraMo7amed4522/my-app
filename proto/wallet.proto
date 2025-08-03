@@ -1,0 +1,130 @@
+// wallet.proto
+syntax = "proto3";
+package wallet;
+
+import "proto/transaction.proto"; 
+import "google/protobuf/timestamp.proto";
+
+service WalletService {
+    rpc GetWalletByUserID(GetWalletByUserIDRequest) returns (GetWalletByUserIDResponse);
+    rpc CreateWallet(CreateWalletRequest) returns (CreateWalletResponse);
+    rpc FundWallet(FundWalletRequest) returns (FundWalletResponse);
+    rpc DeductFromWallet(DeductFromWalletRequest) returns (DeductFromWalletResponse);
+    rpc GetWalletBalance(GetWalletBalanceRequest) returns (GetWalletBalanceResponse);
+    rpc GetWalletTransactions(GetWalletTransactionsRequest) returns (GetWalletTransactionsResponse);
+    rpc RefundToWallet(RefundToWalletRequest) returns (RefundToWalletResponse);
+}
+
+message Wallet {
+    string id = 1;
+    string userID = 2;
+    string currency = 3;
+    string balance = 4; 
+    string status = 5; 
+    google.protobuf.Timestamp createdAt = 6;
+    google.protobuf.Timestamp updatedAt = 7;
+}
+
+message ErrorDetails {
+    int32 code = 1;
+    string message = 2;
+    repeated string details = 3;
+    string timestamp = 4;
+}
+
+
+message GetWalletByUserIDRequest {
+    string userID = 1;
+}
+
+message GetWalletByUserIDResponse {
+    int32 statusCode = 1;
+    string message = 2;
+    oneof result {
+        Wallet wallet = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message CreateWalletRequest {
+    string userID = 1;
+    string currency = 2; // Optional: default to USD
+}
+
+message CreateWalletResponse {
+    int32 statusCode = 1;
+    string message = 2;
+    oneof result {
+        Wallet wallet = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message FundWalletRequest {
+    string userID = 1;
+    string cardID = 2;
+    string amount = 3;
+    string currency = 4;
+}
+
+message FundWalletResponse {
+    int32 statusCode = 1;
+    string message = 2;
+    oneof result {
+        Wallet wallet = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message DeductFromWalletRequest {
+    string userID = 1;
+    string amount = 2;
+    string currency = 3;
+    string description = 4;
+}
+
+message DeductFromWalletResponse {
+    int32 statusCode = 1;
+    string message = 2;
+    oneof result {
+        Wallet wallet = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message GetWalletBalanceRequest {
+    string userID = 1;
+}
+
+message GetWalletBalanceResponse {
+    int32 statusCode = 1;
+    string message = 2;
+    oneof result {
+        Wallet wallet = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message GetWalletTransactionsRequest {
+    string userID = 1;
+}
+
+message GetWalletTransactionsResponse {
+    int32 statusCode = 1;
+    string message = 2;
+    repeated transaction.Transaction transactions = 3; // From transaction.proto
+}
+
+message RefundToWalletRequest {
+    string transactionID = 1;
+    string amount = 2;
+}
+
+message RefundToWalletResponse {
+    int32 statusCode = 1;
+    string message = 2;
+    oneof result {
+        Wallet wallet = 3;
+        ErrorDetails error = 4;
+    }
+}

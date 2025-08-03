@@ -132,6 +132,8 @@ func (x *User) GetUpdateAt() string {
 type AuthTokens struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	AccessToken   string                 `protobuf:"bytes,1,opt,name=accessToken,proto3" json:"accessToken,omitempty"`
+	ExpiresIn     int32                  `protobuf:"varint,2,opt,name=expiresIn,proto3" json:"expiresIn,omitempty"`
+	User          *User                  `protobuf:"bytes,3,opt,name=user,proto3" json:"user,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -171,6 +173,20 @@ func (x *AuthTokens) GetAccessToken() string {
 		return x.AccessToken
 	}
 	return ""
+}
+
+func (x *AuthTokens) GetExpiresIn() int32 {
+	if x != nil {
+		return x.ExpiresIn
+	}
+	return 0
+}
+
+func (x *AuthTokens) GetUser() *User {
+	if x != nil {
+		return x.User
+	}
+	return nil
 }
 
 type GetUserByEmailRequest struct {
@@ -1721,10 +1737,12 @@ const file_proto_user_proto_rawDesc = "" +
 	"\x04role\x18\x06 \x01(\tR\x04role\x12 \n" +
 	"\vverifiyCode\x18\a \x01(\tR\vverifiyCode\x12\x1a\n" +
 	"\bcreateAt\x18\b \x01(\tR\bcreateAt\x12\x1a\n" +
-	"\bupdateAt\x18\t \x01(\tR\bupdateAt\".\n" +
+	"\bupdateAt\x18\t \x01(\tR\bupdateAt\"m\n" +
 	"\n" +
 	"AuthTokens\x12 \n" +
-	"\vaccessToken\x18\x01 \x01(\tR\vaccessToken\"-\n" +
+	"\vaccessToken\x18\x01 \x01(\tR\vaccessToken\x12\x1c\n" +
+	"\texpiresIn\x18\x02 \x01(\x05R\texpiresIn\x12\x1f\n" +
+	"\x04user\x18\x03 \x01(\v2\v.users.UserR\x04user\"-\n" +
 	"\x15GetUserByEmailRequest\x12\x14\n" +
 	"\x05email\x18\x01 \x01(\tR\x05email\"t\n" +
 	"\fErrorDetails\x12\x12\n" +
@@ -1894,44 +1912,45 @@ var file_proto_user_proto_goTypes = []any{
 	(*TokenClaims)(nil),            // 21: users.TokenClaims
 }
 var file_proto_user_proto_depIdxs = []int32{
-	0,  // 0: users.GetUserByEmialResponse.user:type_name -> users.User
-	3,  // 1: users.GetUserByEmialResponse.error:type_name -> users.ErrorDetails
-	0,  // 2: users.CreateNewUserResponse.user:type_name -> users.User
-	3,  // 3: users.CreateNewUserResponse.error:type_name -> users.ErrorDetails
-	3,  // 4: users.ForgetPasswordResponse.error:type_name -> users.ErrorDetails
-	3,  // 5: users.VerifyCodeResponse.error:type_name -> users.ErrorDetails
-	3,  // 6: users.ResetPasswordResponse.error:type_name -> users.ErrorDetails
-	1,  // 7: users.LoginUserResponse.tokens:type_name -> users.AuthTokens
-	0,  // 8: users.LoginUserResponse.user:type_name -> users.User
-	3,  // 9: users.LoginUserResponse.error:type_name -> users.ErrorDetails
-	0,  // 10: users.UpdateUserResponse.user:type_name -> users.User
-	3,  // 11: users.UpdateUserResponse.error:type_name -> users.ErrorDetails
-	3,  // 12: users.DeleteUserDataResponse.error:type_name -> users.ErrorDetails
-	21, // 13: users.ValidateTokenResponse.claims:type_name -> users.TokenClaims
-	3,  // 14: users.ValidateTokenResponse.error:type_name -> users.ErrorDetails
-	2,  // 15: users.UserService.GetUserByEmail:input_type -> users.GetUserByEmailRequest
-	5,  // 16: users.UserService.CreateNewUser:input_type -> users.CreateNewUserRequest
-	7,  // 17: users.UserService.ForgetPassword:input_type -> users.ForgetPasswordRequest
-	9,  // 18: users.UserService.VerifyCode:input_type -> users.VerifyCodeRequest
-	11, // 19: users.UserService.ResetPassword:input_type -> users.ResetPasswordRequest
-	13, // 20: users.UserService.LoginUser:input_type -> users.LoginUserRequest
-	15, // 21: users.UserService.UpdateUserData:input_type -> users.UpdateUserRequest
-	17, // 22: users.UserService.DeleteUserData:input_type -> users.DeleteUserDatatRequest
-	19, // 23: users.UserService.ValidateToken:input_type -> users.ValidateTokenRequest
-	4,  // 24: users.UserService.GetUserByEmail:output_type -> users.GetUserByEmialResponse
-	6,  // 25: users.UserService.CreateNewUser:output_type -> users.CreateNewUserResponse
-	8,  // 26: users.UserService.ForgetPassword:output_type -> users.ForgetPasswordResponse
-	10, // 27: users.UserService.VerifyCode:output_type -> users.VerifyCodeResponse
-	12, // 28: users.UserService.ResetPassword:output_type -> users.ResetPasswordResponse
-	14, // 29: users.UserService.LoginUser:output_type -> users.LoginUserResponse
-	16, // 30: users.UserService.UpdateUserData:output_type -> users.UpdateUserResponse
-	18, // 31: users.UserService.DeleteUserData:output_type -> users.DeleteUserDataResponse
-	20, // 32: users.UserService.ValidateToken:output_type -> users.ValidateTokenResponse
-	24, // [24:33] is the sub-list for method output_type
-	15, // [15:24] is the sub-list for method input_type
-	15, // [15:15] is the sub-list for extension type_name
-	15, // [15:15] is the sub-list for extension extendee
-	0,  // [0:15] is the sub-list for field type_name
+	0,  // 0: users.AuthTokens.user:type_name -> users.User
+	0,  // 1: users.GetUserByEmialResponse.user:type_name -> users.User
+	3,  // 2: users.GetUserByEmialResponse.error:type_name -> users.ErrorDetails
+	0,  // 3: users.CreateNewUserResponse.user:type_name -> users.User
+	3,  // 4: users.CreateNewUserResponse.error:type_name -> users.ErrorDetails
+	3,  // 5: users.ForgetPasswordResponse.error:type_name -> users.ErrorDetails
+	3,  // 6: users.VerifyCodeResponse.error:type_name -> users.ErrorDetails
+	3,  // 7: users.ResetPasswordResponse.error:type_name -> users.ErrorDetails
+	1,  // 8: users.LoginUserResponse.tokens:type_name -> users.AuthTokens
+	0,  // 9: users.LoginUserResponse.user:type_name -> users.User
+	3,  // 10: users.LoginUserResponse.error:type_name -> users.ErrorDetails
+	0,  // 11: users.UpdateUserResponse.user:type_name -> users.User
+	3,  // 12: users.UpdateUserResponse.error:type_name -> users.ErrorDetails
+	3,  // 13: users.DeleteUserDataResponse.error:type_name -> users.ErrorDetails
+	21, // 14: users.ValidateTokenResponse.claims:type_name -> users.TokenClaims
+	3,  // 15: users.ValidateTokenResponse.error:type_name -> users.ErrorDetails
+	2,  // 16: users.UserService.GetUserByEmail:input_type -> users.GetUserByEmailRequest
+	5,  // 17: users.UserService.CreateNewUser:input_type -> users.CreateNewUserRequest
+	7,  // 18: users.UserService.ForgetPassword:input_type -> users.ForgetPasswordRequest
+	9,  // 19: users.UserService.VerifyCode:input_type -> users.VerifyCodeRequest
+	11, // 20: users.UserService.ResetPassword:input_type -> users.ResetPasswordRequest
+	13, // 21: users.UserService.LoginUser:input_type -> users.LoginUserRequest
+	15, // 22: users.UserService.UpdateUserData:input_type -> users.UpdateUserRequest
+	17, // 23: users.UserService.DeleteUserData:input_type -> users.DeleteUserDatatRequest
+	19, // 24: users.UserService.ValidateToken:input_type -> users.ValidateTokenRequest
+	4,  // 25: users.UserService.GetUserByEmail:output_type -> users.GetUserByEmialResponse
+	6,  // 26: users.UserService.CreateNewUser:output_type -> users.CreateNewUserResponse
+	8,  // 27: users.UserService.ForgetPassword:output_type -> users.ForgetPasswordResponse
+	10, // 28: users.UserService.VerifyCode:output_type -> users.VerifyCodeResponse
+	12, // 29: users.UserService.ResetPassword:output_type -> users.ResetPasswordResponse
+	14, // 30: users.UserService.LoginUser:output_type -> users.LoginUserResponse
+	16, // 31: users.UserService.UpdateUserData:output_type -> users.UpdateUserResponse
+	18, // 32: users.UserService.DeleteUserData:output_type -> users.DeleteUserDataResponse
+	20, // 33: users.UserService.ValidateToken:output_type -> users.ValidateTokenResponse
+	25, // [25:34] is the sub-list for method output_type
+	16, // [16:25] is the sub-list for method input_type
+	16, // [16:16] is the sub-list for extension type_name
+	16, // [16:16] is the sub-list for extension extendee
+	0,  // [0:16] is the sub-list for field type_name
 }
 
 func init() { file_proto_user_proto_init() }

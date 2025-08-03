@@ -66,6 +66,10 @@ export class UserService implements OnModuleInit {
           if (error) {
             reject(error);
           } else {
+            // Extract accessToken from tokens for GraphQL compatibility
+            if (response.tokens && response.tokens.accessToken) {
+              response.accessToken = response.tokens.accessToken;
+            }
             resolve(response);
           }
         },

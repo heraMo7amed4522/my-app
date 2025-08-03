@@ -1,4 +1,4 @@
-FROM golang:1.23-alpine AS builder
+FROM golang:1.24-alpine AS builder
 
 WORKDIR /app
 
@@ -24,7 +24,7 @@ WORKDIR /root/
 COPY --from=builder /app/services/auth-services/auth-service .
 
 # Copy Firebase service account key
-COPY ./services/auth-services/my-app-57137-firebase-adminsdk-fbsvc-a9ef791802.json ./firebase-credentials.json
+COPY ./services/auth-services/my-app-4e7aa-firebase-adminsdk-fbsvc-38f041e31e.json ./firebase-credentials.json
 
 EXPOSE 50052
 

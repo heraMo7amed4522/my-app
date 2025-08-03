@@ -30,7 +30,8 @@ service UserService {
 
 message AuthTokens {
     string accessToken = 1;
-    
+    int32 expiresIn = 2;
+    User user = 3;
 }
 
 message GetUserByEmailRequest {

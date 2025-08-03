@@ -555,6 +555,394 @@
             ]
         },
         {
+            "name": "Transaction Queries",
+            "item": [
+                {
+                    "name": "Get Transaction By ID",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetTransactionByID($id: String!) {\n  getTransactionByID(id: $id) {\n    id\n    userId\n    cardId\n    amount\n    currency\n    description\n    status\n    type\n    createdAt\n    updatedAt\n  }\n}",
+                                "variables": "{\n  \"id\": \"{{transactionId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Transactions By User ID",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetTransactionsByUserID($userId: String!) {\n  getTransactionsByUserID(userId: $userId) {\n    id\n    userId\n    cardId\n    amount\n    currency\n    description\n    status\n    type\n    createdAt\n    updatedAt\n  }\n}",
+                                "variables": "{\n  \"userId\": \"{{userId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Transactions By Card ID",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetTransactionsByCardID($cardId: String!) {\n  getTransactionsByCardID(cardId: $cardId) {\n    id\n    userId\n    cardId\n    amount\n    currency\n    description\n    status\n    type\n    createdAt\n    updatedAt\n  }\n}",
+                                "variables": "{\n  \"cardId\": \"{{cardId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Transactions By Status",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetTransactionsByStatus($status: String!) {\n  getTransactionsByStatus(status: $status) {\n    id\n    userId\n    cardId\n    amount\n    currency\n    description\n    status\n    type\n    createdAt\n    updatedAt\n  }\n}",
+                                "variables": "{\n  \"status\": \"COMPLETED\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Transactions By Date",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetTransactionsByDate($startDate: String!, $endDate: String!) {\n  getTransactionsByDate(startDate: $startDate, endDate: $endDate) {\n    id\n    userId\n    cardId\n    amount\n    currency\n    description\n    status\n    type\n    createdAt\n    updatedAt\n  }\n}",
+                                "variables": "{\n  \"startDate\": \"2024-01-01\",\n  \"endDate\": \"2024-12-31\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Wallet Queries",
+            "item": [
+                {
+                    "name": "Get Wallet By User ID",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetWalletByUserID($userId: String!) {\n  getWalletByUserID(userId: $userId) {\n    statusCode\n    message\n    wallet {\n      id\n      userId\n      balance\n      currency\n      createdAt\n      updatedAt\n    }\n    error {\n      code\n      message\n      details\n      timestamp\n    }\n  }\n}",
+                                "variables": "{\n  \"userId\": \"{{userId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Wallet Balance",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetWalletBalance($walletId: String!) {\n  getWalletBalance(walletId: $walletId) {\n    statusCode\n    message\n    balance\n    currency\n    error {\n      code\n      message\n      details\n      timestamp\n    }\n  }\n}",
+                                "variables": "{\n  \"walletId\": \"{{walletId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Wallet Transactions",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetWalletTransactions($input: GetWalletTransactionsInput!) {\n  getWalletTransactions(input: $input) {\n    statusCode\n    message\n    transactions {\n      id\n      walletId\n      type\n      amount\n      currency\n      description\n      createdAt\n      updatedAt\n    }\n    error {\n      code\n      message\n      details\n      timestamp\n    }\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"walletId\": \"{{walletId}}\",\n    \"page\": 1,\n    \"limit\": 10\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Wallet Mutations",
+            "item": [
+                {
+                    "name": "Create Wallet",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation CreateWallet($input: CreateWalletInput!) {\n  createWallet(input: $input) {\n    statusCode\n    message\n    wallet {\n      id\n      userId\n      balance\n      currency\n      createdAt\n      updatedAt\n    }\n    error {\n      code\n      message\n      details\n      timestamp\n    }\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"userId\": \"{{userId}}\",\n    \"currency\": \"USD\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Fund Wallet",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation FundWallet($input: FundWalletInput!) {\n  fundWallet(input: $input) {\n    statusCode\n    message\n    wallet {\n      id\n      userId\n      balance\n      currency\n      updatedAt\n    }\n    transaction {\n      id\n      walletId\n      type\n      amount\n      currency\n      description\n      createdAt\n    }\n    error {\n      code\n      message\n      details\n      timestamp\n    }\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"walletId\": \"{{walletId}}\",\n    \"amount\": 100.00,\n    \"currency\": \"USD\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Deduct From Wallet",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation DeductFromWallet($input: DeductFromWalletInput!) {\n  deductFromWallet(input: $input) {\n    statusCode\n    message\n    wallet {\n      id\n      userId\n      balance\n      currency\n      updatedAt\n    }\n    transaction {\n      id\n      walletId\n      type\n      amount\n      currency\n      description\n      createdAt\n    }\n    error {\n      code\n      message\n      details\n      timestamp\n    }\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"walletId\": \"{{walletId}}\",\n    \"amount\": 25.00,\n    \"currency\": \"USD\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Refund To Wallet",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation RefundToWallet($input: RefundToWalletInput!) {\n  refundToWallet(input: $input) {\n    statusCode\n    message\n    wallet {\n      id\n      userId\n      balance\n      currency\n      updatedAt\n    }\n    transaction {\n      id\n      walletId\n      type\n      amount\n      currency\n      description\n      createdAt\n    }\n    error {\n      code\n      message\n      details\n      timestamp\n    }\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"walletId\": \"{{walletId}}\",\n    \"amount\": 50.00,\n    \"currency\": \"USD\",\n    \"originalTransactionId\": \"{{transactionId}}\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                }
+            ]
+        },
+        
+        {
             "name": "GraphQL Introspection",
             "item": [
                 {
@@ -591,6 +979,36 @@
             "key": "baseUrl",
             "value": "http://localhost:3000",
             "type": "string"
+        },
+        {
+            "key": "accessToken",
+            "value": "",
+            "type": "string",
+            "description": "JWT access token obtained from login"
+        },
+        {
+            "key": "userId",
+            "value": "",
+            "type": "string",
+            "description": "User ID for testing"
+        },
+        {
+            "key": "cardId",
+            "value": "",
+            "type": "string",
+            "description": "Card ID for testing"
+        },
+        {
+            "key": "transactionId",
+            "value": "",
+            "type": "string",
+            "description": "Transaction ID for testing"
+        },
+        {
+            "key": "walletId",
+            "value": "",
+            "type": "string",
+            "description": "Wallet ID for testing"
         }
     ]
 }

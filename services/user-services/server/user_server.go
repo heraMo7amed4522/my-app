@@ -642,7 +642,7 @@ func (s *UserServer) LoginUser(ctx context.Context, req *pb.LoginUserRequest) (*
 	user.CreateAt = createdAt.Format(time.RFC3339)
 	user.UpdateAt = updatedAt.Format(time.RFC3339)
 	// Generate both access and refresh tokens
-	accessToken, err := generateTokens(user.Id, user.Email, user.Role)
+	accessToken, expiresIn, err := generateTokens(user.Id, user.Email, user.Role)
 	if err != nil {
 		return &pb.LoginUserResponse{
 			StatusCode: 500,
@@ -663,6 +663,8 @@ func (s *UserServer) LoginUser(ctx context.Context, req *pb.LoginUserRequest) (*
 		Message:    "Login successful",
 		Tokens: &pb.AuthTokens{
 			AccessToken: accessToken,
+			ExpiresIn:   expiresIn,
+			User:        &user,
 		},
 		Result: &pb.LoginUserResponse_User{
 			User: &user,
@@ -1057,13 +1059,14 @@ func getJWTSecret() string {
 	return jwtSecret
 }
 
-func generateTokens(userID, email, role string) (string, error) {
+func generateTokens(userID, email, role string) (string, int32, error) {
 	jwtSecret := getJWTSecret()
 	if jwtSecret == "" {
 		jwtSecret = "your-super-secret-jwt-key-change-this-in-production"
 		log.Println("Warning: Using default JWT secret. Set JWT_SECRET environment variable in production.")
 	}
 	// Generate access token (1 hour expiry)
+	expiresIn := int32(3600) // 1 hour in seconds
 	accessClaims := jwt.MapClaims{
 		"user_id": userID,
 		"email":   email,
@@ -1074,9 +1077,9 @@ func generateTokens(userID, email, role string) (string, error) {
 	accessToken := jwt.NewWithClaims(jwt.SigningMethodHS256, accessClaims)
 	accessTokenString, err := accessToken.SignedString([]byte(jwtSecret))
 	if err != nil {
-		return "", err
+		return "", 0, err
 	}
-	return accessTokenString, nil
+	return accessTokenString, expiresIn, nil
 }
 
 // Standardized token validation for system-wide use
