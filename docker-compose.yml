@@ -130,6 +130,113 @@ services:
     networks:
       - user_network
     restart: unless-stopped
+    
+  # Pharaoh Service (GO)
+  pharaoh-service:
+    build:
+      context: ./services/pharaoh-services
+      dockerfile: Dockerfile
+    container_name: pharaoh_service
+    ports:
+      - "50056:50056"
+    environment:
+      - PHARAOH_SERVICE_PORT=50056
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=2521
+      - DB_NAME=userdb
+      - JWT_SECRET=bc295e25dc110117ccd1ac9750e74efed887bce6165557d15a777b5f60f15df0d83932d66dd4223260c1f0e68a7f204d01e4cdd984fca614249af42ebaf32f30
+    depends_on:
+      - postgres
+    networks:
+      - user_network
+    restart: unless-stopped
+
+# History Template Service (GO)
+  history-template-service:
+    build:
+      context: ./services/history-template-services
+      dockerfile: Dockerfile
+    container_name: history_template_service
+    ports:
+      - "50057:50057"
+    environment:
+      - PHARAOH_SERVICE_PORT=50057
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=2521
+      - DB_NAME=userdb
+      - JWT_SECRET=bc295e25dc110117ccd1ac9750e74efed887bce6165557d15a777b5f60f15df0d83932d66dd4223260c1f0e68a7f204d01e4cdd984fca614249af42ebaf32f30
+    depends_on:
+      - postgres
+    networks:
+      - user_network
+    restart: unless-stopped
+  # Quiz  Service (GO)
+  quiz-service:
+    build:
+      context: ./services/quiz-services
+      dockerfile: Dockerfile
+    container_name: quiz_service
+    ports:
+      - "50058:50058"
+    environment:
+      - PHARAOH_SERVICE_PORT=50058
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=2521
+      - DB_NAME=userdb
+    depends_on:
+      - postgres
+    networks:
+      - user_network
+    restart: unless-stopped
+  # Feedback Service (GO)
+  feedback-service:
+    build:
+      context: ./services/feedback-services
+      dockerfile: Dockerfile
+    container_name: feedback_service
+    ports:
+      - "50059:50059"
+    environment:
+      - PHARAOH_SERVICE_PORT=50059
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=2521
+      - DB_NAME=userdb
+    depends_on:
+      - postgres
+    networks:
+      - user_network
+    restart: unless-stopped
+    
+  # User Progress  Service (GO)
+  user-progress-service:
+    build:
+      context: ./services/user-progress-services
+      dockerfile: Dockerfile
+    container_name: user_progress_service
+    ports:
+      - "50060:50060"
+    environment:
+      - PHARAOH_SERVICE_PORT=50060
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=2521
+      - DB_NAME=userdb
+    depends_on:
+      - postgres
+    networks:
+      - user_network
+    restart: unless-stopped
+
+
 
   # Gateway Service (NestJS)
   gateway:

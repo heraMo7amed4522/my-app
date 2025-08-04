@@ -6,6 +6,9 @@ import { AuthModule } from './auth/auth.module';
 import { CardModule } from './card/card.module';
 import { TransactionModule } from './transaction/transaction.module';
 import { WalletModule } from './wallet/wallet.module';
+import { PharaohModule } from './pharaoh/pharaoh.module';
+import { HistoryTemplateModule } from './history-template/history-template.module';
+import { QuizModule } from './quiz/quiz.module';
 
 @Module({
   imports: [
@@ -20,6 +23,9 @@ import { WalletModule } from './wallet/wallet.module';
     CardModule,
     TransactionModule,
     WalletModule,
+    PharaohModule,
+    HistoryTemplateModule,
+    QuizModule,
   ],
 })
 export class AppModule {}

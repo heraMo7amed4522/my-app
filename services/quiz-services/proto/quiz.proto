@@ -1,0 +1,174 @@
+syntax = "proto3";
+
+package quiz;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "./proto";
+
+service QuizService {
+    rpc GetQuizzesBySection(GetQuizzesBySectionRequest) returns (GetQuizzesBySectionResponse);
+    rpc GetQuizByID(GetQuizByIDRequest) returns (GetQuizByIDResponse);
+    rpc CreateQuiz(CreateQuizRequest) returns (CreateQuizResponse);
+    rpc UpdateQuiz(UpdateQuizRequest) returns (UpdateQuizResponse);
+    rpc DeleteQuiz(DeleteQuizRequest) returns (DeleteQuizResponse);
+    rpc SubmitQuizAnswer(SubmitQuizAnswerRequest) returns (SubmitQuizAnswerResponse);
+    rpc GetUserQuizHistory(GetUserQuizHistoryRequest) returns (GetUserQuizHistoryResponse);
+    rpc GetQuizStatistics(GetQuizStatisticsRequest) returns (GetQuizStatisticsResponse);
+}
+
+message Quiz {
+    string id = 1;
+    string section_id = 2;
+    string question = 3;
+    map<string, string> options = 4;
+    string correct_answer = 5;
+    string explanation = 6;
+    string difficulty = 7;
+    google.protobuf.Timestamp created_at = 8;
+}
+
+message QuizResponse {
+    string id = 1;
+    string user_id = 2;
+    string quiz_id = 3;
+    string selected_option = 4;
+    bool is_correct = 5;
+    google.protobuf.Timestamp answered_at = 6;
+}
+
+message ErrorDetails {
+    int32 code = 1;
+    string message = 2;
+    repeated string details = 3;
+    string timestamp = 4;
+}
+
+message GetQuizzesBySectionRequest {
+    string section_id = 1;
+}
+
+message GetQuizzesBySectionResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        QuizList quizzes = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message QuizList {
+    repeated Quiz quizzes = 1;
+    int32 total_count = 2;
+}
+
+message GetQuizByIDRequest {
+    string id = 1;
+}
+
+message GetQuizByIDResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        Quiz quiz = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message CreateQuizRequest {
+    Quiz quiz = 1;
+}
+
+message CreateQuizResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        Quiz quiz = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message UpdateQuizRequest {
+    string id = 1;
+    Quiz quiz = 2;
+}
+
+message UpdateQuizResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        Quiz quiz = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message DeleteQuizRequest {
+    string id = 1;
+}
+
+message DeleteQuizResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        bool success = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message SubmitQuizAnswerRequest {
+    string user_id = 1;
+    string quiz_id = 2;
+    string selected_option = 3;
+}
+
+message SubmitQuizAnswerResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        QuizResponse response = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message GetUserQuizHistoryRequest {
+    string user_id = 1;
+    int32 page = 2;
+    int32 limit = 3;
+}
+
+message GetUserQuizHistoryResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        QuizResponseList responses = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message QuizResponseList {
+    repeated QuizResponse responses = 1;
+    int32 total_count = 2;
+    int32 page = 3;
+    int32 limit = 4;
+}
+
+message GetQuizStatisticsRequest {
+    string quiz_id = 1;
+}
+
+message GetQuizStatisticsResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        QuizStatistics statistics = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message QuizStatistics {
+    string quiz_id = 1;
+    int32 total_attempts = 2;
+    int32 correct_attempts = 3;
+    float success_rate = 4;
+    float average_time = 5;
+}

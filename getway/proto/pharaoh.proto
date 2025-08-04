@@ -1,0 +1,252 @@
+syntax = "proto3";
+
+package pharaohs;
+
+option go_package = "./proto";
+
+service PharaohService {
+    rpc GetPharaohByID(GetPharaohByIDRequest) returns (GetPharaohByIDResponse);
+    rpc GetAllPharaohs(GetAllPharaohsRequest) returns (GetAllPharaohsResponse);
+    rpc GetPharaohsByDynasty(GetPharaohsByDynastyRequest) returns (GetPharaohsByDynastyResponse);
+    rpc GetPharaohsByPeriod(GetPharaohsByPeriodRequest) returns (GetPharaohsByPeriodResponse);
+    rpc SearchPharaohs(SearchPharaohsRequest) returns (SearchPharaohsResponse);
+    rpc CreatePharaoh(CreatePharaohRequest) returns (CreatePharaohResponse);
+    rpc UpdatePharaoh(UpdatePharaohRequest) returns (UpdatePharaohResponse);
+    rpc DeletePharaoh(DeletePharaohRequest) returns (DeletePharaohResponse);
+    rpc GetPharaohsByRarity(GetPharaohsByRarityRequest) returns (GetPharaohsByRarityResponse);
+    rpc UpdatePharaohRating(UpdatePharaohRatingRequest) returns (UpdatePharaohRatingResponse);
+}
+
+message Pharaoh {
+    string id = 1;
+    string name = 2;
+    string birth_name = 3;
+    string throne_name = 4;
+    string epithet = 5;
+    
+    // Historical & Chronological
+    int32 dynasty = 6;
+    string period = 7;
+    int32 reign_start = 8;
+    int32 reign_end = 9;
+    int32 length_of_reign_years = 10;
+    string predecessor_id = 11;
+    string successor_id = 12;
+    
+    // Family & Lineage
+    string father = 13;
+    string mother = 14;
+    repeated string consorts = 15;
+    int32 children_count = 16;
+    repeated string notable_children = 17;
+    
+    // Rule & Governance
+    string capital = 18;
+    repeated string major_achievements = 19;
+    repeated string military_campaigns = 20;
+    repeated string building_projects = 21;
+    string political_style = 22;
+    
+    // Religious & Divine Role
+    repeated string divine_association = 23;
+    repeated string temple_affiliations = 24;
+    string religious_reforms = 25;
+    bool pharaoh_as_god = 26;
+    
+    // Burial & Afterlife
+    string burial_site = 27;
+    bool tomb_discovered = 28;
+    int32 discovery_year = 29;
+    string tomb_guardian = 30;
+    string funerary_text = 31;
+    
+    // Artifacts & Treasures
+    repeated Artifact famous_artifacts = 32;
+    string treasure_status = 33;
+    
+    // Media & Presentation
+    string image_url = 34;
+    int32 statue_count = 35;
+    string mummy_location = 36;
+    string audio_narration_url = 37;
+    string video_documentary_url = 38;
+    
+    // User Engagement
+    float popularity_score = 39;
+    float user_rating = 40;
+    bool unlock_in_game = 41;
+    string rarity = 42;
+    Traits traits = 43;
+    
+    // Metadata
+    string source = 44;
+    bool verified = 45;
+    string language = 46;
+    string created_at = 47;
+    string updated_at = 48;
+}
+
+message Artifact {
+    string name = 1;
+    string museum = 2;
+    string description = 3;
+}
+
+message Traits {
+    int32 leadership = 1;
+    int32 military = 2;
+    int32 diplomacy = 3;
+    int32 wisdom = 4;
+    int32 charisma = 5;
+}
+
+message ErrorDetails {
+    int32 code = 1;
+    string message = 2;
+    repeated string details = 3;
+    string timestamp = 4;
+}
+
+// Request/Response messages
+message GetPharaohByIDRequest {
+    string id = 1;
+}
+
+message GetPharaohByIDResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        Pharaoh pharaoh = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message GetAllPharaohsRequest {
+    int32 page = 1;
+    int32 limit = 2;
+    string sort_by = 3; // "dynasty", "reign_start", "popularity_score"
+    string order = 4; // "asc", "desc"
+}
+
+message GetAllPharaohsResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        PharaohList pharaohs = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message PharaohList {
+    repeated Pharaoh pharaohs = 1;
+    int32 total_count = 2;
+    int32 page = 3;
+    int32 limit = 4;
+}
+
+message GetPharaohsByDynastyRequest {
+    int32 dynasty = 1;
+}
+
+message GetPharaohsByDynastyResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        PharaohList pharaohs = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message GetPharaohsByPeriodRequest {
+    string period = 1;
+}
+
+message GetPharaohsByPeriodResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        PharaohList pharaohs = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message SearchPharaohsRequest {
+    string query = 1;
+    repeated string fields = 2; // ["name", "epithet", "achievements"]
+}
+
+message SearchPharaohsResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        PharaohList pharaohs = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message CreatePharaohRequest {
+    Pharaoh pharaoh = 1;
+}
+
+message CreatePharaohResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        Pharaoh pharaoh = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message UpdatePharaohRequest {
+    string id = 1;
+    Pharaoh pharaoh = 2;
+}
+
+message UpdatePharaohResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        Pharaoh pharaoh = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message DeletePharaohRequest {
+    string id = 1;
+}
+
+message DeletePharaohResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        bool success = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message GetPharaohsByRarityRequest {
+    string rarity = 1; // "Common", "Rare", "Epic", "Legendary"
+}
+
+message GetPharaohsByRarityResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        PharaohList pharaohs = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message UpdatePharaohRatingRequest {
+    string id = 1;
+    float rating = 2;
+}
+
+message UpdatePharaohRatingResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        Pharaoh pharaoh = 3;
+        ErrorDetails error = 4;
+    }
+}

@@ -1,0 +1,117 @@
+syntax = "proto3";
+
+package feedback;
+
+import "google/protobuf/timestamp.proto";
+
+service FeedbackService {
+    rpc SubmitFeedback(SubmitFeedbackRequest) returns (SubmitFeedbackResponse);
+    rpc GetTemplateFeedback(GetTemplateFeedbackRequest) returns (GetTemplateFeedbackResponse);
+    rpc GetFeedbackStatistics(GetFeedbackStatisticsRequest) returns (GetFeedbackStatisticsResponse);
+    rpc UpdateFeedback(UpdateFeedbackRequest) returns (UpdateFeedbackResponse);
+    rpc DeleteFeedback(DeleteFeedbackRequest) returns (DeleteFeedbackResponse);
+}
+
+message Feedback {
+    string id = 1;
+    string user_id = 2;
+    string template_id = 3;
+    float rating = 4;
+    string comment = 5;
+    string language = 6;
+    google.protobuf.Timestamp created_at = 7;
+}
+
+message ErrorDetails {
+    int32 code = 1;
+    string message = 2;
+    repeated string details = 3;
+    string timestamp = 4;
+}
+
+message SubmitFeedbackRequest {
+    string user_id = 1;
+    string template_id = 2;
+    float rating = 3;
+    string comment = 4;
+    string language = 5;
+}
+
+message SubmitFeedbackResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        Feedback feedback = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message GetTemplateFeedbackRequest {
+    string template_id = 1;
+    int32 page = 2;
+    int32 limit = 3;
+}
+
+message GetTemplateFeedbackResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        FeedbackList feedback = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message FeedbackList {
+    repeated Feedback feedback = 1;
+    int32 total_count = 2;
+    int32 page = 3;
+    int32 limit = 4;
+}
+
+message GetFeedbackStatisticsRequest {
+    string template_id = 1;
+}
+
+message GetFeedbackStatisticsResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        FeedbackStatistics statistics = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message FeedbackStatistics {
+    string template_id = 1;
+    float average_rating = 2;
+    int32 total_ratings = 3;
+    map<string, int32> rating_distribution = 4;
+}
+
+message UpdateFeedbackRequest {
+    string id = 1;
+    float rating = 2;
+    string comment = 3;
+}
+
+message UpdateFeedbackResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        Feedback feedback = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message DeleteFeedbackRequest {
+    string id = 1;
+}
+
+message DeleteFeedbackResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        bool success = 3;
+        ErrorDetails error = 4;
+    }
+}

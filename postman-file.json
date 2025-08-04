@@ -38,6 +38,295 @@
             ]
         },
         {
+            "name": "Quiz Queries",
+            "item": [
+                {
+                    "name": "Get Quizzes By Section",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetQuizzesBySection($sectionId: String!) {\n  getQuizzesBySection(sectionId: $sectionId) {\n    statusCode\n    message\n    quizzes {\n      quizzes {\n        id\n        sectionId\n        question\n        options {\n          key\n          value\n        }\n        correctAnswer\n        explanation\n        difficulty\n        createdAt\n      }\n      totalCount\n      page\n      limit\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"sectionId\": \"{{sectionId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Quiz By ID",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetQuizById($id: String!) {\n  getQuizById(id: $id) {\n    statusCode\n    message\n    quiz {\n      id\n      sectionId\n      question\n      options {\n        key\n        value\n      }\n      correctAnswer\n      explanation\n      difficulty\n      createdAt\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"id\": \"{{quizId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get User Quiz History",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetUserQuizHistory($userId: String!) {\n  getUserQuizHistory(userId: $userId) {\n    statusCode\n    message\n    quizResponses {\n      id\n      userId\n      quizId\n      selectedOption\n      isCorrect\n      answeredAt\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"userId\": \"{{userId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Quiz Statistics",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetQuizStatistics($quizId: String!) {\n  getQuizStatistics(quizId: $quizId) {\n    statusCode\n    message\n    statistics {\n      totalAttempts\n      correctAnswers\n      uniqueUsers\n      successRate\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"quizId\": \"{{quizId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Quiz Mutations",
+            "item": [
+                {
+                    "name": "Create Quiz",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation CreateQuiz($input: CreateQuizInput!) {\n  createQuiz(input: $input) {\n    statusCode\n    message\n    quiz {\n      id\n      sectionId\n      question\n      options {\n        key\n        value\n      }\n      correctAnswer\n      explanation\n      difficulty\n      createdAt\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"sectionId\": \"section-123\",\n    \"question\": \"What was the capital of ancient Egypt?\",\n    \"options\": [\n      {\"key\": \"A\", \"value\": \"Memphis\"},\n      {\"key\": \"B\", \"value\": \"Thebes\"},\n      {\"key\": \"C\", \"value\": \"Alexandria\"},\n      {\"key\": \"D\", \"value\": \"Cairo\"}\n    ],\n    \"correctAnswer\": \"A\",\n    \"explanation\": \"Memphis was the ancient capital of Egypt during the Old Kingdom period.\",\n    \"difficulty\": \"medium\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Quiz",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation UpdateQuiz($id: String!, $input: UpdateQuizInput!) {\n  updateQuiz(id: $id, input: $input) {\n    statusCode\n    message\n    quiz {\n      id\n      sectionId\n      question\n      options {\n        key\n        value\n      }\n      correctAnswer\n      explanation\n      difficulty\n      createdAt\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"id\": \"{{quizId}}\",\n  \"input\": {\n    \"question\": \"What was the primary capital of ancient Egypt during the Old Kingdom?\",\n    \"explanation\": \"Memphis served as the capital of ancient Egypt during the Old Kingdom period and was a major administrative center.\",\n    \"difficulty\": \"hard\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Delete Quiz",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation DeleteQuiz($id: String!) {\n  deleteQuiz(id: $id) {\n    statusCode\n    message\n    success\n  }\n}",
+                                "variables": "{\n  \"id\": \"{{quizId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Submit Quiz Answer",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation SubmitQuizAnswer($input: SubmitQuizAnswerInput!) {\n  submitQuizAnswer(input: $input) {\n    statusCode\n    message\n    quizResponses {\n      id\n      userId\n      quizId\n      selectedOption\n      isCorrect\n      answeredAt\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"userId\": \"{{userId}}\",\n    \"quizId\": \"{{quizId}}\",\n    \"selectedOption\": \"A\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Auth Mutations",
+            "item": [
+                {
+                    "name": "Firebase Authentication",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation AuthenticateWithFirebase($input: FirebaseAuthInput!) {\n  authenticateWithFirebase(input: $input) {\n    statusCode\n    message\n    tokens {\n      accessToken\n      refreshToken\n      expiresIn\n      user {\n        id\n        email\n        fullName\n        role\n      }\n    }\n    error\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"idToken\": \"firebase-id-token-here\",\n    \"provider\": \"google\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
             "name": "User Queries",
             "item": [
                 {
@@ -943,6 +1232,328 @@
         },
         
         {
+            "name": "History Template Queries",
+            "item": [
+                {
+                    "name": "Get Template By ID",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetTemplateById($id: String!) {\n  getTemplateById(id: $id) {\n    statusCode\n    message\n    template {\n      id\n      title\n      description\n      era\n      dynasty\n      pharaohId\n      difficulty\n      thumbnailUrl\n      language\n      isActive\n      version\n      publishedAt\n      createdAt\n      updatedAt\n      sections {\n        id\n        templateId\n        title\n        subtitle\n        contentType\n        content\n        orderIndex\n        optional\n        createdAt\n      }\n      tags\n    }\n  }\n}",
+                                "variables": "{\n  \"id\": \"{{templateId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get All Templates",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetAllTemplates($page: Int, $limit: Int, $sortBy: String, $order: String) {\n  getAllTemplates(page: $page, limit: $limit, sortBy: $sortBy, order: $order) {\n    statusCode\n    message\n    templates {\n      templates {\n        id\n        title\n        description\n        era\n        dynasty\n        pharaohId\n        difficulty\n        thumbnailUrl\n        language\n        isActive\n        version\n        publishedAt\n        createdAt\n        updatedAt\n        tags\n      }\n      totalCount\n      page\n      limit\n    }\n  }\n}",
+                                "variables": "{\n  \"page\": 1,\n  \"limit\": 10,\n  \"sortBy\": \"createdAt\",\n  \"order\": \"desc\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Templates By Era",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetTemplatesByEra($era: String!, $page: Int, $limit: Int) {\n  getTemplatesByEra(era: $era, page: $page, limit: $limit) {\n    statusCode\n    message\n    templates {\n      templates {\n        id\n        title\n        description\n        era\n        dynasty\n        pharaohId\n        difficulty\n        thumbnailUrl\n        language\n        isActive\n        createdAt\n        updatedAt\n        tags\n      }\n      totalCount\n      page\n      limit\n    }\n  }\n}",
+                                "variables": "{\n  \"era\": \"Old Kingdom\",\n  \"page\": 1,\n  \"limit\": 10\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Templates By Dynasty",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetTemplatesByDynasty($dynasty: Int!, $page: Int, $limit: Int) {\n  getTemplatesByDynasty(dynasty: $dynasty, page: $page, limit: $limit) {\n    statusCode\n    message\n    templates {\n      templates {\n        id\n        title\n        description\n        era\n        dynasty\n        pharaohId\n        difficulty\n        thumbnailUrl\n        language\n        isActive\n        createdAt\n        updatedAt\n        tags\n      }\n      totalCount\n      page\n      limit\n    }\n  }\n}",
+                                "variables": "{\n  \"dynasty\": 4,\n  \"page\": 1,\n  \"limit\": 10\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Templates By Pharaoh",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetTemplatesByPharaoh($pharaohId: String!, $page: Int, $limit: Int) {\n  getTemplatesByPharaoh(pharaohId: $pharaohId, page: $page, limit: $limit) {\n    statusCode\n    message\n    templates {\n      templates {\n        id\n        title\n        description\n        era\n        dynasty\n        pharaohId\n        difficulty\n        thumbnailUrl\n        language\n        isActive\n        createdAt\n        updatedAt\n        tags\n      }\n      totalCount\n      page\n      limit\n    }\n  }\n}",
+                                "variables": "{\n  \"pharaohId\": \"{{pharaohId}}\",\n  \"page\": 1,\n  \"limit\": 10\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Templates By Difficulty",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetTemplatesByDifficulty($difficulty: String!, $page: Int, $limit: Int) {\n  getTemplatesByDifficulty(difficulty: $difficulty, page: $page, limit: $limit) {\n    statusCode\n    message\n    templates {\n      templates {\n        id\n        title\n        description\n        era\n        dynasty\n        pharaohId\n        difficulty\n        thumbnailUrl\n        language\n        isActive\n        createdAt\n        updatedAt\n        tags\n      }\n      totalCount\n      page\n      limit\n    }\n  }\n}",
+                                "variables": "{\n  \"difficulty\": \"easy\",\n  \"page\": 1,\n  \"limit\": 10\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Search Templates",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query SearchTemplates($query: String!, $fields: [String], $page: Int, $limit: Int) {\n  searchTemplates(query: $query, fields: $fields, page: $page, limit: $limit) {\n    statusCode\n    message\n    templates {\n      templates {\n        id\n        title\n        description\n        era\n        dynasty\n        pharaohId\n        difficulty\n        thumbnailUrl\n        language\n        isActive\n        createdAt\n        updatedAt\n        tags\n      }\n      totalCount\n      page\n      limit\n    }\n  }\n}",
+                                "variables": "{\n  \"query\": \"pyramid\",\n  \"fields\": [\"title\", \"description\"],\n  \"page\": 1,\n  \"limit\": 10\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Templates By Tag",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetTemplatesByTag($tag: String!, $page: Int, $limit: Int) {\n  getTemplatesByTag(tag: $tag, page: $page, limit: $limit) {\n    statusCode\n    message\n    templates {\n      templates {\n        id\n        title\n        description\n        era\n        dynasty\n        pharaohId\n        difficulty\n        thumbnailUrl\n        language\n        isActive\n        createdAt\n        updatedAt\n        tags\n      }\n      totalCount\n      page\n      limit\n    }\n  }\n}",
+                                "variables": "{\n  \"tag\": \"architecture\",\n  \"page\": 1,\n  \"limit\": 10\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Related Templates",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetRelatedTemplates($templateId: String!, $limit: Int) {\n  getRelatedTemplates(templateId: $templateId, limit: $limit) {\n    statusCode\n    message\n    templates {\n      templates {\n        id\n        title\n        description\n        era\n        dynasty\n        pharaohId\n        difficulty\n        thumbnailUrl\n        language\n        isActive\n        createdAt\n        updatedAt\n        tags\n      }\n      totalCount\n      page\n      limit\n    }\n  }\n}",
+                                "variables": "{\n  \"templateId\": \"{{templateId}}\",\n  \"limit\": 5\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "History Template Mutations",
+            "item": [
+                {
+                    "name": "Create Template",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation CreateTemplate($input: CreateTemplateInput!) {\n  createTemplate(input: $input) {\n    statusCode\n    message\n    template {\n      id\n      title\n      description\n      era\n      dynasty\n      pharaohId\n      difficulty\n      thumbnailUrl\n      language\n      isActive\n      version\n      publishedAt\n      createdAt\n      updatedAt\n      tags\n    }\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"title\": \"The Great Pyramid of Giza\",\n    \"description\": \"Learn about the construction and significance of the Great Pyramid\",\n    \"era\": \"Old Kingdom\",\n    \"dynasty\": 4,\n    \"pharaohId\": \"{{pharaohId}}\",\n    \"difficulty\": \"medium\",\n    \"thumbnailUrl\": \"https://example.com/pyramid.jpg\",\n    \"language\": \"en\",\n    \"isActive\": true,\n    \"tags\": [\"architecture\", \"pyramid\", \"ancient\"]\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Template",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation UpdateTemplate($id: String!, $input: UpdateTemplateInput!) {\n  updateTemplate(id: $id, input: $input) {\n    statusCode\n    message\n    template {\n      id\n      title\n      description\n      era\n      dynasty\n      pharaohId\n      difficulty\n      thumbnailUrl\n      language\n      isActive\n      version\n      publishedAt\n      createdAt\n      updatedAt\n      tags\n    }\n  }\n}",
+                                "variables": "{\n  \"id\": \"{{templateId}}\",\n  \"input\": {\n    \"title\": \"Updated: The Great Pyramid of Giza\",\n    \"description\": \"Updated description about the construction and significance of the Great Pyramid\",\n    \"difficulty\": \"hard\",\n    \"isActive\": true,\n    \"tags\": [\"architecture\", \"pyramid\", \"ancient\", \"updated\"]\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Delete Template",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation DeleteTemplate($id: String!) {\n  deleteTemplate(id: $id) {\n    statusCode\n    message\n    success\n  }\n}",
+                                "variables": "{\n  \"id\": \"{{templateId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
             "name": "GraphQL Introspection",
             "item": [
                 {
@@ -972,6 +1583,306 @@
                     }
                 }
             ]
+        },{
+            "name": "Auth Mutations",
+            "item": [
+                {
+                    "name": "Firebase Authentication",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation AuthenticateWithFirebase($input: FirebaseAuthInput!) {\n  authenticateWithFirebase(input: $input) {\n    statusCode\n    message\n    tokens {\n      accessToken\n      refreshToken\n      expiresIn\n      user {\n        id\n        email\n        fullName\n        role\n      }\n    }\n    error\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"idToken\": \"firebase-id-token-here\",\n    \"provider\": \"google\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Pharaoh Queries",
+            "item": [
+                {
+                    "name": "Get Pharaoh By ID",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetPharaohById($id: String!) {\n  getPharaohById(id: $id) {\n    statusCode\n    message\n    pharaoh {\n      id\n      name\n      birthName\n      throneName\n      epithet\n      dynasty\n      period\n      reignStart\n      reignEnd\n      lengthOfReignYears\n      father\n      mother\n      capital\n      majorAchievements\n      burialSite\n      imageUrl\n      rarity\n      userRating\n      createdAt\n      updatedAt\n    }\n    error {\n      code\n      message\n      details\n      timestamp\n    }\n  }\n}",
+                                "variables": "{\n  \"id\": \"{{pharaohId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get All Pharaohs",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetAllPharaohs($input: GetAllPharaohsInput) {\n  getAllPharaohs(input: $input) {\n    statusCode\n    message\n    pharaohs {\n      id\n      name\n      dynasty\n      period\n      reignStart\n      reignEnd\n      epithet\n      capital\n      rarity\n      userRating\n      imageUrl\n      createdAt\n      updatedAt\n    }\n    totalCount\n    page\n    limit\n    error {\n      code\n      message\n      details\n      timestamp\n    }\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"page\": 1,\n    \"limit\": 10,\n    \"sortBy\": \"dynasty\",\n    \"order\": \"asc\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Pharaohs By Dynasty",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetPharaohsByDynasty($input: GetPharaohsByDynastyInput!) {\n  getPharaohsByDynasty(input: $input) {\n    statusCode\n    message\n    pharaohs {\n      id\n      name\n      dynasty\n      period\n      reignStart\n      reignEnd\n      epithet\n      capital\n      majorAchievements\n      imageUrl\n      createdAt\n      updatedAt\n    }\n    error {\n      code\n      message\n      details\n      timestamp\n    }\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"dynasty\": 18\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Pharaohs By Period",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetPharaohsByPeriod($input: GetPharaohsByPeriodInput!) {\n  getPharaohsByPeriod(input: $input) {\n    statusCode\n    message\n    pharaohs {\n      id\n      name\n      dynasty\n      period\n      reignStart\n      reignEnd\n      epithet\n      capital\n      majorAchievements\n      imageUrl\n      createdAt\n      updatedAt\n    }\n    error {\n      code\n      message\n      details\n      timestamp\n    }\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"period\": \"New Kingdom\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Search Pharaohs",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query SearchPharaohs($input: SearchPharaohsInput!) {\n  searchPharaohs(input: $input) {\n    statusCode\n    message\n    pharaohs {\n      id\n      name\n      dynasty\n      period\n      epithet\n      majorAchievements\n      capital\n      imageUrl\n      rarity\n      userRating\n      createdAt\n      updatedAt\n    }\n    error {\n      code\n      message\n      details\n      timestamp\n    }\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"query\": \"Ramesses\",\n    \"fields\": [\"name\", \"epithet\", \"major_achievements\"]\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Pharaohs By Rarity",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetPharaohsByRarity($input: GetPharaohsByRarityInput!) {\n  getPharaohsByRarity(input: $input) {\n    statusCode\n    message\n    pharaohs {\n      id\n      name\n      dynasty\n      period\n      epithet\n      rarity\n      userRating\n      imageUrl\n      unlockInGame\n      createdAt\n      updatedAt\n    }\n    error {\n      code\n      message\n      details\n      timestamp\n    }\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"rarity\": \"legendary\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Pharaoh Mutations",
+            "item": [
+                {
+                    "name": "Create New Pharaoh",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation CreatePharaoh($input: CreatePharaohInput!) {\n  createPharaoh(input: $input) {\n    statusCode\n    message\n    pharaoh {\n      id\n      name\n      birthName\n      throneName\n      epithet\n      dynasty\n      period\n      reignStart\n      reignEnd\n      father\n      mother\n      capital\n      majorAchievements\n      burialSite\n      imageUrl\n      rarity\n      traits {\n        leadership\n        military\n        diplomacy\n        wisdom\n        charisma\n      }\n      createdAt\n      updatedAt\n    }\n    error {\n      code\n      message\n      details\n      timestamp\n    }\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"name\": \"Tutankhamun\",\n    \"birthName\": \"Tutankhaten\",\n    \"throneName\": \"Nebkheperure\",\n    \"epithet\": \"The Boy King\",\n    \"dynasty\": 18,\n    \"period\": \"New Kingdom\",\n    \"reignStart\": -1332,\n    \"reignEnd\": -1323,\n    \"lengthOfReignYears\": 9,\n    \"father\": \"Akhenaten\",\n    \"capital\": \"Memphis\",\n    \"majorAchievements\": [\"Restored traditional Egyptian religion\", \"Moved capital back to Memphis\"],\n    \"burialSite\": \"Valley of the Kings (KV62)\",\n    \"tombDiscovered\": true,\n    \"discoveryYear\": 1922,\n    \"rarity\": \"legendary\",\n    \"traits\": {\n      \"leadership\": 6,\n      \"military\": 4,\n      \"diplomacy\": 7,\n      \"wisdom\": 8,\n      \"charisma\": 9\n    }\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Pharaoh",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation UpdatePharaoh($input: UpdatePharaohInput!) {\n  updatePharaoh(input: $input) {\n    statusCode\n    message\n    pharaoh {\n      id\n      name\n      epithet\n      dynasty\n      period\n      reignStart\n      reignEnd\n      majorAchievements\n      burialSite\n      imageUrl\n      rarity\n      userRating\n      updatedAt\n    }\n    error {\n      code\n      message\n      details\n      timestamp\n    }\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"id\": \"{{pharaohId}}\",\n    \"pharaoh\": {\n      \"name\": \"Tutankhamun\",\n      \"epithet\": \"The Golden Pharaoh\",\n      \"majorAchievements\": [\"Restored traditional Egyptian religion\", \"Moved capital back to Memphis\", \"Famous golden burial mask\"],\n      \"imageUrl\": \"https://example.com/tutankhamun-updated.jpg\",\n      \"userRating\": 9.5\n    }\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Pharaoh Rating",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation UpdatePharaohRating($input: UpdatePharaohRatingInput!) {\n  updatePharaohRating(input: $input) {\n    statusCode\n    message\n    pharaoh {\n      id\n      name\n      userRating\n      popularityScore\n      updatedAt\n    }\n    error {\n      code\n      message\n      details\n      timestamp\n    }\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"id\": \"{{pharaohId}}\",\n    \"rating\": 8.7\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Delete Pharaoh",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation DeletePharaoh($id: String!) {\n  deletePharaoh(id: $id) {\n    statusCode\n    message\n    success\n    error {\n      code\n      message\n      details\n      timestamp\n    }\n  }\n}",
+                                "variables": "{\n  \"id\": \"{{pharaohIdToDelete}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                }
+            ]
         }
     ],
     "variable": [
@@ -984,7 +1895,7 @@
             "key": "accessToken",
             "value": "",
             "type": "string",
-            "description": "JWT access token obtained from login"
+            "description": "JWT access token for authentication"
         },
         {
             "key": "userId",
@@ -1009,6 +1920,30 @@
             "value": "",
             "type": "string",
             "description": "Wallet ID for testing"
+        },
+        {
+            "key": "templateId",
+            "value": "",
+            "type": "string",
+            "description": "History Template ID for testing"
+        },
+        {
+            "key": "pharaohId",
+            "value": "",
+            "type": "string",
+            "description": "Pharaoh ID for testing"
+        },
+        {
+            "key": "quizId",
+            "value": "",
+            "type": "string",
+            "description": "Quiz ID for testing"
+        },
+        {
+            "key": "sectionId",
+            "value": "",
+            "type": "string",
+            "description": "Section ID for testing"
         }
     ]
 }

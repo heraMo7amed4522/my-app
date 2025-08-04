@@ -1,0 +1,154 @@
+syntax = "proto3";
+
+package user_progress;
+
+import "google/protobuf/timestamp.proto";
+
+service UserProgressService {
+    rpc GetUserProgress(GetUserProgressRequest) returns (GetUserProgressResponse);
+    rpc UpdateProgress(UpdateProgressRequest) returns (UpdateProgressResponse);
+    rpc GetCompletedTemplates(GetCompletedTemplatesRequest) returns (GetCompletedTemplatesResponse);
+    rpc GetUserAchievements(GetUserAchievementsRequest) returns (GetUserAchievementsResponse);
+    rpc UnlockAchievement(UnlockAchievementRequest) returns (UnlockAchievementResponse);
+    rpc GetLearningPath(GetLearningPathRequest) returns (GetLearningPathResponse);
+}
+
+message UserProgress {
+    string id = 1;
+    string user_id = 2;
+    string template_id = 3;
+    string section_id = 4;
+    float progress = 5;
+    bool completed = 6;
+    google.protobuf.Timestamp last_viewed = 7;
+    google.protobuf.Timestamp created_at = 8;
+}
+
+message Achievement {
+    string id = 1;
+    string code = 2;
+    string name = 3;
+    string description = 4;
+    map<string, string> criteria = 5;
+    string badge_url = 6;
+    google.protobuf.Timestamp created_at = 7;
+}
+
+message UserAchievement {
+    string id = 1;
+    string user_id = 2;
+    string achievement_id = 3;
+    Achievement achievement = 4;
+    google.protobuf.Timestamp unlocked_at = 5;
+}
+
+message ErrorDetails {
+    int32 code = 1;
+    string message = 2;
+    repeated string details = 3;
+    string timestamp = 4;
+}
+
+message GetUserProgressRequest {
+    string user_id = 1;
+    string template_id = 2;
+}
+
+message GetUserProgressResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        UserProgressList progress = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message UserProgressList {
+    repeated UserProgress progress = 1;
+    int32 total_count = 2;
+}
+
+message UpdateProgressRequest {
+    string user_id = 1;
+    string template_id = 2;
+    string section_id = 3;
+    float progress = 4;
+    bool completed = 5;
+}
+
+message UpdateProgressResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        UserProgress progress = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message GetCompletedTemplatesRequest {
+    string user_id = 1;
+    int32 page = 2;
+    int32 limit = 3;
+}
+
+message GetCompletedTemplatesResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        UserProgressList completed = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message GetUserAchievementsRequest {
+    string user_id = 1;
+}
+
+message GetUserAchievementsResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        UserAchievementList achievements = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message UserAchievementList {
+    repeated UserAchievement achievements = 1;
+    int32 total_count = 2;
+}
+
+message UnlockAchievementRequest {
+    string user_id = 1;
+    string achievement_id = 2;
+}
+
+message UnlockAchievementResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        UserAchievement achievement = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message GetLearningPathRequest {
+    string user_id = 1;
+}
+
+message GetLearningPathResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        LearningPath path = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message LearningPath {
+    string user_id = 1;
+    repeated string recommended_template_ids = 2;
+    float overall_progress = 3;
+    int32 completed_templates = 4;
+    int32 total_templates = 5;
+}

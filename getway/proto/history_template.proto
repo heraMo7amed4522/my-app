@@ -1,0 +1,242 @@
+syntax = "proto3";
+
+package history_templates;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "./proto";
+service HistoryTemplateService {
+    rpc GetTemplateByID(GetTemplateByIDRequest) returns (GetTemplateByIDResponse);
+    rpc GetAllTemplates(GetAllTemplatesRequest) returns (GetAllTemplatesResponse);
+    rpc GetTemplatesByEra(GetTemplatesByEraRequest) returns (GetTemplatesByEraResponse);
+    rpc GetTemplatesByDynasty(GetTemplatesByDynastyRequest) returns (GetTemplatesByDynastyResponse);
+    rpc GetTemplatesByPharaoh(GetTemplatesByPharaohRequest) returns (GetTemplatesByPharaohResponse);
+    rpc GetTemplatesByDifficulty(GetTemplatesByDifficultyRequest) returns (GetTemplatesByDifficultyResponse);
+    rpc SearchTemplates(SearchTemplatesRequest) returns (SearchTemplatesResponse);
+    rpc CreateTemplate(CreateTemplateRequest) returns (CreateTemplateResponse);
+    rpc UpdateTemplate(UpdateTemplateRequest) returns (UpdateTemplateResponse);
+    rpc DeleteTemplate(DeleteTemplateRequest) returns (DeleteTemplateResponse);
+    rpc GetTemplatesByTag(GetTemplatesByTagRequest) returns (GetTemplatesByTagResponse);
+    rpc GetRelatedTemplates(GetRelatedTemplatesRequest) returns (GetRelatedTemplatesResponse);
+}
+
+message HistoryTemplate {
+    string id = 1;
+    string title = 2;
+    string description = 3;
+    string era = 4;
+    int32 dynasty = 5;
+    string pharaoh_id = 6;
+    string difficulty = 7;
+    string thumbnail_url = 8;
+    string language = 9;
+    bool is_active = 10;
+    int32 version = 11;
+    google.protobuf.Timestamp published_at = 12;
+    google.protobuf.Timestamp created_at = 13;
+    google.protobuf.Timestamp updated_at = 14;
+    repeated TemplateSection sections = 15;
+    repeated string tags = 16;
+}
+
+message TemplateSection {
+    string id = 1;
+    string template_id = 2;
+    string title = 3;
+    string subtitle = 4;
+    string content_type = 5;
+    string content = 6;
+    map<string, string> metadata = 7;
+    int32 order_index = 8;
+    bool optional = 9;
+    google.protobuf.Timestamp created_at = 10;
+}
+
+message ErrorDetails {
+    int32 code = 1;
+    string message = 2;
+    repeated string details = 3;
+    string timestamp = 4;
+}
+
+// Request/Response messages
+message GetTemplateByIDRequest {
+    string id = 1;
+}
+
+message GetTemplateByIDResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        HistoryTemplate template = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message GetAllTemplatesRequest {
+    int32 page = 1;
+    int32 limit = 2;
+    string sort_by = 3;
+    string order = 4;
+}
+
+message GetAllTemplatesResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        TemplateList templates = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message TemplateList {
+    repeated HistoryTemplate templates = 1;
+    int32 total_count = 2;
+    int32 page = 3;
+    int32 limit = 4;
+}
+
+message GetTemplatesByEraRequest {
+    string era = 1;
+    int32 page = 2;
+    int32 limit = 3;
+}
+
+message GetTemplatesByEraResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        TemplateList templates = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message GetTemplatesByDynastyRequest {
+    int32 dynasty = 1;
+    int32 page = 2;
+    int32 limit = 3;
+}
+
+message GetTemplatesByDynastyResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        TemplateList templates = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message GetTemplatesByPharaohRequest {
+    string pharaoh_id = 1;
+    int32 page = 2;
+    int32 limit = 3;
+}
+
+message GetTemplatesByPharaohResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        TemplateList templates = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message GetTemplatesByDifficultyRequest {
+    string difficulty = 1;
+    int32 page = 2;
+    int32 limit = 3;
+}
+
+message GetTemplatesByDifficultyResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        TemplateList templates = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message SearchTemplatesRequest {
+    string query = 1;
+    repeated string fields = 2;
+    int32 page = 3;
+    int32 limit = 4;
+}
+
+message SearchTemplatesResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        TemplateList templates = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message CreateTemplateRequest {
+    HistoryTemplate template = 1;
+}
+
+message CreateTemplateResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        HistoryTemplate template = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message UpdateTemplateRequest {
+    string id = 1;
+    HistoryTemplate template = 2;
+}
+
+message UpdateTemplateResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        HistoryTemplate template = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message DeleteTemplateRequest {
+    string id = 1;
+}
+
+message DeleteTemplateResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        bool success = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message GetTemplatesByTagRequest {
+    string tag = 1;
+    int32 page = 2;
+    int32 limit = 3;
+}
+
+message GetTemplatesByTagResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        TemplateList templates = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message GetRelatedTemplatesRequest {
+    string template_id = 1;
+    int32 limit = 2;
+}
+
+message GetRelatedTemplatesResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        TemplateList templates = 3;
+        ErrorDetails error = 4;
+    }
+}
