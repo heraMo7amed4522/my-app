@@ -4,9 +4,10 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   
+  // Enable CORS
   app.enableCors();
   
   await app.listen(3000);
-  console.log('GraphQL Gateway is running on http://localhost:3000/graphql');
+  console.log('Gateway is running on http://localhost:3000');
 }
 bootstrap();

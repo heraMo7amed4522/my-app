@@ -2,7 +2,7 @@
     "info": {
         "_postman_id": "12345678-1234-1234-1234-123456789012",
         "name": "GraphQL Gateway API Tests",
-        "description": "Postman collection to test GraphQL endpoints in the gateway service including auth, feedback, quiz, and user-progress",
+        "description": "Postman collection to test GraphQL endpoints in the gateway service including auth, feedback, quiz, user-progress, and upload",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
     },
     "item": [
@@ -2223,6 +2223,109 @@
                     }
                 }
             ]
+        },
+        {
+            "name": "Upload Queries",
+            "item": [
+                {
+                    "name": "Get File URL",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetFileURL($input: GetFileURLInput!) {\n  getFileURL(input: $input) {\n    statusCode\n    message\n    success {\n      signedUrl\n      expiresAt\n    }\n    error {\n      code\n      message\n      details\n      timestamp\n    }\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"fileKey\": \"{{fileKey}}\",\n    \"expiresIn\": 3600\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Upload Mutations",
+            "item": [
+                {
+                    "name": "Upload File",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation UploadFile($input: UploadFileInput!) {\n  uploadFile(input: $input) {\n    statusCode\n    message\n    success {\n      fileUrl\n      fileKey\n      fileId\n      fileSize\n      uploadedAt\n    }\n    error {\n      code\n      message\n      details\n      timestamp\n    }\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"file\": \"{{base64FileData}}\",\n    \"fileName\": \"example-image.jpg\",\n    \"contentType\": \"image/jpeg\",\n    \"userId\": \"{{userId}}\",\n    \"fileType\": \"IMAGE\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Delete File",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation DeleteFile($input: DeleteFileInput!) {\n  deleteFile(input: $input) {\n    statusCode\n    message\n    success {\n      fileKey\n      deletedAt\n    }\n    error {\n      code\n      message\n      details\n      timestamp\n    }\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"fileKey\": \"{{fileKey}}\",\n    \"userId\": \"{{userId}}\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                }
+            ]
         }
     ],
     "variable": [
@@ -2295,6 +2398,18 @@
             "value": "",
             "type": "string",
             "description": "Achievement ID for testing"
+        },
+        {
+            "key": "fileKey",
+            "value": "",
+            "type": "string",
+            "description": "File key for upload operations"
+        },
+        {
+            "key": "base64FileData",
+            "value": "",
+            "type": "string",
+            "description": "Base64 encoded file data for upload"
         }
     ]
 }

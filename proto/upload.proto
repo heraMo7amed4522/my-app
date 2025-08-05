@@ -1,0 +1,87 @@
+syntax = "proto3";
+
+package upload;
+
+option go_package = "./proto";
+
+service UploadService {
+    rpc UploadFile(UploadFileRequest) returns (UploadFileResponse);
+    rpc DeleteFile(DeleteFileRequest) returns (DeleteFileResponse);
+    rpc GetFileURL(GetFileURLRequest) returns (GetFileURLResponse);
+}
+
+message UploadFileRequest {
+    bytes file_data = 1;
+    string file_name = 2;
+    string content_type = 3;
+    string user_id = 4;
+    FileType file_type = 5;
+}
+
+message UploadFileResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        UploadSuccess success = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message UploadSuccess {
+    string file_url = 1;
+    string file_key = 2;
+    string file_id = 3;
+    int64 file_size = 4;
+    string uploaded_at = 5;
+}
+
+message DeleteFileRequest {
+    string file_key = 1;
+    string user_id = 2;
+}
+
+message DeleteFileResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        DeleteSuccess success = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message DeleteSuccess {
+    string file_key = 1;
+    string deleted_at = 2;
+}
+
+message GetFileURLRequest {
+    string file_key = 1;
+    int32 expires_in = 2; // seconds
+}
+
+message GetFileURLResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        URLSuccess success = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message URLSuccess {
+    string signed_url = 1;
+    string expires_at = 2;
+}
+
+message ErrorDetails {
+    int32 code = 1;
+    string message = 2;
+    repeated string details = 3;
+    string timestamp = 4;
+}
+
+enum FileType {
+    UNKNOWN = 0;
+    IMAGE = 1;
+    VIDEO = 2;
+}

@@ -119,9 +119,87 @@ CREATE INDEX idx_wallet_trans_wallet_id ON wallet_transactions (wallet_id);
 CREATE INDEX idx_wallet_trans_type ON wallet_transactions (type);
 CREATE INDEX idx_wallet_trans_created_at ON wallet_transactions (created_at);
 
--- Add triggers to update updated_at timestamp for wallets
+-- Add trigger to update updated_at timestamp for wallets
 CREATE TRIGGER update_wallets_updated_at BEFORE UPDATE ON wallets
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- uploads table for S3 file management
+CREATE TABLE uploads (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL,
+    file_key VARCHAR(500) NOT NULL UNIQUE,
+    file_name VARCHAR(255) NOT NULL,
+    file_type VARCHAR(50) NOT NULL, -- 'images' or 'videos'
+    content_type VARCHAR(100) NOT NULL, -- MIME type
+    file_size BIGINT NOT NULL,
+    file_url TEXT NOT NULL,
+    uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    -- Foreign key constraint
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- Indexes for uploads table
+CREATE INDEX idx_uploads_user_id ON uploads (user_id);
+CREATE INDEX idx_uploads_file_type ON uploads (file_type);
+CREATE INDEX idx_uploads_uploaded_at ON uploads (uploaded_at);
+CREATE INDEX idx_uploads_deleted_at ON uploads (deleted_at);
+CREATE INDEX idx_uploads_file_key ON uploads (file_key);
+
+-- Add trigger to update updated_at timestamp for uploads
+CREATE TRIGGER update_uploads_updated_at BEFORE UPDATE ON uploads
+    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- stories table
+CREATE TABLE stories (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    content TEXT,
+    author VARCHAR(100),
+    status VARCHAR(20) DEFAULT 'DRAFT', -- DRAFT, PUBLISHED, ARCHIVED
+    category VARCHAR(100),
+    tags JSONB, -- array of tags
+    image_url TEXT,
+    language VARCHAR(10) DEFAULT 'en',
+    is_featured BOOLEAN DEFAULT false,
+    view_count INTEGER DEFAULT 0,
+    like_count INTEGER DEFAULT 0,
+    published_at TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    -- Foreign key constraint
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- Indexes for stories table
+CREATE INDEX idx_stories_user_id ON stories (user_id);
+CREATE INDEX idx_stories_status ON stories (status);
+CREATE INDEX idx_stories_category ON stories (category);
+CREATE INDEX idx_stories_published_at ON stories (published_at);
+CREATE INDEX idx_stories_is_featured ON stories (is_featured);
+CREATE INDEX idx_stories_language ON stories (language);
+
+-- Add trigger to update updated_at timestamp for stories
+CREATE TRIGGER update_stories_updated_at BEFORE UPDATE ON stories
+    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- Optional: Story likes/reactions table
+CREATE TABLE story_reactions (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    story_id UUID NOT NULL,
+    user_id UUID NOT NULL,
+    reaction_type VARCHAR(20) NOT NULL, -- LIKE, LOVE, DISLIKE
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (story_id) REFERENCES stories(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    UNIQUE(story_id, user_id) -- One reaction per user per story
+);
+
+CREATE INDEX idx_story_reactions_story_id ON story_reactions (story_id);
+CREATE INDEX idx_story_reactions_user_id ON story_reactions (user_id);
 
 -- pharaohs table
 CREATE TABLE

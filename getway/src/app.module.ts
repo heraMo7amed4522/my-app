@@ -11,6 +11,7 @@ import { HistoryTemplateModule } from './history-template/history-template.modul
 import { QuizModule } from './quiz/quiz.module';
 import { FeedbackModule } from './feedback/feedback.module';
 import { UserProgressModule } from './user-progress/user-progress.module';
+import { UploadModule } from './upload/upload.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { UserProgressModule } from './user-progress/user-progress.module';
       autoSchemaFile: true,
       playground: true,
       introspection: true,
+      
     }),
     UserModule,
     AuthModule,
@@ -30,6 +32,7 @@ import { UserProgressModule } from './user-progress/user-progress.module';
     QuizModule,
     FeedbackModule,
     UserProgressModule,
+    UploadModule,
   ],
 })
 export class AppModule {}

@@ -1,0 +1,177 @@
+syntax = "proto3";
+
+package stories;
+
+option go_package = "./proto";
+service StoriesService {
+    rpc CreateStory(CreateStoryRequest) returns (CreateStoryResponse);
+    rpc GetStoryById(GetStoryByIdRequest) returns (GetStoryByIdResponse);
+    rpc GetStoriesByUser(GetStoriesByUserRequest) returns (GetStoriesByUserResponse);
+    rpc GetAllStories(GetAllStoriesRequest) returns (GetAllStoriesResponse);
+    rpc UpdateStory(UpdateStoryRequest) returns (UpdateStoryResponse);
+    rpc DeleteStory(DeleteStoryRequest) returns (DeleteStoryResponse);
+    rpc PublishStory(PublishStoryRequest) returns (PublishStoryResponse);
+    rpc ReactToStory(ReactToStoryRequest) returns (ReactToStoryResponse);
+}
+
+message Story {
+    string id = 1;
+    string user_id = 2;
+    string title = 3;
+    string content = 4;
+    string author = 5;
+    string status = 6;
+    string category = 7;
+    repeated string tags = 8;
+    string image_url = 9;
+    string language = 10;
+    bool is_featured = 11;
+    int32 view_count = 12;
+    int32 like_count = 13;
+    string published_at = 14;
+    string created_at = 15;
+    string updated_at = 16;
+}
+
+message ErrorDetails {
+    int32 code = 1;
+    string message = 2;
+    repeated string details = 3;
+    string timestamp = 4;
+}
+
+// Create Story
+message CreateStoryRequest {
+    string user_id = 1;
+    string title = 2;
+    string content = 3;
+    string author = 4;
+    string category = 5;
+    repeated string tags = 6;
+    string image_url = 7;
+    string language = 8;
+}
+
+message CreateStoryResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        Story story = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+// Get Story by ID
+message GetStoryByIdRequest {
+    string story_id = 1;
+}
+
+message GetStoryByIdResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        Story story = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+// Get Stories by User
+message GetStoriesByUserRequest {
+    string user_id = 1;
+    int32 page = 2;
+    int32 limit = 3;
+    string status = 4; // Optional filter
+}
+
+message GetStoriesByUserResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        StoriesList stories = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+// Get All Stories
+message GetAllStoriesRequest {
+    int32 page = 1;
+    int32 limit = 2;
+    string category = 3; // Optional filter
+    string status = 4; // Optional filter
+    bool featured_only = 5;
+}
+
+message GetAllStoriesResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        StoriesList stories = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+message StoriesList {
+    repeated Story stories = 1;
+    int32 total_count = 2;
+    int32 page = 3;
+    int32 limit = 4;
+}
+
+// Update Story
+message UpdateStoryRequest {
+    string story_id = 1;
+    string title = 2;
+    string content = 3;
+    string category = 4;
+    repeated string tags = 5;
+    string image_url = 6;
+}
+
+message UpdateStoryResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        Story story = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+// Delete Story
+message DeleteStoryRequest {
+    string story_id = 1;
+    string user_id = 2;
+}
+
+message DeleteStoryResponse {
+    int32 status_code = 1;
+    string message = 2;
+    ErrorDetails error = 3;
+}
+
+// Publish Story
+message PublishStoryRequest {
+    string story_id = 1;
+    string user_id = 2;
+}
+
+message PublishStoryResponse {
+    int32 status_code = 1;
+    string message = 2;
+    oneof result {
+        Story story = 3;
+        ErrorDetails error = 4;
+    }
+}
+
+// React to Story
+message ReactToStoryRequest {
+    string story_id = 1;
+    string user_id = 2;
+    string reaction_type = 3; 
+}
+
+message ReactToStoryResponse {
+    int32 status_code = 1;
+    string message = 2;
+    ErrorDetails error = 3;
+}
