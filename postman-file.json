@@ -2,20 +2,17 @@
     "info": {
         "_postman_id": "12345678-1234-1234-1234-123456789012",
         "name": "GraphQL Gateway API Tests",
-        "description": "Postman collection to test GraphQL endpoints in the gateway service including auth",
+        "description": "Postman collection to test GraphQL endpoints in the gateway service including auth, feedback, quiz, and user-progress",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
     },
     "item": [
-        {
-            "name": "Auth Mutations",
+        {"name": "Auth Mutations",
             "item": [
-                {
-                    "name": "Firebase Authentication",
+                {"name": "Firebase Authentication",
                     "request": {
                         "method": "POST",
                         "header": [
-                            {
-                                "key": "Content-Type",
+                            {"key": "Content-Type",
                                 "value": "application/json"
                             }
                         ],
@@ -24,6 +21,154 @@
                             "graphql": {
                                 "query": "mutation AuthenticateWithFirebase($input: FirebaseAuthInput!) {\n  authenticateWithFirebase(input: $input) {\n    statusCode\n    message\n    tokens {\n      accessToken\n      refreshToken\n      expiresIn\n      user {\n        id\n        email\n        fullName\n        role\n      }\n    }\n    error\n  }\n}",
                                 "variables": "{\n  \"input\": {\n    \"idToken\": \"firebase-id-token-here\",\n    \"provider\": \"google\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                }
+            ]
+        },
+        {"name": "Feedback Queries",
+            "item": [
+                {"name": "Get Template Feedback",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {"key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {"key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetTemplateFeedback($templateId: String!, $page: Int, $limit: Int) {\n  getTemplateFeedback(templateId: $templateId, page: $page, limit: $limit) {\n    statusCode\n    message\n    feedbackList {\n      feedbacks {\n        id\n        templateId\n        userId\n        rating\n        comment\n        createdAt\n        updatedAt\n      }\n      totalCount\n      page\n      limit\n      hasNext\n      hasPrevious\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"templateId\": \"{{templateId}}\",\n  \"page\": 1,\n  \"limit\": 10\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {"name": "Get Feedback Statistics",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {"key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {"key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetFeedbackStatistics($templateId: String!) {\n  getFeedbackStatistics(templateId: $templateId) {\n    statusCode\n    message\n    statistics {\n      totalFeedbacks\n      averageRating\n      ratingDistribution {\n        rating\n        count\n        percentage\n      }\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"templateId\": \"{{templateId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                }
+            ]
+        },
+        {"name": "Feedback Mutations",
+            "item": [
+                {"name": "Submit Feedback",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {"key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {"key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation SubmitFeedback($input: SubmitFeedbackInput!) {\n  submitFeedback(input: $input) {\n    statusCode\n    message\n    feedback {\n      id\n      templateId\n      userId\n      rating\n      comment\n      createdAt\n      updatedAt\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"templateId\": \"{{templateId}}\",\n    \"userId\": \"{{userId}}\",\n    \"rating\": 5,\n    \"comment\": \"Excellent historical template! Very informative and well-structured.\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {"name": "Update Feedback",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {"key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {"key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation UpdateFeedback($id: String!, $input: UpdateFeedbackInput!) {\n  updateFeedback(id: $id, input: $input) {\n    statusCode\n    message\n    feedback {\n      id\n      templateId\n      userId\n      rating\n      comment\n      createdAt\n      updatedAt\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"id\": \"{{feedbackId}}\",\n  \"input\": {\n    \"rating\": 4,\n    \"comment\": \"Updated: Good template with room for improvement in some sections.\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {"name": "Delete Feedback",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {"key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {"key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation DeleteFeedback($id: String!) {\n  deleteFeedback(id: $id) {\n    statusCode\n    message\n    success\n  }\n}",
+                                "variables": "{\n  \"id\": \"{{feedbackId}}\"\n}"
                             }
                         },
                         "url": {
@@ -1553,8 +1698,7 @@
                 }
             ]
         },
-        {
-            "name": "GraphQL Introspection",
+        {"name": "GraphQL Introspection",
             "item": [
                 {
                     "name": "Get Schema",
@@ -1571,6 +1715,202 @@
                             "graphql": {
                                 "query": "query IntrospectionQuery {\n  __schema {\n    queryType {\n      name\n    }\n    mutationType {\n      name\n    }\n    types {\n      name\n      kind\n      description\n    }\n  }\n}",
                                 "variables": "{}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "User Progress Queries",
+            "item": [
+                {
+                    "name": "Get User Progress",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetUserProgress($userId: String!) {\n  getUserProgress(userId: $userId) {\n    statusCode\n    message\n    userProgress {\n      id\n      userId\n      templateId\n      sectionId\n      progress\n      completedAt\n      timeSpent\n      lastAccessedAt\n      createdAt\n      updatedAt\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"userId\": \"{{userId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Completed Templates",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetCompletedTemplates($userId: String!, $page: Int, $limit: Int) {\n  getCompletedTemplates(userId: $userId, page: $page, limit: $limit) {\n    statusCode\n    message\n    userProgressList {\n      userProgress {\n        id\n        userId\n        templateId\n        sectionId\n        progress\n        completedAt\n        timeSpent\n        lastAccessedAt\n        createdAt\n        updatedAt\n      }\n      totalCount\n      page\n      limit\n      hasNext\n      hasPrevious\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"userId\": \"{{userId}}\",\n  \"page\": 1,\n  \"limit\": 10\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get User Achievements",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetUserAchievements($userId: String!, $page: Int, $limit: Int) {\n  getUserAchievements(userId: $userId, page: $page, limit: $limit) {\n    statusCode\n    message\n    userAchievementList {\n      userAchievements {\n        id\n        userId\n        achievementId\n        unlockedAt\n        progress\n        achievement {\n          id\n          name\n          description\n          type\n          requirement\n          points\n          iconUrl\n          rarity\n          createdAt\n        }\n      }\n      totalCount\n      page\n      limit\n      hasNext\n      hasPrevious\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"userId\": \"{{userId}}\",\n  \"page\": 1,\n  \"limit\": 10\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Learning Path",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetLearningPath($userId: String!) {\n  getLearningPath(userId: $userId) {\n    statusCode\n    message\n    learningPath {\n      userId\n      currentLevel\n      totalXp\n      completedTemplates\n      totalTemplates\n      completionPercentage\n      recommendedNextTemplates\n      strengths\n      areasForImprovement\n      estimatedTimeToComplete\n      lastActivityDate\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"userId\": \"{{userId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "User Progress Mutations",
+            "item": [
+                {
+                    "name": "Update Progress",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation UpdateProgress($input: UpdateProgressInput!) {\n  updateProgress(input: $input) {\n    statusCode\n    message\n    userProgress {\n      id\n      userId\n      templateId\n      sectionId\n      progress\n      completedAt\n      timeSpent\n      lastAccessedAt\n      createdAt\n      updatedAt\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"userId\": \"{{userId}}\",\n    \"templateId\": \"{{templateId}}\",\n    \"sectionId\": \"{{sectionId}}\",\n    \"progress\": 75.5,\n    \"timeSpent\": 1800\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Unlock Achievement",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation UnlockAchievement($input: UnlockAchievementInput!) {\n  unlockAchievement(input: $input) {\n    statusCode\n    message\n    userAchievement {\n      id\n      userId\n      achievementId\n      unlockedAt\n      progress\n      achievement {\n        id\n        name\n        description\n        type\n        requirement\n        points\n        iconUrl\n        rarity\n        createdAt\n      }\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"userId\": \"{{userId}}\",\n    \"achievementId\": \"{{achievementId}}\",\n    \"progress\": 100.0\n  }\n}"
                             }
                         },
                         "url": {
@@ -1939,11 +2279,22 @@
             "type": "string",
             "description": "Quiz ID for testing"
         },
-        {
-            "key": "sectionId",
+        {"key": "sectionId",
             "value": "",
             "type": "string",
             "description": "Section ID for testing"
+        },
+        {
+            "key": "feedbackId",
+            "value": "",
+            "type": "string",
+            "description": "Feedback ID for testing"
+        },
+        {
+            "key": "achievementId",
+            "value": "",
+            "type": "string",
+            "description": "Achievement ID for testing"
         }
     ]
 }

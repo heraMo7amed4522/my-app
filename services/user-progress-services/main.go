@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net"
+	"os"
 
 	pb "user-progress-services/proto"
 	"user-progress-services/server"
@@ -11,7 +12,12 @@ import (
 )
 
 func main() {
-	lis, err := net.Listen("tcp", ":50057")
+	port := os.Getenv("GRPC_PORT")
+	if port == "" {
+		port = "50060"
+	}
+
+	lis, err := net.Listen("tcp", ":"+port)
 	if err != nil {
 		log.Fatalf("Failed to listen: %v", err)
 	}
@@ -25,7 +31,7 @@ func main() {
 	// Register the user progress service with the gRPC server
 	pb.RegisterUserProgressServiceServer(s, userProgressServer)
 
-	log.Println("User Progress service is running on port 50057...")
+	log.Printf("User Progress service is running on port %s...", port)
 
 	// Start the server
 	if err := s.Serve(lis); err != nil {

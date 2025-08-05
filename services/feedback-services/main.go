@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net"
+	"os"
 
 	pb "feedback-services/proto"
 	"feedback-services/server"
@@ -11,7 +12,12 @@ import (
 )
 
 func main() {
-	lis, err := net.Listen("tcp", ":50058")
+	port := os.Getenv("GRPC_PORT")
+	if port == "" {
+		port = "50059"
+	}
+
+	lis, err := net.Listen("tcp", ":"+port)
 	if err != nil {
 		log.Fatalf("Failed to listen: %v", err)
 	}
@@ -25,7 +31,7 @@ func main() {
 	// Register the feedback service with the gRPC server
 	pb.RegisterFeedbackServiceServer(s, feedbackServer)
 
-	log.Println("Feedback service is running on port 50058...")
+	log.Printf("Feedback service is running on port %s...", port)
 
 	// Start the server
 	if err := s.Serve(lis); err != nil {

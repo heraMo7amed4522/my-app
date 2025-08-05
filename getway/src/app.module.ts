@@ -9,6 +9,8 @@ import { WalletModule } from './wallet/wallet.module';
 import { PharaohModule } from './pharaoh/pharaoh.module';
 import { HistoryTemplateModule } from './history-template/history-template.module';
 import { QuizModule } from './quiz/quiz.module';
+import { FeedbackModule } from './feedback/feedback.module';
+import { UserProgressModule } from './user-progress/user-progress.module';
 
 @Module({
   imports: [
@@ -26,6 +28,8 @@ import { QuizModule } from './quiz/quiz.module';
     PharaohModule,
     HistoryTemplateModule,
     QuizModule,
+    FeedbackModule,
+    UserProgressModule,
   ],
 })
 export class AppModule {}
