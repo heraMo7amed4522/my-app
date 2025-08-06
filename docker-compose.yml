@@ -250,6 +250,11 @@ services:
       CARD_SERVICE_URL: card-service:50053
       TRANSACTION_SERVICE_URL: transaction-service:50054
       WALLET_SERVICE_URL: wallet-service:50055
+      PHARAOH_SERVICE_URL: pharaoh-service:50056
+      HISTORY_TEMPLATE_SERVICE_URL: history-template-service:50057
+      QUIZ_SERVICE_URL: quiz-service:50058
+      FEEDBACK_SERVICE_URL: feedback-service:50059
+      USER_PROGRESS_SERVICE_URL: user-progress-service:50060
     ports:
       - "3000:3000"
     depends_on:

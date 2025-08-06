@@ -499,6 +499,553 @@ CREATE TRIGGER update_history_templates_updated_at BEFORE UPDATE ON history_temp
 CREATE TRIGGER update_template_translations_updated_at BEFORE UPDATE ON template_translations
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
+-- =============================================
+-- CHAT SYSTEM TABLES
+-- =============================================
+
+-- Chat groups table
+CREATE TABLE chat_groups (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    avatar_url TEXT,
+    creator_id UUID NOT NULL,
+    max_members INTEGER DEFAULT 100,
+    is_private BOOLEAN DEFAULT false,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (creator_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- Group members table
+CREATE TABLE group_members (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    group_id UUID NOT NULL,
+    user_id UUID NOT NULL,
+    role VARCHAR(20) DEFAULT 'MEMBER', -- MEMBER, ADMIN, OWNER
+    joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (group_id) REFERENCES chat_groups(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    UNIQUE(group_id, user_id)
+);
+
+-- Chat messages table
+CREATE TABLE chat_messages (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    sender_id UUID NOT NULL,
+    receiver_id UUID,
+    group_id UUID,
+    content TEXT,
+    message_type VARCHAR(20) DEFAULT 'MSG_TEXT', -- MSG_TEXT, MSG_IMAGE, MSG_VIDEO, etc.
+    is_group BOOLEAN DEFAULT false,
+    is_read BOOLEAN DEFAULT false,
+    is_edited BOOLEAN DEFAULT false,
+    is_pinned BOOLEAN DEFAULT false,
+    is_scheduled BOOLEAN DEFAULT false,
+    is_system_message BOOLEAN DEFAULT false,
+    is_encrypted BOOLEAN DEFAULT false,
+    status VARCHAR(20) DEFAULT 'SENT', -- SENT, DELIVERED, READ, FAILED
+    reply_to_message_id UUID,
+    thread_id UUID,
+    parent_message_id UUID,
+    thread_reply_count INTEGER DEFAULT 0,
+    forward_count INTEGER DEFAULT 0,
+    original_message_id UUID,
+    pinned_by UUID,
+    device_info TEXT,
+    client_version VARCHAR(50),
+    encryption_key_id VARCHAR(255),
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    delivered_at TIMESTAMP,
+    read_at TIMESTAMP,
+    edited_at TIMESTAMP,
+    pinned_at TIMESTAMP,
+    scheduled_at TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (receiver_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (group_id) REFERENCES chat_groups(id) ON DELETE CASCADE,
+    FOREIGN KEY (reply_to_message_id) REFERENCES chat_messages(id) ON DELETE SET NULL,
+    FOREIGN KEY (parent_message_id) REFERENCES chat_messages(id) ON DELETE CASCADE,
+    FOREIGN KEY (original_message_id) REFERENCES chat_messages(id) ON DELETE SET NULL,
+    FOREIGN KEY (pinned_by) REFERENCES users(id) ON DELETE SET NULL
+);
+
+-- Message attachments table
+CREATE TABLE message_attachments (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    message_id UUID NOT NULL,
+    file_name VARCHAR(255) NOT NULL,
+    file_type VARCHAR(100) NOT NULL,
+    file_size BIGINT NOT NULL,
+    file_url TEXT NOT NULL,
+    thumbnail_url TEXT,
+    duration INTEGER, -- for audio/video files
+    width INTEGER,    -- for images/videos
+    height INTEGER,   -- for images/videos
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (message_id) REFERENCES chat_messages(id) ON DELETE CASCADE
+);
+
+-- Message reactions table
+CREATE TABLE message_reactions (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    message_id UUID NOT NULL,
+    user_id UUID NOT NULL,
+    reaction_type VARCHAR(20) NOT NULL, -- LIKE, LOVE, LAUGH, WOW, SAD, ANGRY
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (message_id) REFERENCES chat_messages(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    UNIQUE(message_id, user_id, reaction_type)
+);
+
+-- Message likes table (for backward compatibility)
+CREATE TABLE message_likes (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    message_id UUID NOT NULL,
+    user_id UUID NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (message_id) REFERENCES chat_messages(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    UNIQUE(message_id, user_id)
+);
+
+-- Message mentions table
+CREATE TABLE message_mentions (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    message_id UUID NOT NULL,
+    mentioned_user_id UUID NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (message_id) REFERENCES chat_messages(id) ON DELETE CASCADE,
+    FOREIGN KEY (mentioned_user_id) REFERENCES users(id) ON DELETE CASCADE,
+    UNIQUE(message_id, mentioned_user_id)
+);
+
+-- Message edit history table
+CREATE TABLE message_edit_history (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    message_id UUID NOT NULL,
+    previous_content TEXT NOT NULL,
+    edited_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (message_id) REFERENCES chat_messages(id) ON DELETE CASCADE
+);
+
+-- User presence table
+CREATE TABLE user_presence (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID UNIQUE NOT NULL,
+    status VARCHAR(20) DEFAULT 'PRESENCE_OFFLINE', -- PRESENCE_OFFLINE, PRESENCE_ONLINE, PRESENCE_AWAY, PRESENCE_BUSY, PRESENCE_INVISIBLE
+    custom_message TEXT,
+    last_seen TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- Typing indicators table
+CREATE TABLE typing_indicators (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL,
+    peer_id UUID,
+    group_id UUID,
+    is_group BOOLEAN DEFAULT false,
+    is_typing BOOLEAN DEFAULT false,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (peer_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (group_id) REFERENCES chat_groups(id) ON DELETE CASCADE
+);
+
+-- Voice/Video calls table
+CREATE TABLE chat_calls (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    caller_id UUID NOT NULL,
+    receiver_id UUID,
+    group_id UUID,
+    call_type VARCHAR(20) NOT NULL, -- CALL_VOICE, CALL_VIDEO
+    status VARCHAR(20) DEFAULT 'CALL_INITIATED', -- CALL_INITIATED, CALL_RINGING, CALL_ACCEPTED, CALL_REJECTED, CALL_ENDED, CALL_MISSED, CALL_BUSY
+    is_group BOOLEAN DEFAULT false,
+    start_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    end_time TIMESTAMP,
+    duration INTEGER, -- in seconds
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (caller_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (receiver_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (group_id) REFERENCES chat_groups(id) ON DELETE CASCADE
+);
+
+-- Call participants table (for group calls)
+CREATE TABLE call_participants (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    call_id UUID NOT NULL,
+    user_id UUID NOT NULL,
+    joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    left_at TIMESTAMP,
+    FOREIGN KEY (call_id) REFERENCES chat_calls(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    UNIQUE(call_id, user_id)
+);
+
+-- Location data table
+CREATE TABLE message_locations (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    message_id UUID UNIQUE NOT NULL,
+    latitude DECIMAL(10, 8) NOT NULL,
+    longitude DECIMAL(11, 8) NOT NULL,
+    address TEXT,
+    place_name VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (message_id) REFERENCES chat_messages(id) ON DELETE CASCADE
+);
+
+-- Poll data table
+CREATE TABLE message_polls (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    message_id UUID UNIQUE NOT NULL,
+    question TEXT NOT NULL,
+    allow_multiple_answers BOOLEAN DEFAULT false,
+    is_anonymous BOOLEAN DEFAULT false,
+    total_votes INTEGER DEFAULT 0,
+    expires_at TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (message_id) REFERENCES chat_messages(id) ON DELETE CASCADE
+);
+
+-- Poll options table
+CREATE TABLE poll_options (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    poll_id UUID NOT NULL,
+    text TEXT NOT NULL,
+    vote_count INTEGER DEFAULT 0,
+    option_order INTEGER NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (poll_id) REFERENCES message_polls(id) ON DELETE CASCADE
+);
+
+-- Poll votes table
+CREATE TABLE poll_votes (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    poll_id UUID NOT NULL,
+    option_id UUID NOT NULL,
+    user_id UUID NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (poll_id) REFERENCES message_polls(id) ON DELETE CASCADE,
+    FOREIGN KEY (option_id) REFERENCES poll_options(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    UNIQUE(poll_id, option_id, user_id)
+);
+
+-- Notification settings table
+CREATE TABLE notification_settings (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID UNIQUE NOT NULL,
+    enable_push_notifications BOOLEAN DEFAULT true,
+    enable_sound_notifications BOOLEAN DEFAULT true,
+    enable_vibration_notifications BOOLEAN DEFAULT true,
+    enable_email_notifications BOOLEAN DEFAULT false,
+    mute_all_chats BOOLEAN DEFAULT false,
+    quiet_hours_start TIME,
+    quiet_hours_end TIME,
+    show_message_preview BOOLEAN DEFAULT true,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- Muted chats table
+CREATE TABLE muted_chats (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL,
+    chat_id UUID,
+    group_id UUID,
+    is_group BOOLEAN DEFAULT false,
+    muted_until TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (chat_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (group_id) REFERENCES chat_groups(id) ON DELETE CASCADE
+);
+
+-- Notifications table
+CREATE TABLE chat_notifications (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL,
+    type VARCHAR(30) NOT NULL, -- NOTIFICATION_MESSAGE, NOTIFICATION_MENTION, NOTIFICATION_REACTION, NOTIFICATION_CALL, NOTIFICATION_GROUP_INVITE, NOTIFICATION_SYSTEM
+    title VARCHAR(255) NOT NULL,
+    content TEXT,
+    sender_id UUID,
+    chat_id UUID,
+    group_id UUID,
+    message_id UUID,
+    is_read BOOLEAN DEFAULT false,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (message_id) REFERENCES chat_messages(id) ON DELETE CASCADE,
+    FOREIGN KEY (group_id) REFERENCES chat_groups(id) ON DELETE CASCADE
+);
+
+-- Screen sharing sessions table
+CREATE TABLE screen_share_sessions (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    session_id VARCHAR(255) UNIQUE NOT NULL,
+    user_id UUID NOT NULL,
+    chat_id UUID,
+    group_id UUID,
+    share_url TEXT,
+    status VARCHAR(20) DEFAULT 'active', -- active, paused, stopped
+    started_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    ended_at TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (group_id) REFERENCES chat_groups(id) ON DELETE CASCADE
+);
+
+-- Scheduled messages table
+CREATE TABLE scheduled_messages (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    chat_id UUID,
+    group_id UUID,
+    sender_id UUID NOT NULL,
+    content TEXT NOT NULL,
+    message_type VARCHAR(20) DEFAULT 'MSG_TEXT',
+    scheduled_time TIMESTAMP NOT NULL,
+    is_sent BOOLEAN DEFAULT false,
+    sent_at TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (chat_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (group_id) REFERENCES chat_groups(id) ON DELETE CASCADE
+);
+
+-- Scheduled message attachments table
+CREATE TABLE scheduled_message_attachments (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    scheduled_message_id UUID NOT NULL,
+    file_name VARCHAR(255) NOT NULL,
+    file_type VARCHAR(100) NOT NULL,
+    file_size BIGINT NOT NULL,
+    file_url TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (scheduled_message_id) REFERENCES scheduled_messages(id) ON DELETE CASCADE
+);
+
+-- Chat events table (for analytics)
+CREATE TABLE chat_events (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    event_type VARCHAR(30) NOT NULL, -- EVENT_MESSAGE_SENT, EVENT_MESSAGE_EDITED, EVENT_MESSAGE_DELETED, EVENT_USER_JOINED, EVENT_USER_LEFT, EVENT_TYPING_START, EVENT_TYPING_STOP, EVENT_CALL_STARTED, EVENT_CALL_ENDED, EVENT_SCREEN_SHARE_STARTED, EVENT_SCREEN_SHARE_STOPPED
+    user_id UUID NOT NULL,
+    chat_id UUID,
+    group_id UUID,
+    message_id UUID,
+    metadata JSONB,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (message_id) REFERENCES chat_messages(id) ON DELETE CASCADE,
+    FOREIGN KEY (group_id) REFERENCES chat_groups(id) ON DELETE CASCADE
+);
+
+-- Chat analytics table
+CREATE TABLE chat_analytics (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    chat_id UUID,
+    group_id UUID,
+    date DATE NOT NULL,
+    total_messages INTEGER DEFAULT 0,
+    active_users INTEGER DEFAULT 0,
+    total_reactions INTEGER DEFAULT 0,
+    total_attachments INTEGER DEFAULT 0,
+    average_response_time DECIMAL(10, 2), -- in seconds
+    peak_hour INTEGER, -- 0-23
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (group_id) REFERENCES chat_groups(id) ON DELETE CASCADE,
+    UNIQUE(chat_id, group_id, date)
+);
+
+-- =============================================
+-- CHAT SYSTEM INDEXES
+-- =============================================
+
+-- Chat groups indexes
+CREATE INDEX idx_chat_groups_creator_id ON chat_groups (creator_id);
+CREATE INDEX idx_chat_groups_created_at ON chat_groups (created_at);
+CREATE INDEX idx_chat_groups_is_private ON chat_groups (is_private);
+
+-- Group members indexes
+CREATE INDEX idx_group_members_group_id ON group_members (group_id);
+CREATE INDEX idx_group_members_user_id ON group_members (user_id);
+CREATE INDEX idx_group_members_role ON group_members (role);
+CREATE INDEX idx_group_members_joined_at ON group_members (joined_at);
+
+-- Chat messages indexes
+CREATE INDEX idx_chat_messages_sender_id ON chat_messages (sender_id);
+CREATE INDEX idx_chat_messages_receiver_id ON chat_messages (receiver_id);
+CREATE INDEX idx_chat_messages_group_id ON chat_messages (group_id);
+CREATE INDEX idx_chat_messages_timestamp ON chat_messages (timestamp DESC);
+CREATE INDEX idx_chat_messages_created_at ON chat_messages (created_at DESC);
+CREATE INDEX idx_chat_messages_is_group ON chat_messages (is_group);
+CREATE INDEX idx_chat_messages_status ON chat_messages (status);
+CREATE INDEX idx_chat_messages_message_type ON chat_messages (message_type);
+CREATE INDEX idx_chat_messages_is_read ON chat_messages (is_read);
+CREATE INDEX idx_chat_messages_is_pinned ON chat_messages (is_pinned);
+CREATE INDEX idx_chat_messages_thread_id ON chat_messages (thread_id);
+CREATE INDEX idx_chat_messages_parent_message_id ON chat_messages (parent_message_id);
+CREATE INDEX idx_chat_messages_reply_to_message_id ON chat_messages (reply_to_message_id);
+CREATE INDEX idx_chat_messages_scheduled_at ON chat_messages (scheduled_at);
+CREATE INDEX idx_chat_messages_is_scheduled ON chat_messages (is_scheduled);
+
+-- Composite indexes for common queries
+CREATE INDEX idx_chat_messages_sender_receiver ON chat_messages (sender_id, receiver_id, timestamp DESC);
+CREATE INDEX idx_chat_messages_group_timestamp ON chat_messages (group_id, timestamp DESC);
+CREATE INDEX idx_chat_messages_user_group ON chat_messages (sender_id, group_id, timestamp DESC);
+
+-- Message attachments indexes
+CREATE INDEX idx_message_attachments_message_id ON message_attachments (message_id);
+CREATE INDEX idx_message_attachments_file_type ON message_attachments (file_type);
+CREATE INDEX idx_message_attachments_created_at ON message_attachments (created_at);
+
+-- Message reactions indexes
+CREATE INDEX idx_message_reactions_message_id ON message_reactions (message_id);
+CREATE INDEX idx_message_reactions_user_id ON message_reactions (user_id);
+CREATE INDEX idx_message_reactions_reaction_type ON message_reactions (reaction_type);
+CREATE INDEX idx_message_reactions_created_at ON message_reactions (created_at);
+
+-- Message likes indexes
+CREATE INDEX idx_message_likes_message_id ON message_likes (message_id);
+CREATE INDEX idx_message_likes_user_id ON message_likes (user_id);
+CREATE INDEX idx_message_likes_created_at ON message_likes (created_at);
+
+-- Message mentions indexes
+CREATE INDEX idx_message_mentions_message_id ON message_mentions (message_id);
+CREATE INDEX idx_message_mentions_mentioned_user_id ON message_mentions (mentioned_user_id);
+CREATE INDEX idx_message_mentions_created_at ON message_mentions (created_at);
+
+-- Message edit history indexes
+CREATE INDEX idx_message_edit_history_message_id ON message_edit_history (message_id);
+CREATE INDEX idx_message_edit_history_edited_at ON message_edit_history (edited_at DESC);
+
+-- User presence indexes
+CREATE INDEX idx_user_presence_user_id ON user_presence (user_id);
+CREATE INDEX idx_user_presence_status ON user_presence (status);
+CREATE INDEX idx_user_presence_last_seen ON user_presence (last_seen DESC);
+CREATE INDEX idx_user_presence_updated_at ON user_presence (updated_at DESC);
+
+-- Typing indicators indexes
+CREATE INDEX idx_typing_indicators_user_id ON typing_indicators (user_id);
+CREATE INDEX idx_typing_indicators_peer_id ON typing_indicators (peer_id);
+CREATE INDEX idx_typing_indicators_group_id ON typing_indicators (group_id);
+CREATE INDEX idx_typing_indicators_timestamp ON typing_indicators (timestamp DESC);
+CREATE INDEX idx_typing_indicators_is_typing ON typing_indicators (is_typing);
+
+-- Chat calls indexes
+CREATE INDEX idx_chat_calls_caller_id ON chat_calls (caller_id);
+CREATE INDEX idx_chat_calls_receiver_id ON chat_calls (receiver_id);
+CREATE INDEX idx_chat_calls_group_id ON chat_calls (group_id);
+CREATE INDEX idx_chat_calls_call_type ON chat_calls (call_type);
+CREATE INDEX idx_chat_calls_status ON chat_calls (status);
+CREATE INDEX idx_chat_calls_start_time ON chat_calls (start_time DESC);
+CREATE INDEX idx_chat_calls_created_at ON chat_calls (created_at DESC);
+
+-- Call participants indexes
+CREATE INDEX idx_call_participants_call_id ON call_participants (call_id);
+CREATE INDEX idx_call_participants_user_id ON call_participants (user_id);
+CREATE INDEX idx_call_participants_joined_at ON call_participants (joined_at);
+
+-- Message locations indexes
+CREATE INDEX idx_message_locations_message_id ON message_locations (message_id);
+CREATE INDEX idx_message_locations_latitude_longitude ON message_locations (latitude, longitude);
+CREATE INDEX idx_message_locations_created_at ON message_locations (created_at);
+
+-- Message polls indexes
+CREATE INDEX idx_message_polls_message_id ON message_polls (message_id);
+CREATE INDEX idx_message_polls_expires_at ON message_polls (expires_at);
+CREATE INDEX idx_message_polls_created_at ON message_polls (created_at);
+
+-- Poll options indexes
+CREATE INDEX idx_poll_options_poll_id ON poll_options (poll_id);
+CREATE INDEX idx_poll_options_option_order ON poll_options (poll_id, option_order);
+
+-- Poll votes indexes
+CREATE INDEX idx_poll_votes_poll_id ON poll_votes (poll_id);
+CREATE INDEX idx_poll_votes_option_id ON poll_votes (option_id);
+CREATE INDEX idx_poll_votes_user_id ON poll_votes (user_id);
+CREATE INDEX idx_poll_votes_created_at ON poll_votes (created_at);
+
+-- Notification settings indexes
+CREATE INDEX idx_notification_settings_user_id ON notification_settings (user_id);
+CREATE INDEX idx_notification_settings_updated_at ON notification_settings (updated_at);
+
+-- Muted chats indexes
+CREATE INDEX idx_muted_chats_user_id ON muted_chats (user_id);
+CREATE INDEX idx_muted_chats_chat_id ON muted_chats (chat_id);
+CREATE INDEX idx_muted_chats_group_id ON muted_chats (group_id);
+CREATE INDEX idx_muted_chats_muted_until ON muted_chats (muted_until);
+
+-- Chat notifications indexes
+CREATE INDEX idx_chat_notifications_user_id ON chat_notifications (user_id);
+CREATE INDEX idx_chat_notifications_sender_id ON chat_notifications (sender_id);
+CREATE INDEX idx_chat_notifications_message_id ON chat_notifications (message_id);
+CREATE INDEX idx_chat_notifications_group_id ON chat_notifications (group_id);
+CREATE INDEX idx_chat_notifications_type ON chat_notifications (type);
+CREATE INDEX idx_chat_notifications_is_read ON chat_notifications (is_read);
+CREATE INDEX idx_chat_notifications_created_at ON chat_notifications (created_at DESC);
+
+-- Screen share sessions indexes
+CREATE INDEX idx_screen_share_sessions_session_id ON screen_share_sessions (session_id);
+CREATE INDEX idx_screen_share_sessions_user_id ON screen_share_sessions (user_id);
+CREATE INDEX idx_screen_share_sessions_group_id ON screen_share_sessions (group_id);
+CREATE INDEX idx_screen_share_sessions_status ON screen_share_sessions (status);
+CREATE INDEX idx_screen_share_sessions_started_at ON screen_share_sessions (started_at DESC);
+
+-- Scheduled messages indexes
+CREATE INDEX idx_scheduled_messages_sender_id ON scheduled_messages (sender_id);
+CREATE INDEX idx_scheduled_messages_chat_id ON scheduled_messages (chat_id);
+CREATE INDEX idx_scheduled_messages_group_id ON scheduled_messages (group_id);
+CREATE INDEX idx_scheduled_messages_scheduled_time ON scheduled_messages (scheduled_time);
+CREATE INDEX idx_scheduled_messages_is_sent ON scheduled_messages (is_sent);
+CREATE INDEX idx_scheduled_messages_created_at ON scheduled_messages (created_at);
+
+-- Scheduled message attachments indexes
+CREATE INDEX idx_scheduled_message_attachments_scheduled_message_id ON scheduled_message_attachments (scheduled_message_id);
+CREATE INDEX idx_scheduled_message_attachments_file_type ON scheduled_message_attachments (file_type);
+
+-- Chat events indexes
+CREATE INDEX idx_chat_events_event_type ON chat_events (event_type);
+CREATE INDEX idx_chat_events_user_id ON chat_events (user_id);
+CREATE INDEX idx_chat_events_group_id ON chat_events (group_id);
+CREATE INDEX idx_chat_events_message_id ON chat_events (message_id);
+CREATE INDEX idx_chat_events_created_at ON chat_events (created_at DESC);
+
+-- Chat analytics indexes
+CREATE INDEX idx_chat_analytics_chat_id ON chat_analytics (chat_id);
+CREATE INDEX idx_chat_analytics_group_id ON chat_analytics (group_id);
+CREATE INDEX idx_chat_analytics_date ON chat_analytics (date DESC);
+CREATE INDEX idx_chat_analytics_created_at ON chat_analytics (created_at);
+
+-- =============================================
+-- CHAT SYSTEM TRIGGERS
+-- =============================================
+
+-- Add triggers to update updated_at timestamp for chat tables
+CREATE TRIGGER update_chat_groups_updated_at BEFORE UPDATE ON chat_groups
+    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER update_chat_messages_updated_at BEFORE UPDATE ON chat_messages
+    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER update_user_presence_updated_at BEFORE UPDATE ON user_presence
+    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER update_chat_calls_updated_at BEFORE UPDATE ON chat_calls
+    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER update_notification_settings_updated_at BEFORE UPDATE ON notification_settings
+    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER update_chat_analytics_updated_at BEFORE UPDATE ON chat_analytics
+    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
 
 INSERT INTO pharaohs (
     id, name, birth_name, throne_name, epithet,
