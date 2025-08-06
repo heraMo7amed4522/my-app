@@ -34,7 +34,7 @@ type ChatRepository interface {
 	GetUserPresence(ctx context.Context, userIDs []string) ([]*models.UserPresence, error)
 
 	// Group operations
-	CreateGroup(ctx context.Context, group *models.GroupInfo, memberIDs []string) (*models.GroupInfo, error)
+	CreateGroup(ctx context.Context, group *models.GroupInfo, memberIDs *models.GroupMember) (*models.GroupInfo, error)
 	UpdateGroup(ctx context.Context, groupID string, updates map[string]interface{}) (*models.GroupInfo, error)
 	AddGroupMembers(ctx context.Context, groupID string, memberIDs []string) error
 	RemoveGroupMembers(ctx context.Context, groupID string, memberIDs []string) error

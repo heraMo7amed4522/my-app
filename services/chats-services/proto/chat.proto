@@ -174,58 +174,58 @@ enum CallStatus {
 }
 
 enum ReactionType {
-  LIKE = 0;
-  LOVE = 1;
-  LAUGH = 2;
-  WOW = 3;
-  SAD = 4;
-  ANGRY = 5;
+    LIKE = 0;
+    LOVE = 1;
+    LAUGH = 2;
+    WOW = 3;
+    SAD = 4;
+    ANGRY = 5;
 }
 
 enum PresenceStatus {
-  PRESENCE_OFFLINE = 0;
-  PRESENCE_ONLINE = 1;
-  PRESENCE_AWAY = 2;
-  PRESENCE_BUSY = 3;
-  PRESENCE_INVISIBLE = 4;
+    PRESENCE_OFFLINE = 0;
+    PRESENCE_ONLINE = 1;
+    PRESENCE_AWAY = 2;
+    PRESENCE_BUSY = 3;
+    PRESENCE_INVISIBLE = 4;
 }
 
 enum MessageUpdateType {
-  UPDATE_EDITED = 0;
-  UPDATE_DELETED = 1;
-  UPDATE_REACTION_ADDED = 2;
-  UPDATE_REACTION_REMOVED = 3;
-  UPDATE_PINNED = 4;
-  UPDATE_UNPINNED = 5;
+    UPDATE_EDITED = 0;
+    UPDATE_DELETED = 1;
+    UPDATE_REACTION_ADDED = 2;
+    UPDATE_REACTION_REMOVED = 3;
+    UPDATE_PINNED = 4;
+    UPDATE_UNPINNED = 5;
 }
 
 enum ThreadType {
-  THREAD_REPLY = 0;
-  THREAD_DISCUSSION = 1;
-  THREAD_ANNOUNCEMENT = 2;
+    THREAD_REPLY = 0;
+    THREAD_DISCUSSION = 1;
+    THREAD_ANNOUNCEMENT = 2;
 }
 
 enum NotificationType {
-  NOTIFICATION_MESSAGE = 0;
-  NOTIFICATION_MENTION = 1;
-  NOTIFICATION_REACTION = 2;
-  NOTIFICATION_CALL = 3;
-  NOTIFICATION_GROUP_INVITE = 4;
-  NOTIFICATION_SYSTEM = 5;
+    NOTIFICATION_MESSAGE = 0;
+    NOTIFICATION_MENTION = 1;
+    NOTIFICATION_REACTION = 2;
+    NOTIFICATION_CALL = 3;
+    NOTIFICATION_GROUP_INVITE = 4;
+    NOTIFICATION_SYSTEM = 5;
 }
 
 enum ChatEventType {
-  EVENT_MESSAGE_SENT = 0;
-  EVENT_MESSAGE_EDITED = 1;
-  EVENT_MESSAGE_DELETED = 2;
-  EVENT_USER_JOINED = 3;
-  EVENT_USER_LEFT = 4;
-  EVENT_TYPING_START = 5;
-  EVENT_TYPING_STOP = 6;
-  EVENT_CALL_STARTED = 7;
-  EVENT_CALL_ENDED = 8;
-  EVENT_SCREEN_SHARE_STARTED = 9;
-  EVENT_SCREEN_SHARE_STOPPED = 10;
+    EVENT_MESSAGE_SENT = 0;
+    EVENT_MESSAGE_EDITED = 1;
+    EVENT_MESSAGE_DELETED = 2;
+    EVENT_USER_JOINED = 3;
+    EVENT_USER_LEFT = 4;
+    EVENT_TYPING_START = 5;
+    EVENT_TYPING_STOP = 6;
+    EVENT_CALL_STARTED = 7;
+    EVENT_CALL_ENDED = 8;
+    EVENT_SCREEN_SHARE_STARTED = 9;
+    EVENT_SCREEN_SHARE_STOPPED = 10;
 }
 
 enum MessageStatus {
@@ -257,11 +257,11 @@ message ErrorMessage {
 
 
 message ChatStreamEnvelope {
-  oneof payload {
-    ChatMessage message = 1;
-    StateMessage state = 2;
-    ErrorMessage error = 3;
-  }
+    oneof payload {
+        ChatMessage message = 1;
+        StateMessage state = 2;
+        ErrorMessage error = 3;
+    }
 }
 
 message SendMessageRequest {
@@ -315,7 +315,7 @@ message ReadReceiptResponse {
     int32 StatusCode = 1;
     string Message = 2;
     oneof result {
-        StateMessage status = 3;
+        string status = 3;
         ErrorMessage error = 4;
     }
 }
@@ -330,7 +330,7 @@ message LikeMessageResponse {
     int32 StatusCode = 1;
     string Message = 2;
     oneof result {
-        StateMessage status = 3;
+        string status = 3;
         ErrorMessage error = 4;
     }
 }
@@ -344,7 +344,7 @@ message GetLikedMessagesResponse {
     int32 StatusCode = 1;
     string Message = 2;
     oneof result {
-         ChatMessageList likedMessages = 3;
+        ChatMessageList likedMessages = 3;
         ErrorMessage error = 4;
     }
 }
@@ -359,7 +359,7 @@ message DeleteMessageResponse {
     int32 StatusCode = 1;
     string Message = 2;
     oneof result {
-        StateMessage status = 3;
+        string status = 3;
         ErrorMessage error = 4;
     }
 }
@@ -393,7 +393,7 @@ message GetUsersByUserIDResponse {
     int32 StatusCode = 1;
     string Message = 2;
     oneof result {
-         UserInfoList users = 3;
+        UserInfoList users = 3;
         ErrorMessage error = 4;
     }
 }
@@ -407,7 +407,7 @@ message GetUsersInGroupResponse {
     int32 StatusCode = 1;
     string Message = 2;
     oneof result {
-         UserInfoList users = 3;
+        UserInfoList users = 3;
         ErrorMessage error = 4;
     }
 }
@@ -434,7 +434,7 @@ message UserStatusResponse {
     int32 StatusCode = 1;
     string Message = 2;
     oneof result {
-         UserStatusList statuses = 3;
+        UserStatusList statuses = 3;
         ErrorMessage error = 4;
     }
 }
@@ -446,7 +446,7 @@ message UserStatus {
 }
 
 message UserStatusSubscriptionRequest {
-    repeated string userIds = 1; 
+    repeated string userIds = 1;
 }
 
 message GetLastMessagesRequest {
@@ -491,7 +491,7 @@ message JoinGroupResponse {
     int32 StatusCode = 1;
     string Message = 2;
     oneof result {
-        StateMessage status = 3;
+        string status = 3;
         ErrorMessage error = 4;
     }
 }
@@ -505,7 +505,7 @@ message LeaveGroupResponse {
     int32 StatusCode = 1;
     string Message = 2;
     oneof result {
-        StateMessage status = 3;
+        string status = 3;
         ErrorMessage error = 4;
     }
 }
@@ -561,7 +561,7 @@ message TypingIndicatorResponse {
     int32 StatusCode = 1;
     string Message = 2;
     oneof result {
-        StateMessage status = 3;
+        string status = 3;
         ErrorMessage error = 4;
     }
 }
@@ -613,7 +613,7 @@ message DeliveryReceiptResponse {
     int32 StatusCode = 1;
     string Message = 2;
     oneof result {
-        StateMessage status = 3;
+        string status = 3;
         ErrorMessage error = 4;
     }
 }
@@ -635,7 +635,7 @@ message AddReactionResponse {
     int32 StatusCode = 1;
     string Message = 2;
     oneof result {
-        StateMessage status = 3;
+        string status = 3;
         ErrorMessage error = 4;
     }
 }
@@ -650,7 +650,7 @@ message RemoveReactionResponse {
     int32 StatusCode = 1;
     string Message = 2;
     oneof result {
-        StateMessage status = 3;
+        string status = 3;
         ErrorMessage error = 4;
     }
 }
@@ -672,7 +672,6 @@ message GetMessageReactionsResponse {
     }
 }
 
-// ==== Message Forwarding ====
 
 message ForwardMessageRequest {
     string messageId = 1;
@@ -697,9 +696,9 @@ message FileMetadata {
     int64 fileSize = 3;
     string fileUrl = 4;
     string thumbnailUrl = 5;
-    int32 duration = 6; // for audio/video files
-    int32 width = 7;    // for images/videos
-    int32 height = 8;   // for images/videos
+    int32 duration = 6;
+    int32 width = 7;
+    int32 height = 8;
 }
 
 message FileUploadRequest {
@@ -903,7 +902,7 @@ message PinMessageResponse {
     int32 StatusCode = 1;
     string Message = 2;
     oneof result {
-        StateMessage status = 3;
+        string status = 3;
         ErrorMessage error = 4;
     }
 }
@@ -919,7 +918,7 @@ message UnpinMessageResponse {
     int32 StatusCode = 1;
     string Message = 2;
     oneof result {
-        StateMessage status = 3;
+        string status = 3;
         ErrorMessage error = 4;
     }
 }
@@ -940,302 +939,302 @@ message GetPinnedMessagesResponse {
 
 // Real-time presence messages
 message UpdatePresenceStatusRequest {
-  string userId = 1;
-  PresenceStatus status = 2;
-  string customMessage = 3;
+    string userId = 1;
+    PresenceStatus status = 2;
+    string customMessage = 3;
 }
 
 message UpdatePresenceStatusResponse {
-  int32 StatusCode = 1;
-  string Message = 2;
-  oneof result {
-    StateMessage status = 3;
-    ErrorMessage error = 4;
-  }
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        string status = 3;
+        ErrorMessage error = 4;
+    }
 }
 
 message SubscribeToPresenceRequest {
-  repeated string userIds = 1;
+    repeated string userIds = 1;
 }
 
 message PresenceUpdate {
-  string userId = 1;
-  PresenceStatus status = 2;
-  string customMessage = 3;
-  google.protobuf.Timestamp lastSeen = 4;
+    string userId = 1;
+    PresenceStatus status = 2;
+    string customMessage = 3;
+    google.protobuf.Timestamp lastSeen = 4;
 }
 
 message GetUserPresenceRequest {
-  repeated string userIds = 1;
+    repeated string userIds = 1;
 }
 
 message UserPresence {
-  string userId = 1;
-  PresenceStatus status = 2;
-  string customMessage = 3;
-  google.protobuf.Timestamp lastSeen = 4;
+    string userId = 1;
+    PresenceStatus status = 2;
+    string customMessage = 3;
+    google.protobuf.Timestamp lastSeen = 4;
 }
 
 message UserPresenceList {
-  repeated UserPresence presences = 1;
+    repeated UserPresence presences = 1;
 }
 
 message GetUserPresenceResponse {
-  int32 StatusCode = 1;
-  string Message = 2;
-  oneof result {
-    UserPresenceList presences = 3;
-    ErrorMessage error = 4;
-  }
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        UserPresenceList presences = 3;
+        ErrorMessage error = 4;
+    }
 }
 
 
 
 message SubscribeToMessageUpdatesRequest {
-  string chatId = 1;
+    string chatId = 1;
 }
 
 message MessageUpdate {
-  string messageId = 1;
-  MessageUpdateType updateType = 2;
-  ChatMessage updatedMessage = 3;
-  string userId = 4;
-  google.protobuf.Timestamp timestamp = 5;
+    string messageId = 1;
+    MessageUpdateType updateType = 2;
+    ChatMessage updatedMessage = 3;
+    string userId = 4;
+    google.protobuf.Timestamp timestamp = 5;
 }
 
 // Message threading
 message CreateThreadRequest {
-  string parentMessageId = 1;
-  string userId = 2;
-  string content = 3;
+    string parentMessageId = 1;
+    string userId = 2;
+    string content = 3;
 }
 
 message CreateThreadResponse {
-  int32 StatusCode = 1;
-  string Message = 2;
-  oneof result {
-    ChatMessage threadMessage = 3;
-    ErrorMessage error = 4;
-  }
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        ChatMessage threadMessage = 3;
+        ErrorMessage error = 4;
+    }
 }
 
 message GetThreadMessagesRequest {
-  string parentMessageId = 1;
-  int32 limit = 2;
-  int32 offset = 3;
+    string parentMessageId = 1;
+    int32 limit = 2;
+    int32 offset = 3;
 }
 
 message GetThreadMessagesResponse {
-  int32 StatusCode = 1;
-  string Message = 2;
-  oneof result {
-    ChatMessageList messages = 3;
-    ErrorMessage error = 4;
-  }
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        ChatMessageList messages = 3;
+        ErrorMessage error = 4;
+    }
 }
 
 message SubscribeToThreadRequest {
-  string threadId = 1;
+    string threadId = 1;
 }
 
 message ThreadUpdate {
-  string threadId = 1;
-  ChatMessage message = 2;
-  ThreadType type = 3;
-  google.protobuf.Timestamp timestamp = 4;
+    string threadId = 1;
+    ChatMessage message = 2;
+    ThreadType type = 3;
+    google.protobuf.Timestamp timestamp = 4;
 }
 
 // Advanced notifications
 message SubscribeToNotificationsRequest {
-  string userId = 1;
+    string userId = 1;
 }
 
 message NotificationUpdate {
-  string id = 1;
-  NotificationType type = 2;
-  string title = 3;
-  string content = 4;
-  string senderId = 5;
-  string chatId = 6;
-  string messageId = 7;
-  google.protobuf.Timestamp timestamp = 8;
-  bool isRead = 9;
+    string id = 1;
+    NotificationType type = 2;
+    string title = 3;
+    string content = 4;
+    string senderId = 5;
+    string chatId = 6;
+    string messageId = 7;
+    google.protobuf.Timestamp timestamp = 8;
+    bool isRead = 9;
 }
 
 message MarkNotificationAsReadRequest {
-  string notificationId = 1;
-  string userId = 2;
+    string notificationId = 1;
+    string userId = 2;
 }
 
 message MarkNotificationAsReadResponse {
-  int32 StatusCode = 1;
-  string Message = 2;
-  oneof result {
-    StateMessage status = 3;
-    ErrorMessage error = 4;
-  }
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        string status = 3;
+        ErrorMessage error = 4;
+    }
 }
 
 message GetUnreadNotificationCountRequest {
-  string userId = 1;
+    string userId = 1;
 }
 
 message GetUnreadNotificationCountResponse {
-  int32 StatusCode = 1;
-  string Message = 2;
-  oneof result {
-    int32 count = 3;
-    ErrorMessage error = 4;
-  }
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        int32 count = 3;
+        ErrorMessage error = 4;
+    }
 }
 
 message StartScreenShareRequest {
-  string userId = 1;
-  string chatId = 2;
-  string sessionId = 3;
+    string userId = 1;
+    string chatId = 2;
+    string sessionId = 3;
 }
 
 message StartScreenShareResponse {
-  int32 StatusCode = 1;
-  string Message = 2;
-  oneof result {
-    string shareUrl = 3;
-    ErrorMessage error = 4;
-  }
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        string shareUrl = 3;
+        ErrorMessage error = 4;
+    }
 }
 
 message StopScreenShareRequest {
-  string sessionId = 1;
-  string userId = 2;
+    string sessionId = 1;
+    string userId = 2;
 }
 
 message StopScreenShareResponse {
-  int32 StatusCode = 1;
-  string Message = 2;
-  oneof result {
-    StateMessage status = 3;
-    ErrorMessage error = 4;
-  }
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        string status = 3;
+        ErrorMessage error = 4;
+    }
 }
 
 message SubscribeToScreenShareRequest {
-  string chatId = 1;
+    string chatId = 1;
 }
 
 message ScreenShareUpdate {
-  string sessionId = 1;
-  string userId = 2;
-  string action = 3; 
-  string shareUrl = 4;
-  google.protobuf.Timestamp timestamp = 5;
+    string sessionId = 1;
+    string userId = 2;
+    string action = 3; 
+    string shareUrl = 4;
+    google.protobuf.Timestamp timestamp = 5;
 }
 
 // Message scheduling
 message Attachment {
-  string id = 1;
-  string fileName = 2;
-  string fileType = 3;
-  int64 fileSize = 4;
-  string fileUrl = 5;
+    string id = 1;
+    string fileName = 2;
+    string fileType = 3;
+    int64 fileSize = 4;
+    string fileUrl = 5;
 }
 
 message ScheduleMessageRequest {
-  string chatId = 1;
-  string senderId = 2;
-  string content = 3;
-  google.protobuf.Timestamp scheduledTime = 4;
-  MessageType type = 5;
-  repeated Attachment attachments = 6;
+    string chatId = 1;
+    string senderId = 2;
+    string content = 3;
+    google.protobuf.Timestamp scheduledTime = 4;
+    MessageType type = 5;
+    repeated Attachment attachments = 6;
 }
 
 message ScheduleMessageResponse {
-  int32 StatusCode = 1;
-  string Message = 2;
-  oneof result {
-    string scheduledMessageId = 3;
-    ErrorMessage error = 4;
-  }
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        string scheduledMessageId = 3;
+        ErrorMessage error = 4;
+    }
 }
 
 message CancelScheduledMessageRequest {
-  string scheduledMessageId = 1;
-  string userId = 2;
+    string scheduledMessageId = 1;
+    string userId = 2;
 }
 
 message CancelScheduledMessageResponse {
-  int32 StatusCode = 1;
-  string Message = 2;
-  oneof result {
-    StateMessage status = 3;
-    ErrorMessage error = 4;
-  }
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        string status = 3;
+        ErrorMessage error = 4;
+    }
 }
 
 message GetScheduledMessagesRequest {
-  string userId = 1;
-  string chatId = 2;
+    string userId = 1;
+    string chatId = 2;
 }
 
 message ScheduledMessage {
-  string id = 1;
-  string chatId = 2;
-  string senderId = 3;
-  string content = 4;
-  google.protobuf.Timestamp scheduledTime = 5;
-  MessageType type = 6;
-  repeated Attachment attachments = 7;
-  google.protobuf.Timestamp createdAt = 8;
+    string id = 1;
+    string chatId = 2;
+    string senderId = 3;
+    string content = 4;
+    google.protobuf.Timestamp scheduledTime = 5;
+    MessageType type = 6;
+    repeated Attachment attachments = 7;
+    google.protobuf.Timestamp createdAt = 8;
 }
 
 message ScheduledMessageList {
-  repeated ScheduledMessage messages = 1;
+    repeated ScheduledMessage messages = 1;
 }
 
 message GetScheduledMessagesResponse {
-  int32 StatusCode = 1;
-  string Message = 2;
-  oneof result {
-    ScheduledMessageList messages = 3;
-    ErrorMessage error = 4;
-  }
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        ScheduledMessageList messages = 3;
+        ErrorMessage error = 4;
+    }
 }
 
 message GetChatAnalyticsRequest {
-  string chatId = 1;
-  google.protobuf.Timestamp startDate = 2;
-  google.protobuf.Timestamp endDate = 3;
+    string chatId = 1;
+    google.protobuf.Timestamp startDate = 2;
+    google.protobuf.Timestamp endDate = 3;
 }
 
 message ChatAnalytics {
-  int32 totalMessages = 1;
-  int32 activeUsers = 2;
-  int32 totalReactions = 3;
-  int32 totalAttachments = 4;
-  repeated string topUsers = 5;
-  repeated string peakHours = 6;
-  double averageResponseTime = 7;
+    int32 totalMessages = 1;
+    int32 activeUsers = 2;
+    int32 totalReactions = 3;
+    int32 totalAttachments = 4;
+    repeated string topUsers = 5;
+    repeated string peakHours = 6;
+    double averageResponseTime = 7;
 }
 
 message GetChatAnalyticsResponse {
-  int32 StatusCode = 1;
-  string Message = 2;
-  oneof result {
-    ChatAnalytics analytics = 3;
-    ErrorMessage error = 4;
-  }
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        ChatAnalytics analytics = 3;
+        ErrorMessage error = 4;
+    }
 }
 
 message SubscribeToChatEventsRequest {
-  string chatId = 1;
+    string chatId = 1;
 }
 
 message ChatEvent {
-  string id = 1;
-  ChatEventType eventType = 2;
-  string userId = 3;
-  string chatId = 4;
-  string messageId = 5;
-  google.protobuf.Timestamp timestamp = 6;
-  string metadata = 7;
+    string id = 1;
+    ChatEventType eventType = 2;
+    string userId = 3;
+    string chatId = 4;
+    string messageId = 5;
+    google.protobuf.Timestamp timestamp = 6;
+    string metadata = 7;
 }
 

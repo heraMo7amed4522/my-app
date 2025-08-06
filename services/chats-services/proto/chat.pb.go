@@ -1753,13 +1753,13 @@ func (x *ReadReceiptResponse) GetResult() isReadReceiptResponse_Result {
 	return nil
 }
 
-func (x *ReadReceiptResponse) GetStatus() *StateMessage {
+func (x *ReadReceiptResponse) GetStatus() string {
 	if x != nil {
 		if x, ok := x.Result.(*ReadReceiptResponse_Status); ok {
 			return x.Status
 		}
 	}
-	return nil
+	return ""
 }
 
 func (x *ReadReceiptResponse) GetError() *ErrorMessage {
@@ -1776,7 +1776,7 @@ type isReadReceiptResponse_Result interface {
 }
 
 type ReadReceiptResponse_Status struct {
-	Status *StateMessage `protobuf:"bytes,3,opt,name=status,proto3,oneof"`
+	Status string `protobuf:"bytes,3,opt,name=status,proto3,oneof"`
 }
 
 type ReadReceiptResponse_Error struct {
@@ -1903,13 +1903,13 @@ func (x *LikeMessageResponse) GetResult() isLikeMessageResponse_Result {
 	return nil
 }
 
-func (x *LikeMessageResponse) GetStatus() *StateMessage {
+func (x *LikeMessageResponse) GetStatus() string {
 	if x != nil {
 		if x, ok := x.Result.(*LikeMessageResponse_Status); ok {
 			return x.Status
 		}
 	}
-	return nil
+	return ""
 }
 
 func (x *LikeMessageResponse) GetError() *ErrorMessage {
@@ -1926,7 +1926,7 @@ type isLikeMessageResponse_Result interface {
 }
 
 type LikeMessageResponse_Status struct {
-	Status *StateMessage `protobuf:"bytes,3,opt,name=status,proto3,oneof"`
+	Status string `protobuf:"bytes,3,opt,name=status,proto3,oneof"`
 }
 
 type LikeMessageResponse_Error struct {
@@ -2195,13 +2195,13 @@ func (x *DeleteMessageResponse) GetResult() isDeleteMessageResponse_Result {
 	return nil
 }
 
-func (x *DeleteMessageResponse) GetStatus() *StateMessage {
+func (x *DeleteMessageResponse) GetStatus() string {
 	if x != nil {
 		if x, ok := x.Result.(*DeleteMessageResponse_Status); ok {
 			return x.Status
 		}
 	}
-	return nil
+	return ""
 }
 
 func (x *DeleteMessageResponse) GetError() *ErrorMessage {
@@ -2218,7 +2218,7 @@ type isDeleteMessageResponse_Result interface {
 }
 
 type DeleteMessageResponse_Status struct {
-	Status *StateMessage `protobuf:"bytes,3,opt,name=status,proto3,oneof"`
+	Status string `protobuf:"bytes,3,opt,name=status,proto3,oneof"`
 }
 
 type DeleteMessageResponse_Error struct {
@@ -3557,13 +3557,13 @@ func (x *JoinGroupResponse) GetResult() isJoinGroupResponse_Result {
 	return nil
 }
 
-func (x *JoinGroupResponse) GetStatus() *StateMessage {
+func (x *JoinGroupResponse) GetStatus() string {
 	if x != nil {
 		if x, ok := x.Result.(*JoinGroupResponse_Status); ok {
 			return x.Status
 		}
 	}
-	return nil
+	return ""
 }
 
 func (x *JoinGroupResponse) GetError() *ErrorMessage {
@@ -3580,7 +3580,7 @@ type isJoinGroupResponse_Result interface {
 }
 
 type JoinGroupResponse_Status struct {
-	Status *StateMessage `protobuf:"bytes,3,opt,name=status,proto3,oneof"`
+	Status string `protobuf:"bytes,3,opt,name=status,proto3,oneof"`
 }
 
 type JoinGroupResponse_Error struct {
@@ -3707,13 +3707,13 @@ func (x *LeaveGroupResponse) GetResult() isLeaveGroupResponse_Result {
 	return nil
 }
 
-func (x *LeaveGroupResponse) GetStatus() *StateMessage {
+func (x *LeaveGroupResponse) GetStatus() string {
 	if x != nil {
 		if x, ok := x.Result.(*LeaveGroupResponse_Status); ok {
 			return x.Status
 		}
 	}
-	return nil
+	return ""
 }
 
 func (x *LeaveGroupResponse) GetError() *ErrorMessage {
@@ -3730,7 +3730,7 @@ type isLeaveGroupResponse_Result interface {
 }
 
 type LeaveGroupResponse_Status struct {
-	Status *StateMessage `protobuf:"bytes,3,opt,name=status,proto3,oneof"`
+	Status string `protobuf:"bytes,3,opt,name=status,proto3,oneof"`
 }
 
 type LeaveGroupResponse_Error struct {
@@ -4247,13 +4247,13 @@ func (x *TypingIndicatorResponse) GetResult() isTypingIndicatorResponse_Result {
 	return nil
 }
 
-func (x *TypingIndicatorResponse) GetStatus() *StateMessage {
+func (x *TypingIndicatorResponse) GetStatus() string {
 	if x != nil {
 		if x, ok := x.Result.(*TypingIndicatorResponse_Status); ok {
 			return x.Status
 		}
 	}
-	return nil
+	return ""
 }
 
 func (x *TypingIndicatorResponse) GetError() *ErrorMessage {
@@ -4270,7 +4270,7 @@ type isTypingIndicatorResponse_Result interface {
 }
 
 type TypingIndicatorResponse_Status struct {
-	Status *StateMessage `protobuf:"bytes,3,opt,name=status,proto3,oneof"`
+	Status string `protobuf:"bytes,3,opt,name=status,proto3,oneof"`
 }
 
 type TypingIndicatorResponse_Error struct {
@@ -4747,13 +4747,13 @@ func (x *DeliveryReceiptResponse) GetResult() isDeliveryReceiptResponse_Result {
 	return nil
 }
 
-func (x *DeliveryReceiptResponse) GetStatus() *StateMessage {
+func (x *DeliveryReceiptResponse) GetStatus() string {
 	if x != nil {
 		if x, ok := x.Result.(*DeliveryReceiptResponse_Status); ok {
 			return x.Status
 		}
 	}
-	return nil
+	return ""
 }
 
 func (x *DeliveryReceiptResponse) GetError() *ErrorMessage {
@@ -4770,7 +4770,7 @@ type isDeliveryReceiptResponse_Result interface {
 }
 
 type DeliveryReceiptResponse_Status struct {
-	Status *StateMessage `protobuf:"bytes,3,opt,name=status,proto3,oneof"`
+	Status string `protobuf:"bytes,3,opt,name=status,proto3,oneof"`
 }
 
 type DeliveryReceiptResponse_Error struct {
@@ -4965,13 +4965,13 @@ func (x *AddReactionResponse) GetResult() isAddReactionResponse_Result {
 	return nil
 }
 
-func (x *AddReactionResponse) GetStatus() *StateMessage {
+func (x *AddReactionResponse) GetStatus() string {
 	if x != nil {
 		if x, ok := x.Result.(*AddReactionResponse_Status); ok {
 			return x.Status
 		}
 	}
-	return nil
+	return ""
 }
 
 func (x *AddReactionResponse) GetError() *ErrorMessage {
@@ -4988,7 +4988,7 @@ type isAddReactionResponse_Result interface {
 }
 
 type AddReactionResponse_Status struct {
-	Status *StateMessage `protobuf:"bytes,3,opt,name=status,proto3,oneof"`
+	Status string `protobuf:"bytes,3,opt,name=status,proto3,oneof"`
 }
 
 type AddReactionResponse_Error struct {
@@ -5123,13 +5123,13 @@ func (x *RemoveReactionResponse) GetResult() isRemoveReactionResponse_Result {
 	return nil
 }
 
-func (x *RemoveReactionResponse) GetStatus() *StateMessage {
+func (x *RemoveReactionResponse) GetStatus() string {
 	if x != nil {
 		if x, ok := x.Result.(*RemoveReactionResponse_Status); ok {
 			return x.Status
 		}
 	}
-	return nil
+	return ""
 }
 
 func (x *RemoveReactionResponse) GetError() *ErrorMessage {
@@ -5146,7 +5146,7 @@ type isRemoveReactionResponse_Result interface {
 }
 
 type RemoveReactionResponse_Status struct {
-	Status *StateMessage `protobuf:"bytes,3,opt,name=status,proto3,oneof"`
+	Status string `protobuf:"bytes,3,opt,name=status,proto3,oneof"`
 }
 
 type RemoveReactionResponse_Error struct {
@@ -5516,9 +5516,9 @@ type FileMetadata struct {
 	FileSize      int64                  `protobuf:"varint,3,opt,name=fileSize,proto3" json:"fileSize,omitempty"`
 	FileUrl       string                 `protobuf:"bytes,4,opt,name=fileUrl,proto3" json:"fileUrl,omitempty"`
 	ThumbnailUrl  string                 `protobuf:"bytes,5,opt,name=thumbnailUrl,proto3" json:"thumbnailUrl,omitempty"`
-	Duration      int32                  `protobuf:"varint,6,opt,name=duration,proto3" json:"duration,omitempty"` // for audio/video files
-	Width         int32                  `protobuf:"varint,7,opt,name=width,proto3" json:"width,omitempty"`       // for images/videos
-	Height        int32                  `protobuf:"varint,8,opt,name=height,proto3" json:"height,omitempty"`     // for images/videos
+	Duration      int32                  `protobuf:"varint,6,opt,name=duration,proto3" json:"duration,omitempty"`
+	Width         int32                  `protobuf:"varint,7,opt,name=width,proto3" json:"width,omitempty"`
+	Height        int32                  `protobuf:"varint,8,opt,name=height,proto3" json:"height,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -7649,13 +7649,13 @@ func (x *PinMessageResponse) GetResult() isPinMessageResponse_Result {
 	return nil
 }
 
-func (x *PinMessageResponse) GetStatus() *StateMessage {
+func (x *PinMessageResponse) GetStatus() string {
 	if x != nil {
 		if x, ok := x.Result.(*PinMessageResponse_Status); ok {
 			return x.Status
 		}
 	}
-	return nil
+	return ""
 }
 
 func (x *PinMessageResponse) GetError() *ErrorMessage {
@@ -7672,7 +7672,7 @@ type isPinMessageResponse_Result interface {
 }
 
 type PinMessageResponse_Status struct {
-	Status *StateMessage `protobuf:"bytes,3,opt,name=status,proto3,oneof"`
+	Status string `protobuf:"bytes,3,opt,name=status,proto3,oneof"`
 }
 
 type PinMessageResponse_Error struct {
@@ -7815,13 +7815,13 @@ func (x *UnpinMessageResponse) GetResult() isUnpinMessageResponse_Result {
 	return nil
 }
 
-func (x *UnpinMessageResponse) GetStatus() *StateMessage {
+func (x *UnpinMessageResponse) GetStatus() string {
 	if x != nil {
 		if x, ok := x.Result.(*UnpinMessageResponse_Status); ok {
 			return x.Status
 		}
 	}
-	return nil
+	return ""
 }
 
 func (x *UnpinMessageResponse) GetError() *ErrorMessage {
@@ -7838,7 +7838,7 @@ type isUnpinMessageResponse_Result interface {
 }
 
 type UnpinMessageResponse_Status struct {
-	Status *StateMessage `protobuf:"bytes,3,opt,name=status,proto3,oneof"`
+	Status string `protobuf:"bytes,3,opt,name=status,proto3,oneof"`
 }
 
 type UnpinMessageResponse_Error struct {
@@ -8124,13 +8124,13 @@ func (x *UpdatePresenceStatusResponse) GetResult() isUpdatePresenceStatusRespons
 	return nil
 }
 
-func (x *UpdatePresenceStatusResponse) GetStatus() *StateMessage {
+func (x *UpdatePresenceStatusResponse) GetStatus() string {
 	if x != nil {
 		if x, ok := x.Result.(*UpdatePresenceStatusResponse_Status); ok {
 			return x.Status
 		}
 	}
-	return nil
+	return ""
 }
 
 func (x *UpdatePresenceStatusResponse) GetError() *ErrorMessage {
@@ -8147,7 +8147,7 @@ type isUpdatePresenceStatusResponse_Result interface {
 }
 
 type UpdatePresenceStatusResponse_Status struct {
-	Status *StateMessage `protobuf:"bytes,3,opt,name=status,proto3,oneof"`
+	Status string `protobuf:"bytes,3,opt,name=status,proto3,oneof"`
 }
 
 type UpdatePresenceStatusResponse_Error struct {
@@ -9342,13 +9342,13 @@ func (x *MarkNotificationAsReadResponse) GetResult() isMarkNotificationAsReadRes
 	return nil
 }
 
-func (x *MarkNotificationAsReadResponse) GetStatus() *StateMessage {
+func (x *MarkNotificationAsReadResponse) GetStatus() string {
 	if x != nil {
 		if x, ok := x.Result.(*MarkNotificationAsReadResponse_Status); ok {
 			return x.Status
 		}
 	}
-	return nil
+	return ""
 }
 
 func (x *MarkNotificationAsReadResponse) GetError() *ErrorMessage {
@@ -9365,7 +9365,7 @@ type isMarkNotificationAsReadResponse_Result interface {
 }
 
 type MarkNotificationAsReadResponse_Status struct {
-	Status *StateMessage `protobuf:"bytes,3,opt,name=status,proto3,oneof"`
+	Status string `protobuf:"bytes,3,opt,name=status,proto3,oneof"`
 }
 
 type MarkNotificationAsReadResponse_Error struct {
@@ -9792,13 +9792,13 @@ func (x *StopScreenShareResponse) GetResult() isStopScreenShareResponse_Result {
 	return nil
 }
 
-func (x *StopScreenShareResponse) GetStatus() *StateMessage {
+func (x *StopScreenShareResponse) GetStatus() string {
 	if x != nil {
 		if x, ok := x.Result.(*StopScreenShareResponse_Status); ok {
 			return x.Status
 		}
 	}
-	return nil
+	return ""
 }
 
 func (x *StopScreenShareResponse) GetError() *ErrorMessage {
@@ -9815,7 +9815,7 @@ type isStopScreenShareResponse_Result interface {
 }
 
 type StopScreenShareResponse_Status struct {
-	Status *StateMessage `protobuf:"bytes,3,opt,name=status,proto3,oneof"`
+	Status string `protobuf:"bytes,3,opt,name=status,proto3,oneof"`
 }
 
 type StopScreenShareResponse_Error struct {
@@ -10321,13 +10321,13 @@ func (x *CancelScheduledMessageResponse) GetResult() isCancelScheduledMessageRes
 	return nil
 }
 
-func (x *CancelScheduledMessageResponse) GetStatus() *StateMessage {
+func (x *CancelScheduledMessageResponse) GetStatus() string {
 	if x != nil {
 		if x, ok := x.Result.(*CancelScheduledMessageResponse_Status); ok {
 			return x.Status
 		}
 	}
-	return nil
+	return ""
 }
 
 func (x *CancelScheduledMessageResponse) GetError() *ErrorMessage {
@@ -10344,7 +10344,7 @@ type isCancelScheduledMessageResponse_Result interface {
 }
 
 type CancelScheduledMessageResponse_Status struct {
-	Status *StateMessage `protobuf:"bytes,3,opt,name=status,proto3,oneof"`
+	Status string `protobuf:"bytes,3,opt,name=status,proto3,oneof"`
 }
 
 type CancelScheduledMessageResponse_Error struct {
@@ -11136,24 +11136,24 @@ const file_proto_chat_proto_rawDesc = "" +
 	"\x12ReadReceiptRequest\x12\x16\n" +
 	"\x06userId\x18\x01 \x01(\tR\x06userId\x12\x16\n" +
 	"\x06peerId\x18\x02 \x01(\tR\x06peerId\x12\x18\n" +
-	"\aisGroup\x18\x03 \x01(\bR\aisGroup\"\xb3\x01\n" +
+	"\aisGroup\x18\x03 \x01(\bR\aisGroup\"\x9f\x01\n" +
 	"\x13ReadReceiptResponse\x12\x1e\n" +
 	"\n" +
 	"StatusCode\x18\x01 \x01(\x05R\n" +
 	"StatusCode\x12\x18\n" +
-	"\aMessage\x18\x02 \x01(\tR\aMessage\x12,\n" +
-	"\x06status\x18\x03 \x01(\v2\x12.chat.StateMessageH\x00R\x06status\x12*\n" +
+	"\aMessage\x18\x02 \x01(\tR\aMessage\x12\x18\n" +
+	"\x06status\x18\x03 \x01(\tH\x00R\x06status\x12*\n" +
 	"\x05error\x18\x04 \x01(\v2\x12.chat.ErrorMessageH\x00R\x05errorB\b\n" +
 	"\x06result\"J\n" +
 	"\x12LikeMessageRequest\x12\x1c\n" +
 	"\tmessageId\x18\x01 \x01(\tR\tmessageId\x12\x16\n" +
-	"\x06userId\x18\x02 \x01(\tR\x06userId\"\xb3\x01\n" +
+	"\x06userId\x18\x02 \x01(\tR\x06userId\"\x9f\x01\n" +
 	"\x13LikeMessageResponse\x12\x1e\n" +
 	"\n" +
 	"StatusCode\x18\x01 \x01(\x05R\n" +
 	"StatusCode\x12\x18\n" +
-	"\aMessage\x18\x02 \x01(\tR\aMessage\x12,\n" +
-	"\x06status\x18\x03 \x01(\v2\x12.chat.StateMessageH\x00R\x06status\x12*\n" +
+	"\aMessage\x18\x02 \x01(\tR\aMessage\x12\x18\n" +
+	"\x06status\x18\x03 \x01(\tH\x00R\x06status\x12*\n" +
 	"\x05error\x18\x04 \x01(\v2\x12.chat.ErrorMessageH\x00R\x05errorB\b\n" +
 	"\x06result\"1\n" +
 	"\x17GetLikedMessagesRequest\x12\x16\n" +
@@ -11168,13 +11168,13 @@ const file_proto_chat_proto_rawDesc = "" +
 	"\x06result\"L\n" +
 	"\x14DeleteMessageRequest\x12\x1c\n" +
 	"\tmessageId\x18\x01 \x01(\tR\tmessageId\x12\x16\n" +
-	"\x06userId\x18\x02 \x01(\tR\x06userId\"\xb5\x01\n" +
+	"\x06userId\x18\x02 \x01(\tR\x06userId\"\xa1\x01\n" +
 	"\x15DeleteMessageResponse\x12\x1e\n" +
 	"\n" +
 	"StatusCode\x18\x01 \x01(\x05R\n" +
 	"StatusCode\x12\x18\n" +
-	"\aMessage\x18\x02 \x01(\tR\aMessage\x12,\n" +
-	"\x06status\x18\x03 \x01(\v2\x12.chat.StateMessageH\x00R\x06status\x12*\n" +
+	"\aMessage\x18\x02 \x01(\tR\aMessage\x12\x18\n" +
+	"\x06status\x18\x03 \x01(\tH\x00R\x06status\x12*\n" +
 	"\x05error\x18\x04 \x01(\v2\x12.chat.ErrorMessageH\x00R\x05errorB\b\n" +
 	"\x06result\"j\n" +
 	"\x12EditMessageRequest\x12\x1c\n" +
@@ -11266,24 +11266,24 @@ const file_proto_chat_proto_rawDesc = "" +
 	"\x06result\"D\n" +
 	"\x10JoinGroupRequest\x12\x16\n" +
 	"\x06userId\x18\x01 \x01(\tR\x06userId\x12\x18\n" +
-	"\agroupId\x18\x02 \x01(\tR\agroupId\"\xb1\x01\n" +
+	"\agroupId\x18\x02 \x01(\tR\agroupId\"\x9d\x01\n" +
 	"\x11JoinGroupResponse\x12\x1e\n" +
 	"\n" +
 	"StatusCode\x18\x01 \x01(\x05R\n" +
 	"StatusCode\x12\x18\n" +
-	"\aMessage\x18\x02 \x01(\tR\aMessage\x12,\n" +
-	"\x06status\x18\x03 \x01(\v2\x12.chat.StateMessageH\x00R\x06status\x12*\n" +
+	"\aMessage\x18\x02 \x01(\tR\aMessage\x12\x18\n" +
+	"\x06status\x18\x03 \x01(\tH\x00R\x06status\x12*\n" +
 	"\x05error\x18\x04 \x01(\v2\x12.chat.ErrorMessageH\x00R\x05errorB\b\n" +
 	"\x06result\"E\n" +
 	"\x11LeaveGroupRequest\x12\x16\n" +
 	"\x06userId\x18\x01 \x01(\tR\x06userId\x12\x18\n" +
-	"\agroupId\x18\x02 \x01(\tR\agroupId\"\xb2\x01\n" +
+	"\agroupId\x18\x02 \x01(\tR\agroupId\"\x9e\x01\n" +
 	"\x12LeaveGroupResponse\x12\x1e\n" +
 	"\n" +
 	"StatusCode\x18\x01 \x01(\x05R\n" +
 	"StatusCode\x12\x18\n" +
-	"\aMessage\x18\x02 \x01(\tR\aMessage\x12,\n" +
-	"\x06status\x18\x03 \x01(\v2\x12.chat.StateMessageH\x00R\x06status\x12*\n" +
+	"\aMessage\x18\x02 \x01(\tR\aMessage\x12\x18\n" +
+	"\x06status\x18\x03 \x01(\tH\x00R\x06status\x12*\n" +
 	"\x05error\x18\x04 \x01(\v2\x12.chat.ErrorMessageH\x00R\x05errorB\b\n" +
 	"\x06result\"\xf2\x01\n" +
 	"\x12UpdateGroupRequest\x12\x18\n" +
@@ -11325,13 +11325,13 @@ const file_proto_chat_proto_rawDesc = "" +
 	"\x06peerId\x18\x02 \x01(\tR\x06peerId\x12\x18\n" +
 	"\agroupId\x18\x03 \x01(\tR\agroupId\x12\x18\n" +
 	"\aisGroup\x18\x04 \x01(\bR\aisGroup\x12\x1a\n" +
-	"\bisTyping\x18\x05 \x01(\bR\bisTyping\"\xb7\x01\n" +
+	"\bisTyping\x18\x05 \x01(\bR\bisTyping\"\xa3\x01\n" +
 	"\x17TypingIndicatorResponse\x12\x1e\n" +
 	"\n" +
 	"StatusCode\x18\x01 \x01(\x05R\n" +
 	"StatusCode\x12\x18\n" +
-	"\aMessage\x18\x02 \x01(\tR\aMessage\x12,\n" +
-	"\x06status\x18\x03 \x01(\v2\x12.chat.StateMessageH\x00R\x06status\x12*\n" +
+	"\aMessage\x18\x02 \x01(\tR\aMessage\x12\x18\n" +
+	"\x06status\x18\x03 \x01(\tH\x00R\x06status\x12*\n" +
 	"\x05error\x18\x04 \x01(\v2\x12.chat.ErrorMessageH\x00R\x05errorB\b\n" +
 	"\x06result\"i\n" +
 	"\x19TypingSubscriptionRequest\x12\x16\n" +
@@ -11365,13 +11365,13 @@ const file_proto_chat_proto_rawDesc = "" +
 	"\x16DeliveryReceiptRequest\x12\x1c\n" +
 	"\tmessageId\x18\x01 \x01(\tR\tmessageId\x12\x16\n" +
 	"\x06userId\x18\x02 \x01(\tR\x06userId\x12+\n" +
-	"\x06status\x18\x03 \x01(\x0e2\x13.chat.MessageStatusR\x06status\"\xb7\x01\n" +
+	"\x06status\x18\x03 \x01(\x0e2\x13.chat.MessageStatusR\x06status\"\xa3\x01\n" +
 	"\x17DeliveryReceiptResponse\x12\x1e\n" +
 	"\n" +
 	"StatusCode\x18\x01 \x01(\x05R\n" +
 	"StatusCode\x12\x18\n" +
-	"\aMessage\x18\x02 \x01(\tR\aMessage\x12,\n" +
-	"\x06status\x18\x03 \x01(\v2\x12.chat.StateMessageH\x00R\x06status\x12*\n" +
+	"\aMessage\x18\x02 \x01(\tR\aMessage\x12\x18\n" +
+	"\x06status\x18\x03 \x01(\tH\x00R\x06status\x12*\n" +
 	"\x05error\x18\x04 \x01(\v2\x12.chat.ErrorMessageH\x00R\x05errorB\b\n" +
 	"\x06result\"\x9b\x01\n" +
 	"\x0fMessageReaction\x12\x16\n" +
@@ -11381,25 +11381,25 @@ const file_proto_chat_proto_rawDesc = "" +
 	"\x12AddReactionRequest\x12\x1c\n" +
 	"\tmessageId\x18\x01 \x01(\tR\tmessageId\x12\x16\n" +
 	"\x06userId\x18\x02 \x01(\tR\x06userId\x126\n" +
-	"\freactionType\x18\x03 \x01(\x0e2\x12.chat.ReactionTypeR\freactionType\"\xb3\x01\n" +
+	"\freactionType\x18\x03 \x01(\x0e2\x12.chat.ReactionTypeR\freactionType\"\x9f\x01\n" +
 	"\x13AddReactionResponse\x12\x1e\n" +
 	"\n" +
 	"StatusCode\x18\x01 \x01(\x05R\n" +
 	"StatusCode\x12\x18\n" +
-	"\aMessage\x18\x02 \x01(\tR\aMessage\x12,\n" +
-	"\x06status\x18\x03 \x01(\v2\x12.chat.StateMessageH\x00R\x06status\x12*\n" +
+	"\aMessage\x18\x02 \x01(\tR\aMessage\x12\x18\n" +
+	"\x06status\x18\x03 \x01(\tH\x00R\x06status\x12*\n" +
 	"\x05error\x18\x04 \x01(\v2\x12.chat.ErrorMessageH\x00R\x05errorB\b\n" +
 	"\x06result\"\x85\x01\n" +
 	"\x15RemoveReactionRequest\x12\x1c\n" +
 	"\tmessageId\x18\x01 \x01(\tR\tmessageId\x12\x16\n" +
 	"\x06userId\x18\x02 \x01(\tR\x06userId\x126\n" +
-	"\freactionType\x18\x03 \x01(\x0e2\x12.chat.ReactionTypeR\freactionType\"\xb6\x01\n" +
+	"\freactionType\x18\x03 \x01(\x0e2\x12.chat.ReactionTypeR\freactionType\"\xa2\x01\n" +
 	"\x16RemoveReactionResponse\x12\x1e\n" +
 	"\n" +
 	"StatusCode\x18\x01 \x01(\x05R\n" +
 	"StatusCode\x12\x18\n" +
-	"\aMessage\x18\x02 \x01(\tR\aMessage\x12,\n" +
-	"\x06status\x18\x03 \x01(\v2\x12.chat.StateMessageH\x00R\x06status\x12*\n" +
+	"\aMessage\x18\x02 \x01(\tR\aMessage\x12\x18\n" +
+	"\x06status\x18\x03 \x01(\tH\x00R\x06status\x12*\n" +
 	"\x05error\x18\x04 \x01(\v2\x12.chat.ErrorMessageH\x00R\x05errorB\b\n" +
 	"\x06result\":\n" +
 	"\x1aGetMessageReactionsRequest\x12\x1c\n" +
@@ -11594,26 +11594,26 @@ const file_proto_chat_proto_rawDesc = "" +
 	"\tmessageId\x18\x01 \x01(\tR\tmessageId\x12\x16\n" +
 	"\x06userId\x18\x02 \x01(\tR\x06userId\x12\x16\n" +
 	"\x06chatId\x18\x03 \x01(\tR\x06chatId\x12\x18\n" +
-	"\aisGroup\x18\x04 \x01(\bR\aisGroup\"\xb2\x01\n" +
+	"\aisGroup\x18\x04 \x01(\bR\aisGroup\"\x9e\x01\n" +
 	"\x12PinMessageResponse\x12\x1e\n" +
 	"\n" +
 	"StatusCode\x18\x01 \x01(\x05R\n" +
 	"StatusCode\x12\x18\n" +
-	"\aMessage\x18\x02 \x01(\tR\aMessage\x12,\n" +
-	"\x06status\x18\x03 \x01(\v2\x12.chat.StateMessageH\x00R\x06status\x12*\n" +
+	"\aMessage\x18\x02 \x01(\tR\aMessage\x12\x18\n" +
+	"\x06status\x18\x03 \x01(\tH\x00R\x06status\x12*\n" +
 	"\x05error\x18\x04 \x01(\v2\x12.chat.ErrorMessageH\x00R\x05errorB\b\n" +
 	"\x06result\"}\n" +
 	"\x13UnpinMessageRequest\x12\x1c\n" +
 	"\tmessageId\x18\x01 \x01(\tR\tmessageId\x12\x16\n" +
 	"\x06userId\x18\x02 \x01(\tR\x06userId\x12\x16\n" +
 	"\x06chatId\x18\x03 \x01(\tR\x06chatId\x12\x18\n" +
-	"\aisGroup\x18\x04 \x01(\bR\aisGroup\"\xb4\x01\n" +
+	"\aisGroup\x18\x04 \x01(\bR\aisGroup\"\xa0\x01\n" +
 	"\x14UnpinMessageResponse\x12\x1e\n" +
 	"\n" +
 	"StatusCode\x18\x01 \x01(\x05R\n" +
 	"StatusCode\x12\x18\n" +
-	"\aMessage\x18\x02 \x01(\tR\aMessage\x12,\n" +
-	"\x06status\x18\x03 \x01(\v2\x12.chat.StateMessageH\x00R\x06status\x12*\n" +
+	"\aMessage\x18\x02 \x01(\tR\aMessage\x12\x18\n" +
+	"\x06status\x18\x03 \x01(\tH\x00R\x06status\x12*\n" +
 	"\x05error\x18\x04 \x01(\v2\x12.chat.ErrorMessageH\x00R\x05errorB\b\n" +
 	"\x06result\"L\n" +
 	"\x18GetPinnedMessagesRequest\x12\x16\n" +
@@ -11630,13 +11630,13 @@ const file_proto_chat_proto_rawDesc = "" +
 	"\x1bUpdatePresenceStatusRequest\x12\x16\n" +
 	"\x06userId\x18\x01 \x01(\tR\x06userId\x12,\n" +
 	"\x06status\x18\x02 \x01(\x0e2\x14.chat.PresenceStatusR\x06status\x12$\n" +
-	"\rcustomMessage\x18\x03 \x01(\tR\rcustomMessage\"\xbc\x01\n" +
+	"\rcustomMessage\x18\x03 \x01(\tR\rcustomMessage\"\xa8\x01\n" +
 	"\x1cUpdatePresenceStatusResponse\x12\x1e\n" +
 	"\n" +
 	"StatusCode\x18\x01 \x01(\x05R\n" +
 	"StatusCode\x12\x18\n" +
-	"\aMessage\x18\x02 \x01(\tR\aMessage\x12,\n" +
-	"\x06status\x18\x03 \x01(\v2\x12.chat.StateMessageH\x00R\x06status\x12*\n" +
+	"\aMessage\x18\x02 \x01(\tR\aMessage\x12\x18\n" +
+	"\x06status\x18\x03 \x01(\tH\x00R\x06status\x12*\n" +
 	"\x05error\x18\x04 \x01(\v2\x12.chat.ErrorMessageH\x00R\x05errorB\b\n" +
 	"\x06result\"6\n" +
 	"\x1aSubscribeToPresenceRequest\x12\x18\n" +
@@ -11718,13 +11718,13 @@ const file_proto_chat_proto_rawDesc = "" +
 	"\x06isRead\x18\t \x01(\bR\x06isRead\"_\n" +
 	"\x1dMarkNotificationAsReadRequest\x12&\n" +
 	"\x0enotificationId\x18\x01 \x01(\tR\x0enotificationId\x12\x16\n" +
-	"\x06userId\x18\x02 \x01(\tR\x06userId\"\xbe\x01\n" +
+	"\x06userId\x18\x02 \x01(\tR\x06userId\"\xaa\x01\n" +
 	"\x1eMarkNotificationAsReadResponse\x12\x1e\n" +
 	"\n" +
 	"StatusCode\x18\x01 \x01(\x05R\n" +
 	"StatusCode\x12\x18\n" +
-	"\aMessage\x18\x02 \x01(\tR\aMessage\x12,\n" +
-	"\x06status\x18\x03 \x01(\v2\x12.chat.StateMessageH\x00R\x06status\x12*\n" +
+	"\aMessage\x18\x02 \x01(\tR\aMessage\x12\x18\n" +
+	"\x06status\x18\x03 \x01(\tH\x00R\x06status\x12*\n" +
 	"\x05error\x18\x04 \x01(\v2\x12.chat.ErrorMessageH\x00R\x05errorB\b\n" +
 	"\x06result\";\n" +
 	"!GetUnreadNotificationCountRequest\x12\x16\n" +
@@ -11751,13 +11751,13 @@ const file_proto_chat_proto_rawDesc = "" +
 	"\x06result\"N\n" +
 	"\x16StopScreenShareRequest\x12\x1c\n" +
 	"\tsessionId\x18\x01 \x01(\tR\tsessionId\x12\x16\n" +
-	"\x06userId\x18\x02 \x01(\tR\x06userId\"\xb7\x01\n" +
+	"\x06userId\x18\x02 \x01(\tR\x06userId\"\xa3\x01\n" +
 	"\x17StopScreenShareResponse\x12\x1e\n" +
 	"\n" +
 	"StatusCode\x18\x01 \x01(\x05R\n" +
 	"StatusCode\x12\x18\n" +
-	"\aMessage\x18\x02 \x01(\tR\aMessage\x12,\n" +
-	"\x06status\x18\x03 \x01(\v2\x12.chat.StateMessageH\x00R\x06status\x12*\n" +
+	"\aMessage\x18\x02 \x01(\tR\aMessage\x12\x18\n" +
+	"\x06status\x18\x03 \x01(\tH\x00R\x06status\x12*\n" +
 	"\x05error\x18\x04 \x01(\v2\x12.chat.ErrorMessageH\x00R\x05errorB\b\n" +
 	"\x06result\"7\n" +
 	"\x1dSubscribeToScreenShareRequest\x12\x16\n" +
@@ -11792,13 +11792,13 @@ const file_proto_chat_proto_rawDesc = "" +
 	"\x06result\"g\n" +
 	"\x1dCancelScheduledMessageRequest\x12.\n" +
 	"\x12scheduledMessageId\x18\x01 \x01(\tR\x12scheduledMessageId\x12\x16\n" +
-	"\x06userId\x18\x02 \x01(\tR\x06userId\"\xbe\x01\n" +
+	"\x06userId\x18\x02 \x01(\tR\x06userId\"\xaa\x01\n" +
 	"\x1eCancelScheduledMessageResponse\x12\x1e\n" +
 	"\n" +
 	"StatusCode\x18\x01 \x01(\x05R\n" +
 	"StatusCode\x12\x18\n" +
-	"\aMessage\x18\x02 \x01(\tR\aMessage\x12,\n" +
-	"\x06status\x18\x03 \x01(\v2\x12.chat.StateMessageH\x00R\x06status\x12*\n" +
+	"\aMessage\x18\x02 \x01(\tR\aMessage\x12\x18\n" +
+	"\x06status\x18\x03 \x01(\tH\x00R\x06status\x12*\n" +
 	"\x05error\x18\x04 \x01(\v2\x12.chat.ErrorMessageH\x00R\x05errorB\b\n" +
 	"\x06result\"M\n" +
 	"\x1bGetScheduledMessagesRequest\x12\x16\n" +
@@ -12192,261 +12192,246 @@ var file_proto_chat_proto_depIdxs = []int32{
 	11,  // 20: chat.ChatMessageList.messages:type_name -> chat.ChatMessage
 	18,  // 21: chat.GetChatHistoryResponse.messages:type_name -> chat.ChatMessageList
 	13,  // 22: chat.GetChatHistoryResponse.error:type_name -> chat.ErrorMessage
-	12,  // 23: chat.ReadReceiptResponse.status:type_name -> chat.StateMessage
-	13,  // 24: chat.ReadReceiptResponse.error:type_name -> chat.ErrorMessage
-	12,  // 25: chat.LikeMessageResponse.status:type_name -> chat.StateMessage
-	13,  // 26: chat.LikeMessageResponse.error:type_name -> chat.ErrorMessage
-	18,  // 27: chat.GetLikedMessagesResponse.likedMessages:type_name -> chat.ChatMessageList
-	13,  // 28: chat.GetLikedMessagesResponse.error:type_name -> chat.ErrorMessage
-	12,  // 29: chat.DeleteMessageResponse.status:type_name -> chat.StateMessage
-	13,  // 30: chat.DeleteMessageResponse.error:type_name -> chat.ErrorMessage
-	11,  // 31: chat.EditMessageResponse.updatedMessage:type_name -> chat.ChatMessage
-	13,  // 32: chat.EditMessageResponse.error:type_name -> chat.ErrorMessage
-	35,  // 33: chat.UserInfoList.users:type_name -> chat.UserInfo
-	31,  // 34: chat.GetUsersByUserIDResponse.users:type_name -> chat.UserInfoList
-	13,  // 35: chat.GetUsersByUserIDResponse.error:type_name -> chat.ErrorMessage
-	31,  // 36: chat.GetUsersInGroupResponse.users:type_name -> chat.UserInfoList
-	13,  // 37: chat.GetUsersInGroupResponse.error:type_name -> chat.ErrorMessage
-	39,  // 38: chat.UserStatusList.statuses:type_name -> chat.UserStatus
-	37,  // 39: chat.UserStatusResponse.statuses:type_name -> chat.UserStatusList
-	13,  // 40: chat.UserStatusResponse.error:type_name -> chat.ErrorMessage
-	145, // 41: chat.UserStatus.lastSeen:type_name -> google.protobuf.Timestamp
-	18,  // 42: chat.GetLastMessagesResponse.lastMessages:type_name -> chat.ChatMessageList
-	13,  // 43: chat.GetLastMessagesResponse.error:type_name -> chat.ErrorMessage
-	52,  // 44: chat.CreateGroupResponse.group:type_name -> chat.GroupInfo
-	13,  // 45: chat.CreateGroupResponse.error:type_name -> chat.ErrorMessage
-	12,  // 46: chat.JoinGroupResponse.status:type_name -> chat.StateMessage
-	13,  // 47: chat.JoinGroupResponse.error:type_name -> chat.ErrorMessage
-	12,  // 48: chat.LeaveGroupResponse.status:type_name -> chat.StateMessage
-	13,  // 49: chat.LeaveGroupResponse.error:type_name -> chat.ErrorMessage
-	52,  // 50: chat.UpdateGroupResponse.group:type_name -> chat.GroupInfo
-	13,  // 51: chat.UpdateGroupResponse.error:type_name -> chat.ErrorMessage
-	53,  // 52: chat.GroupInfo.members:type_name -> chat.GroupMember
-	145, // 53: chat.GroupInfo.createdAt:type_name -> google.protobuf.Timestamp
-	145, // 54: chat.GroupInfo.updatedAt:type_name -> google.protobuf.Timestamp
-	10,  // 55: chat.GroupMember.role:type_name -> chat.GroupRole
-	145, // 56: chat.GroupMember.joinedAt:type_name -> google.protobuf.Timestamp
-	12,  // 57: chat.TypingIndicatorResponse.status:type_name -> chat.StateMessage
-	13,  // 58: chat.TypingIndicatorResponse.error:type_name -> chat.ErrorMessage
-	145, // 59: chat.TypingIndicator.timestamp:type_name -> google.protobuf.Timestamp
-	0,   // 60: chat.SearchMessagesRequest.messageType:type_name -> chat.MessageType
-	18,  // 61: chat.SearchMessagesResponse.messages:type_name -> chat.ChatMessageList
-	13,  // 62: chat.SearchMessagesResponse.error:type_name -> chat.ErrorMessage
-	9,   // 63: chat.DeliveryReceiptRequest.status:type_name -> chat.MessageStatus
-	12,  // 64: chat.DeliveryReceiptResponse.status:type_name -> chat.StateMessage
-	13,  // 65: chat.DeliveryReceiptResponse.error:type_name -> chat.ErrorMessage
-	3,   // 66: chat.MessageReaction.reactionType:type_name -> chat.ReactionType
-	145, // 67: chat.MessageReaction.timestamp:type_name -> google.protobuf.Timestamp
-	3,   // 68: chat.AddReactionRequest.reactionType:type_name -> chat.ReactionType
-	12,  // 69: chat.AddReactionResponse.status:type_name -> chat.StateMessage
-	13,  // 70: chat.AddReactionResponse.error:type_name -> chat.ErrorMessage
-	3,   // 71: chat.RemoveReactionRequest.reactionType:type_name -> chat.ReactionType
-	12,  // 72: chat.RemoveReactionResponse.status:type_name -> chat.StateMessage
-	13,  // 73: chat.RemoveReactionResponse.error:type_name -> chat.ErrorMessage
-	62,  // 74: chat.MessageReactionList.reactions:type_name -> chat.MessageReaction
-	68,  // 75: chat.GetMessageReactionsResponse.reactions:type_name -> chat.MessageReactionList
-	13,  // 76: chat.GetMessageReactionsResponse.error:type_name -> chat.ErrorMessage
-	18,  // 77: chat.ForwardMessageResponse.forwardedMessages:type_name -> chat.ChatMessageList
-	13,  // 78: chat.ForwardMessageResponse.error:type_name -> chat.ErrorMessage
-	72,  // 79: chat.FileUploadRequest.metadata:type_name -> chat.FileMetadata
-	72,  // 80: chat.FileUploadResponse.uploadedFile:type_name -> chat.FileMetadata
-	13,  // 81: chat.FileUploadResponse.error:type_name -> chat.ErrorMessage
-	72,  // 82: chat.FileDownloadResponse.metadata:type_name -> chat.FileMetadata
-	13,  // 83: chat.FileDownloadResponse.error:type_name -> chat.ErrorMessage
-	78,  // 84: chat.PollData.options:type_name -> chat.PollOption
-	145, // 85: chat.PollData.expiresAt:type_name -> google.protobuf.Timestamp
-	1,   // 86: chat.CallInfo.callType:type_name -> chat.CallType
-	2,   // 87: chat.CallInfo.status:type_name -> chat.CallStatus
-	145, // 88: chat.CallInfo.startTime:type_name -> google.protobuf.Timestamp
-	145, // 89: chat.CallInfo.endTime:type_name -> google.protobuf.Timestamp
-	1,   // 90: chat.InitiateCallRequest.callType:type_name -> chat.CallType
-	80,  // 91: chat.InitiateCallResponse.call:type_name -> chat.CallInfo
-	13,  // 92: chat.InitiateCallResponse.error:type_name -> chat.ErrorMessage
-	80,  // 93: chat.AcceptCallResponse.call:type_name -> chat.CallInfo
-	13,  // 94: chat.AcceptCallResponse.error:type_name -> chat.ErrorMessage
-	12,  // 95: chat.RejectCallResponse.status:type_name -> chat.StateMessage
-	13,  // 96: chat.RejectCallResponse.error:type_name -> chat.ErrorMessage
-	80,  // 97: chat.EndCallResponse.call:type_name -> chat.CallInfo
-	13,  // 98: chat.EndCallResponse.error:type_name -> chat.ErrorMessage
-	80,  // 99: chat.CallInfoList.calls:type_name -> chat.CallInfo
-	90,  // 100: chat.GetCallHistoryResponse.calls:type_name -> chat.CallInfoList
-	13,  // 101: chat.GetCallHistoryResponse.error:type_name -> chat.ErrorMessage
-	92,  // 102: chat.UpdateNotificationSettingsRequest.settings:type_name -> chat.NotificationSettings
-	92,  // 103: chat.UpdateNotificationSettingsResponse.settings:type_name -> chat.NotificationSettings
-	13,  // 104: chat.UpdateNotificationSettingsResponse.error:type_name -> chat.ErrorMessage
-	92,  // 105: chat.GetNotificationSettingsResponse.settings:type_name -> chat.NotificationSettings
-	13,  // 106: chat.GetNotificationSettingsResponse.error:type_name -> chat.ErrorMessage
-	12,  // 107: chat.PinMessageResponse.status:type_name -> chat.StateMessage
-	13,  // 108: chat.PinMessageResponse.error:type_name -> chat.ErrorMessage
-	12,  // 109: chat.UnpinMessageResponse.status:type_name -> chat.StateMessage
-	13,  // 110: chat.UnpinMessageResponse.error:type_name -> chat.ErrorMessage
-	18,  // 111: chat.GetPinnedMessagesResponse.pinnedMessages:type_name -> chat.ChatMessageList
-	13,  // 112: chat.GetPinnedMessagesResponse.error:type_name -> chat.ErrorMessage
-	4,   // 113: chat.UpdatePresenceStatusRequest.status:type_name -> chat.PresenceStatus
-	12,  // 114: chat.UpdatePresenceStatusResponse.status:type_name -> chat.StateMessage
-	13,  // 115: chat.UpdatePresenceStatusResponse.error:type_name -> chat.ErrorMessage
-	4,   // 116: chat.PresenceUpdate.status:type_name -> chat.PresenceStatus
-	145, // 117: chat.PresenceUpdate.lastSeen:type_name -> google.protobuf.Timestamp
-	4,   // 118: chat.UserPresence.status:type_name -> chat.PresenceStatus
-	145, // 119: chat.UserPresence.lastSeen:type_name -> google.protobuf.Timestamp
-	108, // 120: chat.UserPresenceList.presences:type_name -> chat.UserPresence
-	109, // 121: chat.GetUserPresenceResponse.presences:type_name -> chat.UserPresenceList
-	13,  // 122: chat.GetUserPresenceResponse.error:type_name -> chat.ErrorMessage
-	5,   // 123: chat.MessageUpdate.updateType:type_name -> chat.MessageUpdateType
-	11,  // 124: chat.MessageUpdate.updatedMessage:type_name -> chat.ChatMessage
-	145, // 125: chat.MessageUpdate.timestamp:type_name -> google.protobuf.Timestamp
-	11,  // 126: chat.CreateThreadResponse.threadMessage:type_name -> chat.ChatMessage
-	13,  // 127: chat.CreateThreadResponse.error:type_name -> chat.ErrorMessage
-	18,  // 128: chat.GetThreadMessagesResponse.messages:type_name -> chat.ChatMessageList
-	13,  // 129: chat.GetThreadMessagesResponse.error:type_name -> chat.ErrorMessage
-	11,  // 130: chat.ThreadUpdate.message:type_name -> chat.ChatMessage
-	6,   // 131: chat.ThreadUpdate.type:type_name -> chat.ThreadType
-	145, // 132: chat.ThreadUpdate.timestamp:type_name -> google.protobuf.Timestamp
-	7,   // 133: chat.NotificationUpdate.type:type_name -> chat.NotificationType
-	145, // 134: chat.NotificationUpdate.timestamp:type_name -> google.protobuf.Timestamp
-	12,  // 135: chat.MarkNotificationAsReadResponse.status:type_name -> chat.StateMessage
-	13,  // 136: chat.MarkNotificationAsReadResponse.error:type_name -> chat.ErrorMessage
-	13,  // 137: chat.GetUnreadNotificationCountResponse.error:type_name -> chat.ErrorMessage
-	13,  // 138: chat.StartScreenShareResponse.error:type_name -> chat.ErrorMessage
-	12,  // 139: chat.StopScreenShareResponse.status:type_name -> chat.StateMessage
-	13,  // 140: chat.StopScreenShareResponse.error:type_name -> chat.ErrorMessage
-	145, // 141: chat.ScreenShareUpdate.timestamp:type_name -> google.protobuf.Timestamp
-	145, // 142: chat.ScheduleMessageRequest.scheduledTime:type_name -> google.protobuf.Timestamp
-	0,   // 143: chat.ScheduleMessageRequest.type:type_name -> chat.MessageType
-	131, // 144: chat.ScheduleMessageRequest.attachments:type_name -> chat.Attachment
-	13,  // 145: chat.ScheduleMessageResponse.error:type_name -> chat.ErrorMessage
-	12,  // 146: chat.CancelScheduledMessageResponse.status:type_name -> chat.StateMessage
-	13,  // 147: chat.CancelScheduledMessageResponse.error:type_name -> chat.ErrorMessage
-	145, // 148: chat.ScheduledMessage.scheduledTime:type_name -> google.protobuf.Timestamp
-	0,   // 149: chat.ScheduledMessage.type:type_name -> chat.MessageType
-	131, // 150: chat.ScheduledMessage.attachments:type_name -> chat.Attachment
-	145, // 151: chat.ScheduledMessage.createdAt:type_name -> google.protobuf.Timestamp
-	137, // 152: chat.ScheduledMessageList.messages:type_name -> chat.ScheduledMessage
-	138, // 153: chat.GetScheduledMessagesResponse.messages:type_name -> chat.ScheduledMessageList
-	13,  // 154: chat.GetScheduledMessagesResponse.error:type_name -> chat.ErrorMessage
-	145, // 155: chat.GetChatAnalyticsRequest.startDate:type_name -> google.protobuf.Timestamp
-	145, // 156: chat.GetChatAnalyticsRequest.endDate:type_name -> google.protobuf.Timestamp
-	141, // 157: chat.GetChatAnalyticsResponse.analytics:type_name -> chat.ChatAnalytics
-	13,  // 158: chat.GetChatAnalyticsResponse.error:type_name -> chat.ErrorMessage
-	8,   // 159: chat.ChatEvent.eventType:type_name -> chat.ChatEventType
-	145, // 160: chat.ChatEvent.timestamp:type_name -> google.protobuf.Timestamp
-	14,  // 161: chat.ChatService.ChatStream:input_type -> chat.ChatStreamEnvelope
-	15,  // 162: chat.ChatService.SendMessage:input_type -> chat.SendMessageRequest
-	17,  // 163: chat.ChatService.GetChatHistory:input_type -> chat.GetChatHistoryRequest
-	20,  // 164: chat.ChatService.MarkAsRead:input_type -> chat.ReadReceiptRequest
-	22,  // 165: chat.ChatService.LikeMessage:input_type -> chat.LikeMessageRequest
-	24,  // 166: chat.ChatService.GetLikedMessages:input_type -> chat.GetLikedMessagesRequest
-	41,  // 167: chat.ChatService.GetLastMessages:input_type -> chat.GetLastMessagesRequest
-	43,  // 168: chat.ChatService.SubscribeToLastMessages:input_type -> chat.LastMessageStreamRequest
-	30,  // 169: chat.ChatService.GetUsersByUserID:input_type -> chat.GetUsersByUserIDRequest
-	33,  // 170: chat.ChatService.GetUsersInGroup:input_type -> chat.GetUsersInGroupRequest
-	36,  // 171: chat.ChatService.GetUserStatus:input_type -> chat.UserStatusRequest
-	40,  // 172: chat.ChatService.SubscribeToUserStatus:input_type -> chat.UserStatusSubscriptionRequest
-	44,  // 173: chat.ChatService.CreateGroup:input_type -> chat.CreateGroupRequest
-	46,  // 174: chat.ChatService.JoinGroup:input_type -> chat.JoinGroupRequest
-	48,  // 175: chat.ChatService.LeaveGroup:input_type -> chat.LeaveGroupRequest
-	50,  // 176: chat.ChatService.UpdateGroup:input_type -> chat.UpdateGroupRequest
-	54,  // 177: chat.ChatService.SendTypingIndicator:input_type -> chat.TypingIndicatorRequest
-	56,  // 178: chat.ChatService.SubscribeToTypingIndicators:input_type -> chat.TypingSubscriptionRequest
-	58,  // 179: chat.ChatService.SearchMessages:input_type -> chat.SearchMessagesRequest
-	60,  // 180: chat.ChatService.SendDeliveryReceipt:input_type -> chat.DeliveryReceiptRequest
-	63,  // 181: chat.ChatService.AddReaction:input_type -> chat.AddReactionRequest
-	65,  // 182: chat.ChatService.RemoveReaction:input_type -> chat.RemoveReactionRequest
-	67,  // 183: chat.ChatService.GetMessageReactions:input_type -> chat.GetMessageReactionsRequest
-	70,  // 184: chat.ChatService.ForwardMessage:input_type -> chat.ForwardMessageRequest
-	73,  // 185: chat.ChatService.UploadFile:input_type -> chat.FileUploadRequest
-	75,  // 186: chat.ChatService.DownloadFile:input_type -> chat.FileDownloadRequest
-	81,  // 187: chat.ChatService.InitiateCall:input_type -> chat.InitiateCallRequest
-	83,  // 188: chat.ChatService.AcceptCall:input_type -> chat.AcceptCallRequest
-	85,  // 189: chat.ChatService.RejectCall:input_type -> chat.RejectCallRequest
-	87,  // 190: chat.ChatService.EndCall:input_type -> chat.EndCallRequest
-	89,  // 191: chat.ChatService.GetCallHistory:input_type -> chat.GetCallHistoryRequest
-	93,  // 192: chat.ChatService.UpdateNotificationSettings:input_type -> chat.UpdateNotificationSettingsRequest
-	95,  // 193: chat.ChatService.GetNotificationSettings:input_type -> chat.GetNotificationSettingsRequest
-	97,  // 194: chat.ChatService.PinMessage:input_type -> chat.PinMessageRequest
-	99,  // 195: chat.ChatService.UnpinMessage:input_type -> chat.UnpinMessageRequest
-	101, // 196: chat.ChatService.GetPinnedMessages:input_type -> chat.GetPinnedMessagesRequest
-	103, // 197: chat.ChatService.UpdatePresenceStatus:input_type -> chat.UpdatePresenceStatusRequest
-	105, // 198: chat.ChatService.SubscribeToPresence:input_type -> chat.SubscribeToPresenceRequest
-	107, // 199: chat.ChatService.GetUserPresence:input_type -> chat.GetUserPresenceRequest
-	28,  // 200: chat.ChatService.EditMessage:input_type -> chat.EditMessageRequest
-	26,  // 201: chat.ChatService.DeleteMessage:input_type -> chat.DeleteMessageRequest
-	111, // 202: chat.ChatService.SubscribeToMessageUpdates:input_type -> chat.SubscribeToMessageUpdatesRequest
-	113, // 203: chat.ChatService.CreateThread:input_type -> chat.CreateThreadRequest
-	115, // 204: chat.ChatService.GetThreadMessages:input_type -> chat.GetThreadMessagesRequest
-	117, // 205: chat.ChatService.SubscribeToThread:input_type -> chat.SubscribeToThreadRequest
-	119, // 206: chat.ChatService.SubscribeToNotifications:input_type -> chat.SubscribeToNotificationsRequest
-	121, // 207: chat.ChatService.MarkNotificationAsRead:input_type -> chat.MarkNotificationAsReadRequest
-	123, // 208: chat.ChatService.GetUnreadNotificationCount:input_type -> chat.GetUnreadNotificationCountRequest
-	125, // 209: chat.ChatService.StartScreenShare:input_type -> chat.StartScreenShareRequest
-	127, // 210: chat.ChatService.StopScreenShare:input_type -> chat.StopScreenShareRequest
-	129, // 211: chat.ChatService.SubscribeToScreenShare:input_type -> chat.SubscribeToScreenShareRequest
-	132, // 212: chat.ChatService.ScheduleMessage:input_type -> chat.ScheduleMessageRequest
-	134, // 213: chat.ChatService.CancelScheduledMessage:input_type -> chat.CancelScheduledMessageRequest
-	136, // 214: chat.ChatService.GetScheduledMessages:input_type -> chat.GetScheduledMessagesRequest
-	140, // 215: chat.ChatService.GetChatAnalytics:input_type -> chat.GetChatAnalyticsRequest
-	143, // 216: chat.ChatService.SubscribeToChatEvents:input_type -> chat.SubscribeToChatEventsRequest
-	14,  // 217: chat.ChatService.ChatStream:output_type -> chat.ChatStreamEnvelope
-	16,  // 218: chat.ChatService.SendMessage:output_type -> chat.SendMessageResponse
-	19,  // 219: chat.ChatService.GetChatHistory:output_type -> chat.GetChatHistoryResponse
-	21,  // 220: chat.ChatService.MarkAsRead:output_type -> chat.ReadReceiptResponse
-	23,  // 221: chat.ChatService.LikeMessage:output_type -> chat.LikeMessageResponse
-	25,  // 222: chat.ChatService.GetLikedMessages:output_type -> chat.GetLikedMessagesResponse
-	42,  // 223: chat.ChatService.GetLastMessages:output_type -> chat.GetLastMessagesResponse
-	11,  // 224: chat.ChatService.SubscribeToLastMessages:output_type -> chat.ChatMessage
-	32,  // 225: chat.ChatService.GetUsersByUserID:output_type -> chat.GetUsersByUserIDResponse
-	34,  // 226: chat.ChatService.GetUsersInGroup:output_type -> chat.GetUsersInGroupResponse
-	38,  // 227: chat.ChatService.GetUserStatus:output_type -> chat.UserStatusResponse
-	39,  // 228: chat.ChatService.SubscribeToUserStatus:output_type -> chat.UserStatus
-	45,  // 229: chat.ChatService.CreateGroup:output_type -> chat.CreateGroupResponse
-	47,  // 230: chat.ChatService.JoinGroup:output_type -> chat.JoinGroupResponse
-	49,  // 231: chat.ChatService.LeaveGroup:output_type -> chat.LeaveGroupResponse
-	51,  // 232: chat.ChatService.UpdateGroup:output_type -> chat.UpdateGroupResponse
-	55,  // 233: chat.ChatService.SendTypingIndicator:output_type -> chat.TypingIndicatorResponse
-	57,  // 234: chat.ChatService.SubscribeToTypingIndicators:output_type -> chat.TypingIndicator
-	59,  // 235: chat.ChatService.SearchMessages:output_type -> chat.SearchMessagesResponse
-	61,  // 236: chat.ChatService.SendDeliveryReceipt:output_type -> chat.DeliveryReceiptResponse
-	64,  // 237: chat.ChatService.AddReaction:output_type -> chat.AddReactionResponse
-	66,  // 238: chat.ChatService.RemoveReaction:output_type -> chat.RemoveReactionResponse
-	69,  // 239: chat.ChatService.GetMessageReactions:output_type -> chat.GetMessageReactionsResponse
-	71,  // 240: chat.ChatService.ForwardMessage:output_type -> chat.ForwardMessageResponse
-	74,  // 241: chat.ChatService.UploadFile:output_type -> chat.FileUploadResponse
-	76,  // 242: chat.ChatService.DownloadFile:output_type -> chat.FileDownloadResponse
-	82,  // 243: chat.ChatService.InitiateCall:output_type -> chat.InitiateCallResponse
-	84,  // 244: chat.ChatService.AcceptCall:output_type -> chat.AcceptCallResponse
-	86,  // 245: chat.ChatService.RejectCall:output_type -> chat.RejectCallResponse
-	88,  // 246: chat.ChatService.EndCall:output_type -> chat.EndCallResponse
-	91,  // 247: chat.ChatService.GetCallHistory:output_type -> chat.GetCallHistoryResponse
-	94,  // 248: chat.ChatService.UpdateNotificationSettings:output_type -> chat.UpdateNotificationSettingsResponse
-	96,  // 249: chat.ChatService.GetNotificationSettings:output_type -> chat.GetNotificationSettingsResponse
-	98,  // 250: chat.ChatService.PinMessage:output_type -> chat.PinMessageResponse
-	100, // 251: chat.ChatService.UnpinMessage:output_type -> chat.UnpinMessageResponse
-	102, // 252: chat.ChatService.GetPinnedMessages:output_type -> chat.GetPinnedMessagesResponse
-	104, // 253: chat.ChatService.UpdatePresenceStatus:output_type -> chat.UpdatePresenceStatusResponse
-	106, // 254: chat.ChatService.SubscribeToPresence:output_type -> chat.PresenceUpdate
-	110, // 255: chat.ChatService.GetUserPresence:output_type -> chat.GetUserPresenceResponse
-	29,  // 256: chat.ChatService.EditMessage:output_type -> chat.EditMessageResponse
-	27,  // 257: chat.ChatService.DeleteMessage:output_type -> chat.DeleteMessageResponse
-	112, // 258: chat.ChatService.SubscribeToMessageUpdates:output_type -> chat.MessageUpdate
-	114, // 259: chat.ChatService.CreateThread:output_type -> chat.CreateThreadResponse
-	116, // 260: chat.ChatService.GetThreadMessages:output_type -> chat.GetThreadMessagesResponse
-	118, // 261: chat.ChatService.SubscribeToThread:output_type -> chat.ThreadUpdate
-	120, // 262: chat.ChatService.SubscribeToNotifications:output_type -> chat.NotificationUpdate
-	122, // 263: chat.ChatService.MarkNotificationAsRead:output_type -> chat.MarkNotificationAsReadResponse
-	124, // 264: chat.ChatService.GetUnreadNotificationCount:output_type -> chat.GetUnreadNotificationCountResponse
-	126, // 265: chat.ChatService.StartScreenShare:output_type -> chat.StartScreenShareResponse
-	128, // 266: chat.ChatService.StopScreenShare:output_type -> chat.StopScreenShareResponse
-	130, // 267: chat.ChatService.SubscribeToScreenShare:output_type -> chat.ScreenShareUpdate
-	133, // 268: chat.ChatService.ScheduleMessage:output_type -> chat.ScheduleMessageResponse
-	135, // 269: chat.ChatService.CancelScheduledMessage:output_type -> chat.CancelScheduledMessageResponse
-	139, // 270: chat.ChatService.GetScheduledMessages:output_type -> chat.GetScheduledMessagesResponse
-	142, // 271: chat.ChatService.GetChatAnalytics:output_type -> chat.GetChatAnalyticsResponse
-	144, // 272: chat.ChatService.SubscribeToChatEvents:output_type -> chat.ChatEvent
-	217, // [217:273] is the sub-list for method output_type
-	161, // [161:217] is the sub-list for method input_type
-	161, // [161:161] is the sub-list for extension type_name
-	161, // [161:161] is the sub-list for extension extendee
-	0,   // [0:161] is the sub-list for field type_name
+	13,  // 23: chat.ReadReceiptResponse.error:type_name -> chat.ErrorMessage
+	13,  // 24: chat.LikeMessageResponse.error:type_name -> chat.ErrorMessage
+	18,  // 25: chat.GetLikedMessagesResponse.likedMessages:type_name -> chat.ChatMessageList
+	13,  // 26: chat.GetLikedMessagesResponse.error:type_name -> chat.ErrorMessage
+	13,  // 27: chat.DeleteMessageResponse.error:type_name -> chat.ErrorMessage
+	11,  // 28: chat.EditMessageResponse.updatedMessage:type_name -> chat.ChatMessage
+	13,  // 29: chat.EditMessageResponse.error:type_name -> chat.ErrorMessage
+	35,  // 30: chat.UserInfoList.users:type_name -> chat.UserInfo
+	31,  // 31: chat.GetUsersByUserIDResponse.users:type_name -> chat.UserInfoList
+	13,  // 32: chat.GetUsersByUserIDResponse.error:type_name -> chat.ErrorMessage
+	31,  // 33: chat.GetUsersInGroupResponse.users:type_name -> chat.UserInfoList
+	13,  // 34: chat.GetUsersInGroupResponse.error:type_name -> chat.ErrorMessage
+	39,  // 35: chat.UserStatusList.statuses:type_name -> chat.UserStatus
+	37,  // 36: chat.UserStatusResponse.statuses:type_name -> chat.UserStatusList
+	13,  // 37: chat.UserStatusResponse.error:type_name -> chat.ErrorMessage
+	145, // 38: chat.UserStatus.lastSeen:type_name -> google.protobuf.Timestamp
+	18,  // 39: chat.GetLastMessagesResponse.lastMessages:type_name -> chat.ChatMessageList
+	13,  // 40: chat.GetLastMessagesResponse.error:type_name -> chat.ErrorMessage
+	52,  // 41: chat.CreateGroupResponse.group:type_name -> chat.GroupInfo
+	13,  // 42: chat.CreateGroupResponse.error:type_name -> chat.ErrorMessage
+	13,  // 43: chat.JoinGroupResponse.error:type_name -> chat.ErrorMessage
+	13,  // 44: chat.LeaveGroupResponse.error:type_name -> chat.ErrorMessage
+	52,  // 45: chat.UpdateGroupResponse.group:type_name -> chat.GroupInfo
+	13,  // 46: chat.UpdateGroupResponse.error:type_name -> chat.ErrorMessage
+	53,  // 47: chat.GroupInfo.members:type_name -> chat.GroupMember
+	145, // 48: chat.GroupInfo.createdAt:type_name -> google.protobuf.Timestamp
+	145, // 49: chat.GroupInfo.updatedAt:type_name -> google.protobuf.Timestamp
+	10,  // 50: chat.GroupMember.role:type_name -> chat.GroupRole
+	145, // 51: chat.GroupMember.joinedAt:type_name -> google.protobuf.Timestamp
+	13,  // 52: chat.TypingIndicatorResponse.error:type_name -> chat.ErrorMessage
+	145, // 53: chat.TypingIndicator.timestamp:type_name -> google.protobuf.Timestamp
+	0,   // 54: chat.SearchMessagesRequest.messageType:type_name -> chat.MessageType
+	18,  // 55: chat.SearchMessagesResponse.messages:type_name -> chat.ChatMessageList
+	13,  // 56: chat.SearchMessagesResponse.error:type_name -> chat.ErrorMessage
+	9,   // 57: chat.DeliveryReceiptRequest.status:type_name -> chat.MessageStatus
+	13,  // 58: chat.DeliveryReceiptResponse.error:type_name -> chat.ErrorMessage
+	3,   // 59: chat.MessageReaction.reactionType:type_name -> chat.ReactionType
+	145, // 60: chat.MessageReaction.timestamp:type_name -> google.protobuf.Timestamp
+	3,   // 61: chat.AddReactionRequest.reactionType:type_name -> chat.ReactionType
+	13,  // 62: chat.AddReactionResponse.error:type_name -> chat.ErrorMessage
+	3,   // 63: chat.RemoveReactionRequest.reactionType:type_name -> chat.ReactionType
+	13,  // 64: chat.RemoveReactionResponse.error:type_name -> chat.ErrorMessage
+	62,  // 65: chat.MessageReactionList.reactions:type_name -> chat.MessageReaction
+	68,  // 66: chat.GetMessageReactionsResponse.reactions:type_name -> chat.MessageReactionList
+	13,  // 67: chat.GetMessageReactionsResponse.error:type_name -> chat.ErrorMessage
+	18,  // 68: chat.ForwardMessageResponse.forwardedMessages:type_name -> chat.ChatMessageList
+	13,  // 69: chat.ForwardMessageResponse.error:type_name -> chat.ErrorMessage
+	72,  // 70: chat.FileUploadRequest.metadata:type_name -> chat.FileMetadata
+	72,  // 71: chat.FileUploadResponse.uploadedFile:type_name -> chat.FileMetadata
+	13,  // 72: chat.FileUploadResponse.error:type_name -> chat.ErrorMessage
+	72,  // 73: chat.FileDownloadResponse.metadata:type_name -> chat.FileMetadata
+	13,  // 74: chat.FileDownloadResponse.error:type_name -> chat.ErrorMessage
+	78,  // 75: chat.PollData.options:type_name -> chat.PollOption
+	145, // 76: chat.PollData.expiresAt:type_name -> google.protobuf.Timestamp
+	1,   // 77: chat.CallInfo.callType:type_name -> chat.CallType
+	2,   // 78: chat.CallInfo.status:type_name -> chat.CallStatus
+	145, // 79: chat.CallInfo.startTime:type_name -> google.protobuf.Timestamp
+	145, // 80: chat.CallInfo.endTime:type_name -> google.protobuf.Timestamp
+	1,   // 81: chat.InitiateCallRequest.callType:type_name -> chat.CallType
+	80,  // 82: chat.InitiateCallResponse.call:type_name -> chat.CallInfo
+	13,  // 83: chat.InitiateCallResponse.error:type_name -> chat.ErrorMessage
+	80,  // 84: chat.AcceptCallResponse.call:type_name -> chat.CallInfo
+	13,  // 85: chat.AcceptCallResponse.error:type_name -> chat.ErrorMessage
+	12,  // 86: chat.RejectCallResponse.status:type_name -> chat.StateMessage
+	13,  // 87: chat.RejectCallResponse.error:type_name -> chat.ErrorMessage
+	80,  // 88: chat.EndCallResponse.call:type_name -> chat.CallInfo
+	13,  // 89: chat.EndCallResponse.error:type_name -> chat.ErrorMessage
+	80,  // 90: chat.CallInfoList.calls:type_name -> chat.CallInfo
+	90,  // 91: chat.GetCallHistoryResponse.calls:type_name -> chat.CallInfoList
+	13,  // 92: chat.GetCallHistoryResponse.error:type_name -> chat.ErrorMessage
+	92,  // 93: chat.UpdateNotificationSettingsRequest.settings:type_name -> chat.NotificationSettings
+	92,  // 94: chat.UpdateNotificationSettingsResponse.settings:type_name -> chat.NotificationSettings
+	13,  // 95: chat.UpdateNotificationSettingsResponse.error:type_name -> chat.ErrorMessage
+	92,  // 96: chat.GetNotificationSettingsResponse.settings:type_name -> chat.NotificationSettings
+	13,  // 97: chat.GetNotificationSettingsResponse.error:type_name -> chat.ErrorMessage
+	13,  // 98: chat.PinMessageResponse.error:type_name -> chat.ErrorMessage
+	13,  // 99: chat.UnpinMessageResponse.error:type_name -> chat.ErrorMessage
+	18,  // 100: chat.GetPinnedMessagesResponse.pinnedMessages:type_name -> chat.ChatMessageList
+	13,  // 101: chat.GetPinnedMessagesResponse.error:type_name -> chat.ErrorMessage
+	4,   // 102: chat.UpdatePresenceStatusRequest.status:type_name -> chat.PresenceStatus
+	13,  // 103: chat.UpdatePresenceStatusResponse.error:type_name -> chat.ErrorMessage
+	4,   // 104: chat.PresenceUpdate.status:type_name -> chat.PresenceStatus
+	145, // 105: chat.PresenceUpdate.lastSeen:type_name -> google.protobuf.Timestamp
+	4,   // 106: chat.UserPresence.status:type_name -> chat.PresenceStatus
+	145, // 107: chat.UserPresence.lastSeen:type_name -> google.protobuf.Timestamp
+	108, // 108: chat.UserPresenceList.presences:type_name -> chat.UserPresence
+	109, // 109: chat.GetUserPresenceResponse.presences:type_name -> chat.UserPresenceList
+	13,  // 110: chat.GetUserPresenceResponse.error:type_name -> chat.ErrorMessage
+	5,   // 111: chat.MessageUpdate.updateType:type_name -> chat.MessageUpdateType
+	11,  // 112: chat.MessageUpdate.updatedMessage:type_name -> chat.ChatMessage
+	145, // 113: chat.MessageUpdate.timestamp:type_name -> google.protobuf.Timestamp
+	11,  // 114: chat.CreateThreadResponse.threadMessage:type_name -> chat.ChatMessage
+	13,  // 115: chat.CreateThreadResponse.error:type_name -> chat.ErrorMessage
+	18,  // 116: chat.GetThreadMessagesResponse.messages:type_name -> chat.ChatMessageList
+	13,  // 117: chat.GetThreadMessagesResponse.error:type_name -> chat.ErrorMessage
+	11,  // 118: chat.ThreadUpdate.message:type_name -> chat.ChatMessage
+	6,   // 119: chat.ThreadUpdate.type:type_name -> chat.ThreadType
+	145, // 120: chat.ThreadUpdate.timestamp:type_name -> google.protobuf.Timestamp
+	7,   // 121: chat.NotificationUpdate.type:type_name -> chat.NotificationType
+	145, // 122: chat.NotificationUpdate.timestamp:type_name -> google.protobuf.Timestamp
+	13,  // 123: chat.MarkNotificationAsReadResponse.error:type_name -> chat.ErrorMessage
+	13,  // 124: chat.GetUnreadNotificationCountResponse.error:type_name -> chat.ErrorMessage
+	13,  // 125: chat.StartScreenShareResponse.error:type_name -> chat.ErrorMessage
+	13,  // 126: chat.StopScreenShareResponse.error:type_name -> chat.ErrorMessage
+	145, // 127: chat.ScreenShareUpdate.timestamp:type_name -> google.protobuf.Timestamp
+	145, // 128: chat.ScheduleMessageRequest.scheduledTime:type_name -> google.protobuf.Timestamp
+	0,   // 129: chat.ScheduleMessageRequest.type:type_name -> chat.MessageType
+	131, // 130: chat.ScheduleMessageRequest.attachments:type_name -> chat.Attachment
+	13,  // 131: chat.ScheduleMessageResponse.error:type_name -> chat.ErrorMessage
+	13,  // 132: chat.CancelScheduledMessageResponse.error:type_name -> chat.ErrorMessage
+	145, // 133: chat.ScheduledMessage.scheduledTime:type_name -> google.protobuf.Timestamp
+	0,   // 134: chat.ScheduledMessage.type:type_name -> chat.MessageType
+	131, // 135: chat.ScheduledMessage.attachments:type_name -> chat.Attachment
+	145, // 136: chat.ScheduledMessage.createdAt:type_name -> google.protobuf.Timestamp
+	137, // 137: chat.ScheduledMessageList.messages:type_name -> chat.ScheduledMessage
+	138, // 138: chat.GetScheduledMessagesResponse.messages:type_name -> chat.ScheduledMessageList
+	13,  // 139: chat.GetScheduledMessagesResponse.error:type_name -> chat.ErrorMessage
+	145, // 140: chat.GetChatAnalyticsRequest.startDate:type_name -> google.protobuf.Timestamp
+	145, // 141: chat.GetChatAnalyticsRequest.endDate:type_name -> google.protobuf.Timestamp
+	141, // 142: chat.GetChatAnalyticsResponse.analytics:type_name -> chat.ChatAnalytics
+	13,  // 143: chat.GetChatAnalyticsResponse.error:type_name -> chat.ErrorMessage
+	8,   // 144: chat.ChatEvent.eventType:type_name -> chat.ChatEventType
+	145, // 145: chat.ChatEvent.timestamp:type_name -> google.protobuf.Timestamp
+	14,  // 146: chat.ChatService.ChatStream:input_type -> chat.ChatStreamEnvelope
+	15,  // 147: chat.ChatService.SendMessage:input_type -> chat.SendMessageRequest
+	17,  // 148: chat.ChatService.GetChatHistory:input_type -> chat.GetChatHistoryRequest
+	20,  // 149: chat.ChatService.MarkAsRead:input_type -> chat.ReadReceiptRequest
+	22,  // 150: chat.ChatService.LikeMessage:input_type -> chat.LikeMessageRequest
+	24,  // 151: chat.ChatService.GetLikedMessages:input_type -> chat.GetLikedMessagesRequest
+	41,  // 152: chat.ChatService.GetLastMessages:input_type -> chat.GetLastMessagesRequest
+	43,  // 153: chat.ChatService.SubscribeToLastMessages:input_type -> chat.LastMessageStreamRequest
+	30,  // 154: chat.ChatService.GetUsersByUserID:input_type -> chat.GetUsersByUserIDRequest
+	33,  // 155: chat.ChatService.GetUsersInGroup:input_type -> chat.GetUsersInGroupRequest
+	36,  // 156: chat.ChatService.GetUserStatus:input_type -> chat.UserStatusRequest
+	40,  // 157: chat.ChatService.SubscribeToUserStatus:input_type -> chat.UserStatusSubscriptionRequest
+	44,  // 158: chat.ChatService.CreateGroup:input_type -> chat.CreateGroupRequest
+	46,  // 159: chat.ChatService.JoinGroup:input_type -> chat.JoinGroupRequest
+	48,  // 160: chat.ChatService.LeaveGroup:input_type -> chat.LeaveGroupRequest
+	50,  // 161: chat.ChatService.UpdateGroup:input_type -> chat.UpdateGroupRequest
+	54,  // 162: chat.ChatService.SendTypingIndicator:input_type -> chat.TypingIndicatorRequest
+	56,  // 163: chat.ChatService.SubscribeToTypingIndicators:input_type -> chat.TypingSubscriptionRequest
+	58,  // 164: chat.ChatService.SearchMessages:input_type -> chat.SearchMessagesRequest
+	60,  // 165: chat.ChatService.SendDeliveryReceipt:input_type -> chat.DeliveryReceiptRequest
+	63,  // 166: chat.ChatService.AddReaction:input_type -> chat.AddReactionRequest
+	65,  // 167: chat.ChatService.RemoveReaction:input_type -> chat.RemoveReactionRequest
+	67,  // 168: chat.ChatService.GetMessageReactions:input_type -> chat.GetMessageReactionsRequest
+	70,  // 169: chat.ChatService.ForwardMessage:input_type -> chat.ForwardMessageRequest
+	73,  // 170: chat.ChatService.UploadFile:input_type -> chat.FileUploadRequest
+	75,  // 171: chat.ChatService.DownloadFile:input_type -> chat.FileDownloadRequest
+	81,  // 172: chat.ChatService.InitiateCall:input_type -> chat.InitiateCallRequest
+	83,  // 173: chat.ChatService.AcceptCall:input_type -> chat.AcceptCallRequest
+	85,  // 174: chat.ChatService.RejectCall:input_type -> chat.RejectCallRequest
+	87,  // 175: chat.ChatService.EndCall:input_type -> chat.EndCallRequest
+	89,  // 176: chat.ChatService.GetCallHistory:input_type -> chat.GetCallHistoryRequest
+	93,  // 177: chat.ChatService.UpdateNotificationSettings:input_type -> chat.UpdateNotificationSettingsRequest
+	95,  // 178: chat.ChatService.GetNotificationSettings:input_type -> chat.GetNotificationSettingsRequest
+	97,  // 179: chat.ChatService.PinMessage:input_type -> chat.PinMessageRequest
+	99,  // 180: chat.ChatService.UnpinMessage:input_type -> chat.UnpinMessageRequest
+	101, // 181: chat.ChatService.GetPinnedMessages:input_type -> chat.GetPinnedMessagesRequest
+	103, // 182: chat.ChatService.UpdatePresenceStatus:input_type -> chat.UpdatePresenceStatusRequest
+	105, // 183: chat.ChatService.SubscribeToPresence:input_type -> chat.SubscribeToPresenceRequest
+	107, // 184: chat.ChatService.GetUserPresence:input_type -> chat.GetUserPresenceRequest
+	28,  // 185: chat.ChatService.EditMessage:input_type -> chat.EditMessageRequest
+	26,  // 186: chat.ChatService.DeleteMessage:input_type -> chat.DeleteMessageRequest
+	111, // 187: chat.ChatService.SubscribeToMessageUpdates:input_type -> chat.SubscribeToMessageUpdatesRequest
+	113, // 188: chat.ChatService.CreateThread:input_type -> chat.CreateThreadRequest
+	115, // 189: chat.ChatService.GetThreadMessages:input_type -> chat.GetThreadMessagesRequest
+	117, // 190: chat.ChatService.SubscribeToThread:input_type -> chat.SubscribeToThreadRequest
+	119, // 191: chat.ChatService.SubscribeToNotifications:input_type -> chat.SubscribeToNotificationsRequest
+	121, // 192: chat.ChatService.MarkNotificationAsRead:input_type -> chat.MarkNotificationAsReadRequest
+	123, // 193: chat.ChatService.GetUnreadNotificationCount:input_type -> chat.GetUnreadNotificationCountRequest
+	125, // 194: chat.ChatService.StartScreenShare:input_type -> chat.StartScreenShareRequest
+	127, // 195: chat.ChatService.StopScreenShare:input_type -> chat.StopScreenShareRequest
+	129, // 196: chat.ChatService.SubscribeToScreenShare:input_type -> chat.SubscribeToScreenShareRequest
+	132, // 197: chat.ChatService.ScheduleMessage:input_type -> chat.ScheduleMessageRequest
+	134, // 198: chat.ChatService.CancelScheduledMessage:input_type -> chat.CancelScheduledMessageRequest
+	136, // 199: chat.ChatService.GetScheduledMessages:input_type -> chat.GetScheduledMessagesRequest
+	140, // 200: chat.ChatService.GetChatAnalytics:input_type -> chat.GetChatAnalyticsRequest
+	143, // 201: chat.ChatService.SubscribeToChatEvents:input_type -> chat.SubscribeToChatEventsRequest
+	14,  // 202: chat.ChatService.ChatStream:output_type -> chat.ChatStreamEnvelope
+	16,  // 203: chat.ChatService.SendMessage:output_type -> chat.SendMessageResponse
+	19,  // 204: chat.ChatService.GetChatHistory:output_type -> chat.GetChatHistoryResponse
+	21,  // 205: chat.ChatService.MarkAsRead:output_type -> chat.ReadReceiptResponse
+	23,  // 206: chat.ChatService.LikeMessage:output_type -> chat.LikeMessageResponse
+	25,  // 207: chat.ChatService.GetLikedMessages:output_type -> chat.GetLikedMessagesResponse
+	42,  // 208: chat.ChatService.GetLastMessages:output_type -> chat.GetLastMessagesResponse
+	11,  // 209: chat.ChatService.SubscribeToLastMessages:output_type -> chat.ChatMessage
+	32,  // 210: chat.ChatService.GetUsersByUserID:output_type -> chat.GetUsersByUserIDResponse
+	34,  // 211: chat.ChatService.GetUsersInGroup:output_type -> chat.GetUsersInGroupResponse
+	38,  // 212: chat.ChatService.GetUserStatus:output_type -> chat.UserStatusResponse
+	39,  // 213: chat.ChatService.SubscribeToUserStatus:output_type -> chat.UserStatus
+	45,  // 214: chat.ChatService.CreateGroup:output_type -> chat.CreateGroupResponse
+	47,  // 215: chat.ChatService.JoinGroup:output_type -> chat.JoinGroupResponse
+	49,  // 216: chat.ChatService.LeaveGroup:output_type -> chat.LeaveGroupResponse
+	51,  // 217: chat.ChatService.UpdateGroup:output_type -> chat.UpdateGroupResponse
+	55,  // 218: chat.ChatService.SendTypingIndicator:output_type -> chat.TypingIndicatorResponse
+	57,  // 219: chat.ChatService.SubscribeToTypingIndicators:output_type -> chat.TypingIndicator
+	59,  // 220: chat.ChatService.SearchMessages:output_type -> chat.SearchMessagesResponse
+	61,  // 221: chat.ChatService.SendDeliveryReceipt:output_type -> chat.DeliveryReceiptResponse
+	64,  // 222: chat.ChatService.AddReaction:output_type -> chat.AddReactionResponse
+	66,  // 223: chat.ChatService.RemoveReaction:output_type -> chat.RemoveReactionResponse
+	69,  // 224: chat.ChatService.GetMessageReactions:output_type -> chat.GetMessageReactionsResponse
+	71,  // 225: chat.ChatService.ForwardMessage:output_type -> chat.ForwardMessageResponse
+	74,  // 226: chat.ChatService.UploadFile:output_type -> chat.FileUploadResponse
+	76,  // 227: chat.ChatService.DownloadFile:output_type -> chat.FileDownloadResponse
+	82,  // 228: chat.ChatService.InitiateCall:output_type -> chat.InitiateCallResponse
+	84,  // 229: chat.ChatService.AcceptCall:output_type -> chat.AcceptCallResponse
+	86,  // 230: chat.ChatService.RejectCall:output_type -> chat.RejectCallResponse
+	88,  // 231: chat.ChatService.EndCall:output_type -> chat.EndCallResponse
+	91,  // 232: chat.ChatService.GetCallHistory:output_type -> chat.GetCallHistoryResponse
+	94,  // 233: chat.ChatService.UpdateNotificationSettings:output_type -> chat.UpdateNotificationSettingsResponse
+	96,  // 234: chat.ChatService.GetNotificationSettings:output_type -> chat.GetNotificationSettingsResponse
+	98,  // 235: chat.ChatService.PinMessage:output_type -> chat.PinMessageResponse
+	100, // 236: chat.ChatService.UnpinMessage:output_type -> chat.UnpinMessageResponse
+	102, // 237: chat.ChatService.GetPinnedMessages:output_type -> chat.GetPinnedMessagesResponse
+	104, // 238: chat.ChatService.UpdatePresenceStatus:output_type -> chat.UpdatePresenceStatusResponse
+	106, // 239: chat.ChatService.SubscribeToPresence:output_type -> chat.PresenceUpdate
+	110, // 240: chat.ChatService.GetUserPresence:output_type -> chat.GetUserPresenceResponse
+	29,  // 241: chat.ChatService.EditMessage:output_type -> chat.EditMessageResponse
+	27,  // 242: chat.ChatService.DeleteMessage:output_type -> chat.DeleteMessageResponse
+	112, // 243: chat.ChatService.SubscribeToMessageUpdates:output_type -> chat.MessageUpdate
+	114, // 244: chat.ChatService.CreateThread:output_type -> chat.CreateThreadResponse
+	116, // 245: chat.ChatService.GetThreadMessages:output_type -> chat.GetThreadMessagesResponse
+	118, // 246: chat.ChatService.SubscribeToThread:output_type -> chat.ThreadUpdate
+	120, // 247: chat.ChatService.SubscribeToNotifications:output_type -> chat.NotificationUpdate
+	122, // 248: chat.ChatService.MarkNotificationAsRead:output_type -> chat.MarkNotificationAsReadResponse
+	124, // 249: chat.ChatService.GetUnreadNotificationCount:output_type -> chat.GetUnreadNotificationCountResponse
+	126, // 250: chat.ChatService.StartScreenShare:output_type -> chat.StartScreenShareResponse
+	128, // 251: chat.ChatService.StopScreenShare:output_type -> chat.StopScreenShareResponse
+	130, // 252: chat.ChatService.SubscribeToScreenShare:output_type -> chat.ScreenShareUpdate
+	133, // 253: chat.ChatService.ScheduleMessage:output_type -> chat.ScheduleMessageResponse
+	135, // 254: chat.ChatService.CancelScheduledMessage:output_type -> chat.CancelScheduledMessageResponse
+	139, // 255: chat.ChatService.GetScheduledMessages:output_type -> chat.GetScheduledMessagesResponse
+	142, // 256: chat.ChatService.GetChatAnalytics:output_type -> chat.GetChatAnalyticsResponse
+	144, // 257: chat.ChatService.SubscribeToChatEvents:output_type -> chat.ChatEvent
+	202, // [202:258] is the sub-list for method output_type
+	146, // [146:202] is the sub-list for method input_type
+	146, // [146:146] is the sub-list for extension type_name
+	146, // [146:146] is the sub-list for extension extendee
+	0,   // [0:146] is the sub-list for field type_name
 }
 
 func init() { file_proto_chat_proto_init() }
