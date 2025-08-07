@@ -6,13 +6,16 @@
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
     },
     "item": [
-        {"name": "Auth Mutations",
+        {
+            "name": "Auth Mutations",
             "item": [
-                {"name": "Firebase Authentication",
+                {
+                    "name": "Firebase Authentication",
                     "request": {
                         "method": "POST",
                         "header": [
-                            {"key": "Content-Type",
+                            {
+                                "key": "Content-Type",
                                 "value": "application/json"
                             }
                         ],
@@ -34,16 +37,20 @@
                 }
             ]
         },
-        {"name": "Feedback Queries",
+        {
+            "name": "Feedback Queries",
             "item": [
-                {"name": "Get Template Feedback",
+                {
+                    "name": "Get Template Feedback",
                     "request": {
                         "method": "POST",
                         "header": [
-                            {"key": "Content-Type",
+                            {
+                                "key": "Content-Type",
                                 "value": "application/json"
                             },
-                            {"key": "Authorization",
+                            {
+                                "key": "Authorization",
                                 "value": "Bearer {{accessToken}}",
                                 "description": "JWT access token for authentication"
                             }
@@ -64,14 +71,17 @@
                         }
                     }
                 },
-                {"name": "Get Feedback Statistics",
+                {
+                    "name": "Get Feedback Statistics",
                     "request": {
                         "method": "POST",
                         "header": [
-                            {"key": "Content-Type",
+                            {
+                                "key": "Content-Type",
                                 "value": "application/json"
                             },
-                            {"key": "Authorization",
+                            {
+                                "key": "Authorization",
                                 "value": "Bearer {{accessToken}}",
                                 "description": "JWT access token for authentication"
                             }
@@ -94,16 +104,20 @@
                 }
             ]
         },
-        {"name": "Feedback Mutations",
+        {
+            "name": "Feedback Mutations",
             "item": [
-                {"name": "Submit Feedback",
+                {
+                    "name": "Submit Feedback",
                     "request": {
                         "method": "POST",
                         "header": [
-                            {"key": "Content-Type",
+                            {
+                                "key": "Content-Type",
                                 "value": "application/json"
                             },
-                            {"key": "Authorization",
+                            {
+                                "key": "Authorization",
                                 "value": "Bearer {{accessToken}}",
                                 "description": "JWT access token for authentication"
                             }
@@ -124,14 +138,17 @@
                         }
                     }
                 },
-                {"name": "Update Feedback",
+                {
+                    "name": "Update Feedback",
                     "request": {
                         "method": "POST",
                         "header": [
-                            {"key": "Content-Type",
+                            {
+                                "key": "Content-Type",
                                 "value": "application/json"
                             },
-                            {"key": "Authorization",
+                            {
+                                "key": "Authorization",
                                 "value": "Bearer {{accessToken}}",
                                 "description": "JWT access token for authentication"
                             }
@@ -152,14 +169,17 @@
                         }
                     }
                 },
-                {"name": "Delete Feedback",
+                {
+                    "name": "Delete Feedback",
                     "request": {
                         "method": "POST",
                         "header": [
-                            {"key": "Content-Type",
+                            {
+                                "key": "Content-Type",
                                 "value": "application/json"
                             },
-                            {"key": "Authorization",
+                            {
+                                "key": "Authorization",
                                 "value": "Bearer {{accessToken}}",
                                 "description": "JWT access token for authentication"
                             }
@@ -1375,7 +1395,7 @@
                 }
             ]
         },
-        
+
         {
             "name": "History Template Queries",
             "item": [
@@ -1698,7 +1718,8 @@
                 }
             ]
         },
-        {"name": "GraphQL Introspection",
+        {
+            "name": "GraphQL Introspection",
             "item": [
                 {
                     "name": "Get Schema",
@@ -1923,7 +1944,8 @@
                     }
                 }
             ]
-        },{
+        },
+        {
             "name": "Auth Mutations",
             "item": [
                 {
@@ -2326,6 +2348,2113 @@
                     }
                 }
             ]
+        },
+        {
+            "name": "Chat Queries",
+            "item": [
+                {
+                    "name": "Get Chat History",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetChatHistory($input: GetChatHistoryInput!) {\n  getChatHistory(input: $input) {\n    statusCode\n    message\n    messages {\n      messages {\n        id\n        senderId\n        receiverId\n        chatId\n        groupId\n        content\n        messageType\n        timestamp\n        isEdited\n        editedAt\n        isDeleted\n        deletedAt\n        parentMessageId\n        attachments {\n          id\n          fileName\n          fileUrl\n          fileType\n          fileSize\n        }\n        reactions {\n          userId\n          reactionType\n          timestamp\n        }\n        isPinned\n        pinnedAt\n        pinnedBy\n      }\n      totalCount\n      page\n      limit\n      hasNext\n      hasPrevious\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"chatId\": \"{{chatId}}\",\n    \"page\": 1,\n    \"limit\": 50\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Search Messages",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query SearchMessages($input: SearchMessagesInput!) {\n  searchMessages(input: $input) {\n    statusCode\n    message\n    messages {\n      messages {\n        id\n        senderId\n        receiverId\n        chatId\n        groupId\n        content\n        messageType\n        timestamp\n        isEdited\n        editedAt\n      }\n      totalCount\n      page\n      limit\n      hasNext\n      hasPrevious\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"chatId\": \"{{chatId}}\",\n    \"query\": \"hello\",\n    \"page\": 1,\n    \"limit\": 20\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get User Status",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetUserStatus($userId: String!) {\n  getUserStatus(userId: $userId) {\n    statusCode\n    message\n    userStatus {\n      userId\n      status\n      lastSeen\n      customMessage\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"userId\": \"{{targetUserId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Group Info",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetGroupInfo($groupId: String!) {\n  getGroupInfo(groupId: $groupId) {\n    statusCode\n    message\n    group {\n      id\n      name\n      description\n      avatarUrl\n      createdBy\n      createdAt\n      updatedAt\n      memberCount\n      isPrivate\n      members {\n        userId\n        role\n        joinedAt\n        addedBy\n      }\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"groupId\": \"{{groupId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Call History",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetCallHistory($input: GetCallHistoryInput!) {\n  getCallHistory(input: $input) {\n    statusCode\n    message\n    calls {\n      calls {\n        id\n        callerId\n        receiverId\n        groupId\n        callType\n        status\n        startTime\n        endTime\n        duration\n      }\n      totalCount\n      page\n      limit\n      hasNext\n      hasPrevious\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"userId\": \"{{userId}}\",\n    \"page\": 1,\n    \"limit\": 20\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Notifications",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetNotifications($input: GetNotificationsInput!) {\n  getNotifications(input: $input) {\n    statusCode\n    message\n    notifications {\n      notifications {\n        id\n        userId\n        type\n        title\n        content\n        isRead\n        createdAt\n        readAt\n        relatedEntityId\n        relatedEntityType\n      }\n      totalCount\n      page\n      limit\n      hasNext\n      hasPrevious\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"userId\": \"{{userId}}\",\n    \"page\": 1,\n    \"limit\": 20\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Scheduled Messages",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetScheduledMessages($input: GetScheduledMessagesInput!) {\n  getScheduledMessages(input: $input) {\n    statusCode\n    message\n    scheduledMessages {\n      scheduledMessages {\n        id\n        chatId\n        groupId\n        senderId\n        content\n        messageType\n        scheduledTime\n        isSent\n        sentAt\n        createdAt\n        attachments {\n          id\n          fileName\n          fileUrl\n          fileType\n          fileSize\n        }\n      }\n      totalCount\n      page\n      limit\n      hasNext\n      hasPrevious\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"userId\": \"{{userId}}\",\n    \"page\": 1,\n    \"limit\": 20\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Chat Mutations",
+            "item": [
+                {
+                    "name": "Send Message",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation SendMessage($input: SendMessageInput!) {\n  sendMessage(input: $input) {\n    statusCode\n    message\n    chatMessage {\n      id\n      senderId\n      receiverId\n      chatId\n      groupId\n      content\n      messageType\n      timestamp\n      attachments {\n        id\n        fileName\n        fileUrl\n        fileType\n        fileSize\n      }\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"receiverId\": \"{{receiverId}}\",\n    \"content\": \"Hello! How are you doing today?\",\n    \"messageType\": \"TEXT\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Send Group Message",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation SendMessage($input: SendMessageInput!) {\n  sendMessage(input: $input) {\n    statusCode\n    message\n    chatMessage {\n      id\n      senderId\n      groupId\n      content\n      messageType\n      timestamp\n      attachments {\n        id\n        fileName\n        fileUrl\n        fileType\n        fileSize\n      }\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"groupId\": \"{{groupId}}\",\n    \"content\": \"Hello everyone! Great to be part of this group.\",\n    \"messageType\": \"TEXT\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Edit Message",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation EditMessage($input: EditMessageInput!) {\n  editMessage(input: $input) {\n    statusCode\n    message\n    chatMessage {\n      id\n      content\n      isEdited\n      editedAt\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"messageId\": \"{{messageId}}\",\n    \"newContent\": \"Updated message content\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Delete Message",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation DeleteMessage($messageId: String!) {\n  deleteMessage(messageId: $messageId) {\n    statusCode\n    message\n    success\n  }\n}",
+                                "variables": "{\n  \"messageId\": \"{{messageId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Add Reaction",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation AddReaction($input: AddReactionInput!) {\n  addReaction(input: $input) {\n    statusCode\n    message\n    reaction {\n      userId\n      messageId\n      reactionType\n      timestamp\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"messageId\": \"{{messageId}}\",\n    \"reactionType\": \"LIKE\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Remove Reaction",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation RemoveReaction($input: RemoveReactionInput!) {\n  removeReaction(input: $input) {\n    statusCode\n    message\n    success\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"messageId\": \"{{messageId}}\",\n    \"reactionType\": \"LIKE\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Pin Message",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation PinMessage($messageId: String!) {\n  pinMessage(messageId: $messageId) {\n    statusCode\n    message\n    chatMessage {\n      id\n      isPinned\n      pinnedAt\n      pinnedBy\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"messageId\": \"{{messageId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Unpin Message",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation UnpinMessage($messageId: String!) {\n  unpinMessage(messageId: $messageId) {\n    statusCode\n    message\n    success\n  }\n}",
+                                "variables": "{\n  \"messageId\": \"{{messageId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Update User Status",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation UpdateUserStatus($input: UpdateUserStatusInput!) {\n  updateUserStatus(input: $input) {\n    statusCode\n    message\n    userStatus {\n      userId\n      status\n      lastSeen\n      customMessage\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"status\": \"ONLINE\",\n    \"customMessage\": \"Working on an exciting project!\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Create Group",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation CreateGroup($input: CreateGroupInput!) {\n  createGroup(input: $input) {\n    statusCode\n    message\n    group {\n      id\n      name\n      description\n      avatarUrl\n      createdBy\n      createdAt\n      memberCount\n      isPrivate\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"name\": \"Development Team\",\n    \"description\": \"Group for development team discussions\",\n    \"isPrivate\": false,\n    \"memberIds\": [\"{{memberId1}}\", \"{{memberId2}}\"]\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Group",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation UpdateGroup($input: UpdateGroupInput!) {\n  updateGroup(input: $input) {\n    statusCode\n    message\n    group {\n      id\n      name\n      description\n      avatarUrl\n      updatedAt\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"groupId\": \"{{groupId}}\",\n    \"name\": \"Updated Development Team\",\n    \"description\": \"Updated group for development team discussions and planning\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Add Group Member",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation AddGroupMember($input: AddGroupMemberInput!) {\n  addGroupMember(input: $input) {\n    statusCode\n    message\n    groupMember {\n      userId\n      groupId\n      role\n      joinedAt\n      addedBy\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"groupId\": \"{{groupId}}\",\n    \"userId\": \"{{newMemberId}}\",\n    \"role\": \"MEMBER\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Remove Group Member",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation RemoveGroupMember($input: RemoveGroupMemberInput!) {\n  removeGroupMember(input: $input) {\n    statusCode\n    message\n    success\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"groupId\": \"{{groupId}}\",\n    \"userId\": \"{{memberToRemoveId}}\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Group Member Role",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation UpdateGroupMemberRole($input: UpdateGroupMemberRoleInput!) {\n  updateGroupMemberRole(input: $input) {\n    statusCode\n    message\n    groupMember {\n      userId\n      groupId\n      role\n      joinedAt\n      addedBy\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"groupId\": \"{{groupId}}\",\n    \"userId\": \"{{memberId}}\",\n    \"newRole\": \"ADMIN\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Initiate Call",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation InitiateCall($input: InitiateCallInput!) {\n  initiateCall(input: $input) {\n    statusCode\n    message\n    call {\n      id\n      callerId\n      receiverId\n      groupId\n      callType\n      status\n      startTime\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"receiverId\": \"{{receiverId}}\",\n    \"callType\": \"VOICE\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Accept Call",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation AcceptCall($callId: String!) {\n  acceptCall(callId: $callId) {\n    statusCode\n    message\n    call {\n      id\n      status\n      startTime\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"callId\": \"{{callId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Reject Call",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation RejectCall($callId: String!) {\n  rejectCall(callId: $callId) {\n    statusCode\n    message\n    success\n  }\n}",
+                                "variables": "{\n  \"callId\": \"{{callId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "End Call",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation EndCall($callId: String!) {\n  endCall(callId: $callId) {\n    statusCode\n    message\n    call {\n      id\n      status\n      endTime\n      duration\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"callId\": \"{{callId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Add Notification",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation AddNotification($input: AddNotificationInput!) {\n  addNotification(input: $input) {\n    statusCode\n    message\n    notification {\n      id\n      userId\n      type\n      title\n      content\n      isRead\n      createdAt\n      relatedEntityId\n      relatedEntityType\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"userId\": \"{{targetUserId}}\",\n    \"type\": \"MESSAGE\",\n    \"title\": \"New Message\",\n    \"content\": \"You have received a new message\",\n    \"relatedEntityId\": \"{{messageId}}\",\n    \"relatedEntityType\": \"message\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Notification",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation UpdateNotification($input: UpdateNotificationInput!) {\n  updateNotification(input: $input) {\n    statusCode\n    message\n    notification {\n      id\n      isRead\n      readAt\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"notificationId\": \"{{notificationId}}\",\n    \"isRead\": true\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Add Schedule Message",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation AddScheduleMessage($input: AddScheduleMessageInput!) {\n  addScheduleMessage(input: $input) {\n    statusCode\n    message\n    scheduledMessage {\n      id\n      chatId\n      groupId\n      senderId\n      content\n      messageType\n      scheduledTime\n      isSent\n      createdAt\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"receiverId\": \"{{receiverId}}\",\n    \"content\": \"This is a scheduled message for tomorrow!\",\n    \"messageType\": \"TEXT\",\n    \"scheduledTime\": \"2024-12-25T10:00:00Z\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Schedule Message",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation UpdateScheduleMessage($input: UpdateScheduleMessageInput!) {\n  updateScheduleMessage(input: $input) {\n    statusCode\n    message\n    scheduledMessage {\n      id\n      content\n      scheduledTime\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"scheduledMessageId\": \"{{scheduledMessageId}}\",\n    \"content\": \"Updated scheduled message content\",\n    \"scheduledTime\": \"2024-12-25T14:00:00Z\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Cancel Scheduled Message",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation CancelScheduledMessage($scheduledMessageId: String!) {\n  cancelScheduledMessage(scheduledMessageId: $scheduledMessageId) {\n    statusCode\n    message\n    success\n  }\n}",
+                                "variables": "{\n  \"scheduledMessageId\": \"{{scheduledMessageId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Feedback Queries",
+            "item": [
+                {
+                    "name": "Get Template Feedback",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetTemplateFeedback($templateId: String!, $page: Int, $limit: Int) {\n  getTemplateFeedback(templateId: $templateId, page: $page, limit: $limit) {\n    statusCode\n    message\n    feedbackList {\n      feedbacks {\n        id\n        templateId\n        userId\n        rating\n        comment\n        createdAt\n        updatedAt\n      }\n      totalCount\n      page\n      limit\n      hasNext\n      hasPrevious\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"templateId\": \"{{templateId}}\",\n  \"page\": 1,\n  \"limit\": 10\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Feedback Statistics",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetFeedbackStatistics($templateId: String!) {\n  getFeedbackStatistics(templateId: $templateId) {\n    statusCode\n    message\n    statistics {\n      totalFeedbacks\n      averageRating\n      ratingDistribution {\n        rating\n        count\n        percentage\n      }\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"templateId\": \"{{templateId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Feedback Mutations",
+            "item": [
+                {
+                    "name": "Submit Feedback",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation SubmitFeedback($input: SubmitFeedbackInput!) {\n  submitFeedback(input: $input) {\n    statusCode\n    message\n    feedback {\n      id\n      templateId\n      userId\n      rating\n      comment\n      createdAt\n      updatedAt\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"templateId\": \"{{templateId}}\",\n    \"userId\": \"{{userId}}\",\n    \"rating\": 5,\n    \"comment\": \"Excellent historical template! Very informative and well-structured.\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Feedback",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation UpdateFeedback($id: String!, $input: UpdateFeedbackInput!) {\n  updateFeedback(id: $id, input: $input) {\n    statusCode\n    message\n    feedback {\n      id\n      templateId\n      userId\n      rating\n      comment\n      createdAt\n      updatedAt\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"id\": \"{{feedbackId}}\",\n  \"input\": {\n    \"rating\": 4,\n    \"comment\": \"Updated: Good template with room for improvement in some sections.\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Chat Queries",
+            "item": [
+                {
+                    "name": "Get Messages",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetMessages($chatId: String!, $limit: Int, $offset: Int) {\n  getMessages(chatId: $chatId, limit: $limit, offset: $offset) {\n    statusCode\n    message\n    messages {\n      id\n      chatId\n      senderId\n      content\n      messageType\n      timestamp\n      isEdited\n      editedAt\n      replyToMessageId\n      attachments\n      isDeleted\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"chatId\": \"{{chatId}}\",\n  \"limit\": 50,\n  \"offset\": 0\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Message By ID",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetMessageById($messageId: String!) {\n  getMessageById(messageId: $messageId) {\n    statusCode\n    message\n    chatMessage {\n      id\n      chatId\n      senderId\n      content\n      messageType\n      timestamp\n      isEdited\n      editedAt\n      replyToMessageId\n      attachments\n      isDeleted\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"messageId\": \"{{messageId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get User Chats",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetUserChats {\n  getUserChats {\n    statusCode\n    message\n    chats {\n      id\n      name\n      isGroup\n      createdAt\n      updatedAt\n      lastMessageAt\n      participants\n    }\n    success\n  }\n}",
+                                "variables": "{}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Chat By ID",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetChatById($chatId: String!) {\n  getChatById(chatId: $chatId) {\n    statusCode\n    message\n    chat {\n      id\n      name\n      isGroup\n      createdAt\n      updatedAt\n      lastMessageAt\n      participants\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"chatId\": \"{{chatId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Group Members",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetGroupMembers($groupId: String!) {\n  getGroupMembers(groupId: $groupId) {\n    statusCode\n    message\n    members {\n      userId\n      role\n      joinedAt\n      permissions\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"groupId\": \"{{groupId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Call History",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetCallHistory($chatId: String!) {\n  getCallHistory(chatId: $chatId) {\n    statusCode\n    message\n    calls {\n      id\n      chatId\n      initiatorId\n      callType\n      status\n      startTime\n      endTime\n      duration\n      participants\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"chatId\": \"{{chatId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Notifications",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetNotifications($limit: Int, $offset: Int) {\n  getNotifications(limit: $limit, offset: $offset) {\n    statusCode\n    message\n    notifications {\n      id\n      userId\n      type\n      title\n      content\n      isRead\n      createdAt\n      data\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"limit\": 20,\n  \"offset\": 0\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Scheduled Messages",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query GetScheduledMessages($chatId: String!) {\n  getScheduledMessages(chatId: $chatId) {\n    statusCode\n    message\n    scheduledMessages {\n      id\n      chatId\n      senderId\n      content\n      messageType\n      scheduledTime\n      status\n      createdAt\n      attachments\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"chatId\": \"{{chatId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Chat Mutations",
+            "item": [
+                {
+                    "name": "Send Message",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation SendMessage($input: SendMessageInput!) {\n  sendMessage(input: $input) {\n    statusCode\n    message\n    chatMessage {\n      id\n      chatId\n      senderId\n      content\n      messageType\n      timestamp\n      isEdited\n      editedAt\n      replyToMessageId\n      attachments\n      isDeleted\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"chatId\": \"{{chatId}}\",\n    \"content\": \"Hello, this is a test message!\",\n    \"messageType\": \"TEXT\",\n    \"attachments\": []\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Edit Message",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation EditMessage($messageId: String!, $newContent: String!) {\n  editMessage(messageId: $messageId, newContent: $newContent) {\n    statusCode\n    message\n    chatMessage {\n      id\n      chatId\n      senderId\n      content\n      messageType\n      timestamp\n      isEdited\n      editedAt\n      replyToMessageId\n      attachments\n      isDeleted\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"messageId\": \"{{messageId}}\",\n  \"newContent\": \"This message has been edited!\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Delete Message",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation DeleteMessage($messageId: String!) {\n  deleteMessage(messageId: $messageId) {\n    statusCode\n    message\n    success\n  }\n}",
+                                "variables": "{\n  \"messageId\": \"{{messageId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Add Reaction",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation AddReaction($messageId: String!, $reaction: ReactionType!) {\n  addReaction(messageId: $messageId, reaction: $reaction) {\n    statusCode\n    message\n    success\n  }\n}",
+                                "variables": "{\n  \"messageId\": \"{{messageId}}\",\n  \"reaction\": \"LIKE\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Remove Reaction",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation RemoveReaction($messageId: String!, $reaction: ReactionType!) {\n  removeReaction(messageId: $messageId, reaction: $reaction) {\n    statusCode\n    message\n    success\n  }\n}",
+                                "variables": "{\n  \"messageId\": \"{{messageId}}\",\n  \"reaction\": \"LIKE\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Create Chat",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation CreateChat($input: CreateChatInput!) {\n  createChat(input: $input) {\n    statusCode\n    message\n    chat {\n      id\n      name\n      isGroup\n      createdAt\n      updatedAt\n      lastMessageAt\n      participants\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"name\": \"New Chat\",\n    \"isGroup\": false,\n    \"participants\": [\"{{userId}}\", \"{{otherUserId}}\"]\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Chat",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation UpdateChat($chatId: String!, $input: UpdateChatInput!) {\n  updateChat(chatId: $chatId, input: $input) {\n    statusCode\n    message\n    chat {\n      id\n      name\n      isGroup\n      createdAt\n      updatedAt\n      lastMessageAt\n      participants\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"chatId\": \"{{chatId}}\",\n  \"input\": {\n    \"name\": \"Updated Chat Name\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Delete Chat",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation DeleteChat($chatId: String!) {\n  deleteChat(chatId: $chatId) {\n    statusCode\n    message\n    success\n  }\n}",
+                                "variables": "{\n  \"chatId\": \"{{chatId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Add User To Chat",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation AddUserToChat($chatId: String!, $userId: String!) {\n  addUserToChat(chatId: $chatId, userId: $userId) {\n    statusCode\n    message\n    success\n  }\n}",
+                                "variables": "{\n  \"chatId\": \"{{chatId}}\",\n  \"userId\": \"{{otherUserId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Remove User From Chat",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation RemoveUserFromChat($chatId: String!, $userId: String!) {\n  removeUserFromChat(chatId: $chatId, userId: $userId) {\n    statusCode\n    message\n    success\n  }\n}",
+                                "variables": "{\n  \"chatId\": \"{{chatId}}\",\n  \"userId\": \"{{otherUserId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Create Group",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation CreateGroup($input: CreateGroupInput!) {\n  createGroup(input: $input) {\n    statusCode\n    message\n    group {\n      id\n      name\n      description\n      createdBy\n      createdAt\n      updatedAt\n      memberCount\n      isPrivate\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"name\": \"New Group\",\n    \"description\": \"A test group for chat functionality\",\n    \"isPrivate\": false,\n    \"members\": [\"{{userId}}\", \"{{otherUserId}}\"]\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Group",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation UpdateGroup($groupId: String!, $input: UpdateGroupInput!) {\n  updateGroup(groupId: $groupId, input: $input) {\n    statusCode\n    message\n    group {\n      id\n      name\n      description\n      createdBy\n      createdAt\n      updatedAt\n      memberCount\n      isPrivate\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"groupId\": \"{{groupId}}\",\n  \"input\": {\n    \"name\": \"Updated Group Name\",\n    \"description\": \"Updated group description\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Delete Group",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation DeleteGroup($groupId: String!) {\n  deleteGroup(groupId: $groupId) {\n    statusCode\n    message\n    success\n  }\n}",
+                                "variables": "{\n  \"groupId\": \"{{groupId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Add Group Member",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation AddGroupMember($groupId: String!, $userId: String!, $role: GroupRole!) {\n  addGroupMember(groupId: $groupId, userId: $userId, role: $role) {\n    statusCode\n    message\n    success\n  }\n}",
+                                "variables": "{\n  \"groupId\": \"{{groupId}}\",\n  \"userId\": \"{{otherUserId}}\",\n  \"role\": \"MEMBER\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Remove Group Member",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation RemoveGroupMember($groupId: String!, $userId: String!) {\n  removeGroupMember(groupId: $groupId, userId: $userId) {\n    statusCode\n    message\n    success\n  }\n}",
+                                "variables": "{\n  \"groupId\": \"{{groupId}}\",\n  \"userId\": \"{{otherUserId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Group Member Role",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation UpdateGroupMemberRole($groupId: String!, $userId: String!, $role: GroupRole!) {\n  updateGroupMemberRole(groupId: $groupId, userId: $userId, role: $role) {\n    statusCode\n    message\n    success\n  }\n}",
+                                "variables": "{\n  \"groupId\": \"{{groupId}}\",\n  \"userId\": \"{{otherUserId}}\",\n  \"role\": \"ADMIN\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Start Call",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation StartCall($input: StartCallInput!) {\n  startCall(input: $input) {\n    statusCode\n    message\n    call {\n      id\n      chatId\n      initiatorId\n      callType\n      status\n      startTime\n      endTime\n      duration\n      participants\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"chatId\": \"{{chatId}}\",\n    \"callType\": \"VOICE\",\n    \"participants\": [\"{{userId}}\", \"{{otherUserId}}\"]\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "End Call",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation EndCall($callId: String!) {\n  endCall(callId: $callId) {\n    statusCode\n    message\n    call {\n      id\n      chatId\n      initiatorId\n      callType\n      status\n      startTime\n      endTime\n      duration\n      participants\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"callId\": \"{{callId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Join Call",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation JoinCall($callId: String!) {\n  joinCall(callId: $callId) {\n    statusCode\n    message\n    success\n  }\n}",
+                                "variables": "{\n  \"callId\": \"{{callId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Leave Call",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation LeaveCall($callId: String!) {\n  leaveCall(callId: $callId) {\n    statusCode\n    message\n    success\n  }\n}",
+                                "variables": "{\n  \"callId\": \"{{callId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Mark Notification As Read",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation MarkNotificationAsRead($notificationId: String!) {\n  markNotificationAsRead(notificationId: $notificationId) {\n    statusCode\n    message\n    success\n  }\n}",
+                                "variables": "{\n  \"notificationId\": \"{{notificationId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Mark All Notifications As Read",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation MarkAllNotificationsAsRead {\n  markAllNotificationsAsRead {\n    statusCode\n    message\n    success\n  }\n}",
+                                "variables": "{}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Add Scheduled Message",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation AddScheduledMessage($input: AddScheduledMessageInput!) {\n  addScheduledMessage(input: $input) {\n    statusCode\n    message\n    scheduledMessage {\n      id\n      chatId\n      senderId\n      content\n      messageType\n      scheduledTime\n      status\n      createdAt\n      attachments\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"input\": {\n    \"chatId\": \"{{chatId}}\",\n    \"content\": \"This is a scheduled message!\",\n    \"messageType\": \"TEXT\",\n    \"scheduledTime\": \"2024-12-31T23:59:59Z\",\n    \"attachments\": []\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Scheduled Message",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation UpdateScheduledMessage($messageId: String!, $input: UpdateScheduledMessageInput!) {\n  updateScheduledMessage(messageId: $messageId, input: $input) {\n    statusCode\n    message\n    scheduledMessage {\n      id\n      chatId\n      senderId\n      content\n      messageType\n      scheduledTime\n      status\n      createdAt\n      attachments\n    }\n    success\n  }\n}",
+                                "variables": "{\n  \"messageId\": \"{{scheduledMessageId}}\",\n  \"input\": {\n    \"content\": \"Updated scheduled message content!\",\n    \"scheduledTime\": \"2024-12-31T23:30:00Z\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                },
+                {
+                    "name": "Cancel Scheduled Message",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}",
+                                "description": "JWT access token for authentication"
+                            }
+                        ],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation CancelScheduledMessage($messageId: String!) {\n  cancelScheduledMessage(messageId: $messageId) {\n    statusCode\n    message\n    success\n  }\n}",
+                                "variables": "{\n  \"messageId\": \"{{scheduledMessageId}}\"\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/graphql",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "3000",
+                            "path": ["graphql"]
+                        }
+                    }
+                }
+            ]
         }
     ],
     "variable": [
@@ -2382,7 +4511,8 @@
             "type": "string",
             "description": "Quiz ID for testing"
         },
-        {"key": "sectionId",
+        {
+            "key": "sectionId",
             "value": "",
             "type": "string",
             "description": "Section ID for testing"

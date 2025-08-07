@@ -12,6 +12,7 @@ import { QuizModule } from './quiz/quiz.module';
 import { FeedbackModule } from './feedback/feedback.module';
 import { UserProgressModule } from './user-progress/user-progress.module';
 import { UploadModule } from './upload/upload.module';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { UploadModule } from './upload/upload.module';
     FeedbackModule,
     UserProgressModule,
     UploadModule,
+    ChatModule,
   ],
 })
 export class AppModule {}

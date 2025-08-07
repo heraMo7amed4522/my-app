@@ -1,0 +1,1048 @@
+syntax = "proto3";
+package chat;
+
+option go_package = "./proto";
+
+import "google/protobuf/timestamp.proto";
+
+
+service ChatService {
+    // ================================================ STREAMING =======================================
+    rpc ChatStream(stream ChatStreamEnvelope) returns (stream ChatStreamEnvelope);
+    rpc SubscribeToLastMessages(LastMessageStreamRequest) returns (stream ChatMessage);
+    rpc SubscribeToUserStatus(UserStatusSubscriptionRequest) returns (stream UserStatus);
+    rpc SubscribeToTypingIndicators(TypingSubscriptionRequest) returns (stream TypingIndicator);
+    rpc UploadFile(stream FileUploadRequest) returns (FileUploadResponse);
+    rpc DownloadFile(FileDownloadRequest) returns (stream FileDownloadResponse);
+    rpc SubscribeToPresence(SubscribeToPresenceRequest) returns (stream PresenceUpdate);
+    rpc SubscribeToMessageUpdates(SubscribeToMessageUpdatesRequest) returns (stream MessageUpdate);
+    rpc SubscribeToThread(SubscribeToThreadRequest) returns (stream ThreadUpdate);
+    rpc SubscribeToNotifications(SubscribeToNotificationsRequest) returns (stream NotificationUpdate);
+    rpc SubscribeToScreenShare(SubscribeToScreenShareRequest) returns (stream ScreenShareUpdate);
+    rpc SubscribeToChatEvents(SubscribeToChatEventsRequest) returns (stream ChatEvent);
+
+    // ================================================ MESSAGE HANDLING =======================================
+    rpc SendMessage(SendMessageRequest) returns (SendMessageResponse);
+    rpc EditMessage(EditMessageRequest) returns (EditMessageResponse);
+    rpc DeleteMessage(DeleteMessageRequest) returns (DeleteMessageResponse);
+    rpc GetChatHistory(GetChatHistoryRequest) returns (GetChatHistoryResponse);
+    rpc MarkAsRead(ReadReceiptRequest) returns (ReadReceiptResponse);
+    rpc SearchMessages(SearchMessagesRequest) returns (SearchMessagesResponse);
+    rpc ForwardMessage(ForwardMessageRequest) returns (ForwardMessageResponse);
+    rpc PinMessage(PinMessageRequest) returns (PinMessageResponse);
+    rpc UnpinMessage(UnpinMessageRequest) returns (UnpinMessageResponse);
+    rpc GetPinnedMessages(GetPinnedMessagesRequest) returns (GetPinnedMessagesResponse);
+
+    // ================================================ MESSAGE REACTIONS =======================================
+    rpc AddLikeMessage(AddLikeMessageRequest) returns (AddLikeMessageResponse);
+    rpc UpdateLikedMessage(UpdateLikedMessageRequest) returns (UpdateLikedMessageResponse);
+    rpc GetLikedMessages(GetLikedMessagesRequest) returns (GetLikedMessagesResponse);
+    rpc GetLastMessages(GetLastMessagesRequest) returns (GetLastMessagesResponse);
+
+    // ================================================ USER MANAGEMENT =======================================
+    rpc GetUsersByUserEmail(GetUsersByUserEmailRequest) returns (GetUsersByUserEmailResponse);
+    rpc GetUsersInGroup(GetUsersInGroupRequest) returns (GetUsersInGroupResponse);
+    rpc GetUserStatus(UserStatusRequest) returns (UserStatusResponse);
+
+    // ================================================ GROUP MANAGEMENT =======================================
+    rpc CreateGroup(CreateGroupRequest) returns (CreateGroupResponse);
+    rpc JoinGroup(JoinGroupRequest) returns (JoinGroupResponse);
+    rpc LeaveGroup(LeaveGroupRequest) returns (LeaveGroupResponse);
+    rpc UpdateGroup(UpdateGroupRequest) returns (UpdateGroupResponse);
+    rpc GetAllGroupsByUserEmail(GetAllGroupsByUserEmailRequest) returns (GetAllGroupsByUserEmailResponse);
+
+    // ================================================ CALL MANAGEMENT =======================================
+    rpc InitiateCall(InitiateCallRequest) returns (InitiateCallResponse);
+    rpc AcceptCall(AcceptCallRequest) returns (AcceptCallResponse);
+    rpc RejectCall(RejectCallRequest) returns (RejectCallResponse);
+    rpc EndCall(EndCallRequest) returns (EndCallResponse);
+    rpc GetCallHistory(GetCallHistoryRequest) returns (GetCallHistoryResponse);
+
+    // ================================================ NOTIFICATIONS =======================================
+    rpc AddNotification(AddNotificationRequest) returns (AddNotificationResponse);
+    rpc UpdateNotification(UpdateNotificationRequest) returns (UpdateNotificationResponse);
+    rpc GetNotification(GetNotificationRequest) returns (GetNotificationResponse);
+    rpc MarkNotificationAsRead(MarkNotificationAsReadRequest) returns (MarkNotificationAsReadResponse);
+    rpc GetUnreadNotificationCount(GetUnreadNotificationCountRequest) returns (GetUnreadNotificationCountResponse);
+
+    // ================================================ SCHEDULED MESSAGES =======================================
+    rpc AddScheduleMessage(AddScheduleMessageRequest) returns (AddScheduleMessageResponse);
+    rpc UpdateScheduleMessage(UpdateScheduleMessageRequest) returns (UpdateScheduleMessageResponse);
+    rpc CancelScheduledMessage(CancelScheduledMessageRequest) returns (CancelScheduledMessageResponse);
+    rpc GetScheduledMessages(GetScheduledMessagesRequest) returns (GetScheduledMessagesResponse);
+}
+
+// ================================================ ENUMS =======================================
+
+enum MessageType {
+    MSG_TEXT = 0;
+    MSG_IMAGE = 1;
+    MSG_VIDEO = 2;
+    MSG_FILE = 3;
+    MSG_AUDIO = 4;
+    MSG_LOCATION = 5;
+    MSG_STICKER = 6;
+    MSG_GIF = 7;
+    MSG_VOICE_NOTE = 8;
+    MSG_SYSTEM = 9;
+    MSG_POLL = 10;
+    MSG_CONTACT = 11;
+    MSG_DOCUMENT = 12;
+    MSG_LINK_PREVIEW = 13;
+}
+
+enum CallType {
+    CALL_VOICE = 0;
+    CALL_VIDEO = 1;
+}
+
+enum CallStatus {
+    CALL_INITIATED = 0;
+    CALL_RINGING = 1;
+    CALL_ACCEPTED = 2;
+    CALL_REJECTED = 3;
+    CALL_ENDED = 4;
+    CALL_MISSED = 5;
+    CALL_BUSY = 6;
+}
+
+enum ReactionType {
+    LIKE = 0;
+    LOVE = 1;
+    LAUGH = 2;
+    WOW = 3;
+    SAD = 4;
+    ANGRY = 5;
+}
+
+enum PresenceStatus {
+    PRESENCE_OFFLINE = 0;
+    PRESENCE_ONLINE = 1;
+    PRESENCE_AWAY = 2;
+    PRESENCE_BUSY = 3;
+    PRESENCE_INVISIBLE = 4;
+}
+
+enum MessageUpdateType {
+    UPDATE_EDITED = 0;
+    UPDATE_DELETED = 1;
+    UPDATE_REACTION_ADDED = 2;
+    UPDATE_REACTION_REMOVED = 3;
+    UPDATE_PINNED = 4;
+    UPDATE_UNPINNED = 5;
+}
+
+enum ThreadType {
+    THREAD_REPLY = 0;
+    THREAD_DISCUSSION = 1;
+    THREAD_ANNOUNCEMENT = 2;
+}
+
+enum NotificationType {
+    NOTIFICATION_MESSAGE = 0;
+    NOTIFICATION_MENTION = 1;
+    NOTIFICATION_REACTION = 2;
+    NOTIFICATION_CALL = 3;
+    NOTIFICATION_GROUP_INVITE = 4;
+    NOTIFICATION_SYSTEM = 5;
+}
+
+enum ChatEventType {
+    EVENT_MESSAGE_SENT = 0;
+    EVENT_MESSAGE_EDITED = 1;
+    EVENT_MESSAGE_DELETED = 2;
+    EVENT_USER_JOINED = 3;
+    EVENT_USER_LEFT = 4;
+    EVENT_TYPING_START = 5;
+    EVENT_TYPING_STOP = 6;
+    EVENT_CALL_STARTED = 7;
+    EVENT_CALL_ENDED = 8;
+    EVENT_SCREEN_SHARE_STARTED = 9;
+    EVENT_SCREEN_SHARE_STOPPED = 10;
+}
+
+enum MessageStatus {
+    SENT = 0;
+    DELIVERED = 1;
+    READ = 2;
+    FAILED = 3;
+}
+
+enum GroupRole {
+    MEMBER = 0;
+    ADMIN = 1;
+    OWNER = 2;
+}
+
+// ================================================ MESSAGES =======================================
+
+message StateMessage {
+    int32 statusCode = 1;
+    string message = 2;
+    google.protobuf.Timestamp timestamp = 3;
+}
+
+message ErrorMessage {
+    int32 code = 1;
+    string message = 2;
+    repeated string details = 3;
+    google.protobuf.Timestamp timestamp = 4;
+}
+
+message ChatStreamEnvelope {
+    oneof payload {
+        ChatMessage message = 1;
+        StateMessage state = 2;
+        ErrorMessage error = 3;
+    }
+}
+
+// ================================================ CHAT MESSAGES =======================================
+
+message ChatMessage {
+    string messageId = 1;
+    string senderId = 2;
+    string receiverId = 3;
+    string groupId = 4;
+    string content = 5;
+    MessageType type = 6;
+    google.protobuf.Timestamp timestamp = 7;
+    bool isGroup = 8;
+    bool isRead = 9;
+    bool isEdited = 10;
+    repeated string likedBy = 11;
+    string replyToMessageId = 12;
+    repeated string attachments = 13;
+    MessageStatus status = 14;
+    google.protobuf.Timestamp deliveredAt = 15;
+    google.protobuf.Timestamp readAt = 16;
+    repeated MessageReaction reactions = 17;
+    bool isPinned = 18;
+    google.protobuf.Timestamp pinnedAt = 19;
+    string pinnedBy = 20;
+    int32 forwardCount = 21;
+    string originalMessageId = 22;
+    FileMetadata fileMetadata = 23;
+    LocationData locationData = 24;
+    PollData pollData = 25;
+    string threadId = 26;
+    string parentMessageId = 27;
+    int32 threadReplyCount = 28;
+    google.protobuf.Timestamp editedAt = 29;
+    repeated string editHistory = 30;
+    bool isScheduled = 31;
+    google.protobuf.Timestamp scheduledAt = 32;
+    repeated string mentionedUserIds = 33;
+    bool isSystemMessage = 34;
+    string deviceInfo = 35;
+    string clientVersion = 36;
+    bool isEncrypted = 37;
+    string encryptionKeyId = 38;
+}
+
+message SendMessageRequest {
+    string senderId = 1;
+    string receiverId = 2;
+    string groupId = 3;
+    string content = 4;
+    MessageType type = 5;
+    bool isGroup = 6;
+}
+
+message SendMessageResponse {
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        ChatMessage savedMessage = 3;
+        ErrorMessage error = 4;
+    }
+}
+
+message GetChatHistoryRequest {
+    string userId = 1;
+    string peerId = 2;
+    bool isGroup = 3;
+    int32 limit = 4;
+    int32 offset = 5;
+}
+
+message ChatMessageList {
+    repeated ChatMessage messages = 1;
+}
+
+message GetChatHistoryResponse {
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        ChatMessageList messages = 3;
+        ErrorMessage error = 4;
+    }
+}
+
+message ReadReceiptRequest {
+    string userId = 1;
+    string peerId = 2;
+    bool isGroup = 3;
+}
+
+message ReadReceiptResponse {
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        StateMessage status = 3;
+        ErrorMessage error = 4;
+    }
+}
+
+message EditMessageRequest {
+    string messageId = 1;
+    string userId = 2;
+    string newContent = 3;
+}
+
+message EditMessageResponse {
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        ChatMessage updatedMessage = 3;
+        ErrorMessage error = 4;
+    }
+}
+
+message DeleteMessageRequest {
+    string messageId = 1;
+    string userId = 2;
+}
+
+message DeleteMessageResponse {
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        StateMessage status = 3;
+        ErrorMessage error = 4;
+    }
+}
+
+message SearchMessagesRequest {
+    string userId = 1;
+    string query = 2;
+    string peerId = 3;
+    string groupId = 4;
+    bool isGroup = 5;
+    MessageType messageType = 6;
+    int32 limit = 7;
+    int32 offset = 8;
+}
+
+message SearchMessagesResponse {
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        ChatMessageList messages = 3;
+        ErrorMessage error = 4;
+    }
+}
+
+message ForwardMessageRequest {
+    string messageId = 1;
+    string senderId = 2;
+    repeated string receiverIds = 3;
+    repeated string groupIds = 4;
+}
+
+message ForwardMessageResponse {
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        ChatMessageList forwardedMessages = 3;
+        ErrorMessage error = 4;
+    }
+}
+
+// ================================================ MESSAGE PINNING =======================================
+
+message PinMessageRequest {
+    string messageId = 1;
+    string userId = 2;
+    string chatId = 3;
+    bool isGroup = 4;
+}
+
+message PinMessageResponse {
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        StateMessage status = 3;
+        ErrorMessage error = 4;
+    }
+}
+
+message UnpinMessageRequest {
+    string messageId = 1;
+    string userId = 2;
+    string chatId = 3;
+    bool isGroup = 4;
+}
+
+message UnpinMessageResponse {
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        StateMessage status = 3;
+        ErrorMessage error = 4;
+    }
+}
+
+message GetPinnedMessagesRequest {
+    string chatId = 1;
+    bool isGroup = 2;
+}
+
+message GetPinnedMessagesResponse {
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        ChatMessageList pinnedMessages = 3;
+        ErrorMessage error = 4;
+    }
+}
+
+// ================================================ REACTIONS =======================================
+
+message AddLikeMessageRequest {
+    string messageId = 1;
+    string userId = 2;
+}
+
+message AddLikeMessageResponse {
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        StateMessage status = 3;
+        ErrorMessage error = 4;
+    }
+}
+
+message UpdateLikedMessageRequest {
+    string messageId = 1;
+    string userId = 2;
+    ReactionType reactionType = 3;
+}
+
+message UpdateLikedMessageResponse {
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        StateMessage status = 3;
+        ErrorMessage error = 4;
+    }
+}
+
+message GetLikedMessagesRequest {
+    string userId = 1;
+}
+
+message GetLikedMessagesResponse {
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        ChatMessageList likedMessages = 3;
+        ErrorMessage error = 4;
+    }
+}
+
+message GetLastMessagesRequest {
+    string userId = 1;
+}
+
+message GetLastMessagesResponse {
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        ChatMessageList lastMessages = 3;
+        ErrorMessage error = 4;
+    }
+}
+
+// ================================================ USERS & GROUPS =======================================
+
+message GetUsersByUserEmailRequest {
+    repeated string userEmail = 1;
+}
+
+message UserInfo {
+    string id = 1;
+    string fullName = 2;
+    string email = 3;
+    string avatarUrl = 4;
+    bool isOnline = 5;
+}
+
+message UserInfoList {
+    repeated UserInfo users = 1;
+}
+
+message GetUsersByUserEmailResponse {
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        UserInfoList users = 3;
+        ErrorMessage error = 4;
+    }
+}
+
+message GetUsersInGroupRequest {
+    string groupId = 1;
+}
+
+message GetUsersInGroupResponse {
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        UserInfoList users = 3;
+        ErrorMessage error = 4;
+    }
+}
+
+message UserStatusRequest {
+    repeated string userIds = 1;
+}
+
+message UserStatus {
+    string userId = 1;
+    bool isOnline = 2;
+    google.protobuf.Timestamp lastSeen = 3;
+}
+
+message UserStatusList {
+    repeated UserStatus statuses = 1;
+}
+
+message UserStatusResponse {
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        UserStatusList statuses = 3;
+        ErrorMessage error = 4;
+    }
+}
+
+message UserStatusSubscriptionRequest {
+    repeated string userIds = 1;
+}
+
+message LastMessageStreamRequest {
+    string userId = 1;
+}
+
+// ================================================ GROUPS =======================================
+
+message CreateGroupRequest {
+    string creatorId = 1;
+    string groupName = 2;
+    string description = 3;
+    repeated string memberIds = 4;
+    string avatarUrl = 5;
+}
+
+message GroupInfo {
+    string id = 1;
+    string name = 2;
+    string description = 3;
+    string avatarUrl = 4;
+    string creatorId = 5;
+    repeated GroupMember members = 6;
+    google.protobuf.Timestamp createdAt = 7;
+    google.protobuf.Timestamp updatedAt = 8;
+    int32 maxMembers = 9;
+    bool isPrivate = 10;
+}
+
+message GroupMember {
+    string userId = 1;
+    GroupRole role = 2;
+    google.protobuf.Timestamp joinedAt = 3;
+}
+
+message CreateGroupResponse {
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        GroupInfo group = 3;
+        ErrorMessage error = 4;
+    }
+}
+
+message JoinGroupRequest {
+    string userId = 1;
+    string groupId = 2;
+}
+
+message JoinGroupResponse {
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        StateMessage status = 3;
+        ErrorMessage error = 4;
+    }
+}
+
+message LeaveGroupRequest {
+    string userId = 1;
+    string groupId = 2;
+}
+
+message LeaveGroupResponse {
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        StateMessage status = 3;
+        ErrorMessage error = 4;
+    }
+}
+
+message UpdateGroupRequest {
+    string groupId = 1;
+    string userId = 2;
+    string groupName = 3;
+    string description = 4;
+    string avatarUrl = 5;
+    repeated string addMemberIds = 6;
+    repeated string removeMemberIds = 7;
+}
+
+message UpdateGroupResponse {
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        GroupInfo group = 3;
+        ErrorMessage error = 4;
+    }
+}
+
+message GetAllGroupsByUserEmailRequest {
+    string userEmail = 1;
+}
+message GroupInfoList {
+    repeated GroupInfo groups = 1;
+}
+
+message GetAllGroupsByUserEmailResponse {
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        GroupInfoList groups = 3;
+        ErrorMessage error = 4;
+    }
+}
+
+// ================================================ TYPING & PRESENCE =======================================
+
+message TypingSubscriptionRequest {
+    string userId = 1;
+    repeated string peerIds = 2;
+    repeated string groupIds = 3;
+}
+
+message TypingIndicator {
+    string userId = 1;
+    string peerId = 2;
+    string groupId = 3;
+    bool isGroup = 4;
+    bool isTyping = 5;
+    google.protobuf.Timestamp timestamp = 6;
+}
+
+message SubscribeToPresenceRequest {
+    repeated string userIds = 1;
+}
+
+message PresenceUpdate {
+    string userId = 1;
+    PresenceStatus status = 2;
+    string customMessage = 3;
+    google.protobuf.Timestamp lastSeen = 4;
+}
+
+// ================================================ MESSAGE UPDATES (REAL-TIME) =======================================
+
+message SubscribeToMessageUpdatesRequest {
+    string chatId = 1;
+}
+
+message MessageUpdate {
+    string messageId = 1;
+    MessageUpdateType updateType = 2;
+    ChatMessage updatedMessage = 3;
+    string userId = 4;
+    google.protobuf.Timestamp timestamp = 5;
+}
+
+// ================================================ THREADS =======================================
+
+message SubscribeToThreadRequest {
+    string threadId = 1;
+}
+
+message ThreadUpdate {
+    string threadId = 1;
+    ChatMessage message = 2;
+    ThreadType type = 3;
+    google.protobuf.Timestamp timestamp = 4;
+}
+
+// ================================================ NOTIFICATIONS =======================================
+
+message SubscribeToNotificationsRequest {
+    string userId = 1;
+}
+
+message NotificationUpdate {
+    string id = 1;
+    NotificationType type = 2;
+    string title = 3;
+    string content = 4;
+    string senderId = 5;
+    string chatId = 6;
+    string messageId = 7;
+    google.protobuf.Timestamp timestamp = 8;
+    bool isRead = 9;
+}
+
+message AddNotificationRequest {
+    NotificationUpdate notification = 1;
+}
+
+message AddNotificationResponse {
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        NotificationUpdate notification = 3;
+        ErrorMessage error = 4;
+    }
+}
+
+message UpdateNotificationRequest {
+    NotificationUpdate notification = 1;
+}
+
+message UpdateNotificationResponse {
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        NotificationUpdate notification = 3;
+        ErrorMessage error = 4;
+    }
+}
+
+message GetNotificationRequest {
+    string notificationId = 1;
+    string userId = 2;
+}
+
+message GetNotificationResponse {
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        NotificationUpdate notification = 3;
+        ErrorMessage error = 4;
+    }
+}
+
+message MarkNotificationAsReadRequest {
+    string notificationId = 1;
+    string userId = 2;
+}
+
+message MarkNotificationAsReadResponse {
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        StateMessage status = 3;
+        ErrorMessage error = 4;
+    }
+}
+
+message GetUnreadNotificationCountRequest {
+    string userId = 1;
+}
+
+message GetUnreadNotificationCountResponse {
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        int32 count = 3;
+        ErrorMessage error = 4;
+    }
+}
+
+// ================================================ SCHEDULED MESSAGES =======================================
+
+message AddScheduleMessageRequest {
+    string chatId = 1;
+    string senderId = 2;
+    string content = 3;
+    google.protobuf.Timestamp scheduledAt = 4;
+    MessageType type = 5;
+    repeated string attachments = 6;
+}
+
+message AddScheduleMessageResponse {
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        string scheduledMessageId = 3;
+        ErrorMessage error = 4;
+    }
+}
+
+message UpdateScheduleMessageRequest {
+    string scheduledMessageId = 1;
+    string userId = 2;
+    string content = 3;
+    google.protobuf.Timestamp scheduledAt = 4;
+}
+
+message UpdateScheduleMessageResponse {
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        StateMessage status = 3;
+        ErrorMessage error = 4;
+    }
+}
+
+message CancelScheduledMessageRequest {
+    string scheduledMessageId = 1;
+    string userId = 2;
+}
+
+message CancelScheduledMessageResponse {
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        StateMessage status = 3;
+        ErrorMessage error = 4;
+    }
+}
+
+message GetScheduledMessagesRequest {
+    string userId = 1;
+    string chatId = 2;
+}
+
+message ScheduledMessage {
+    string id = 1;
+    string chatId = 2;
+    string senderId = 3;
+    string content = 4;
+    google.protobuf.Timestamp scheduledAt = 5;
+    MessageType type = 6;
+    repeated string attachments = 7;
+    google.protobuf.Timestamp createdAt = 8;
+}
+
+message ScheduledMessageList {
+    repeated ScheduledMessage messages = 1;
+}
+
+message GetScheduledMessagesResponse {
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        ScheduledMessageList messages = 3;
+        ErrorMessage error = 4;
+    }
+}
+
+// ================================================ CALLS =======================================
+
+message InitiateCallRequest {
+    string callerId = 1;
+    string receiverId = 2;
+    string groupId = 3;
+    CallType callType = 4;
+    bool isGroup = 5;
+}
+
+message CallInfo {
+    string callId = 1;
+    string callerId = 2;
+    string receiverId = 3;
+    string groupId = 4;
+    CallType callType = 5;
+    CallStatus status = 6;
+    google.protobuf.Timestamp startTime = 7;
+    google.protobuf.Timestamp endTime = 8;
+    int32 duration = 9;
+    bool isGroup = 10;
+    repeated string participants = 11;
+}
+
+message InitiateCallResponse {
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        CallInfo call = 3;
+        ErrorMessage error = 4;
+    }
+}
+
+message AcceptCallRequest {
+    string callId = 1;
+    string userId = 2;
+}
+
+message AcceptCallResponse {
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        CallInfo call = 3;
+        ErrorMessage error = 4;
+    }
+}
+
+message RejectCallRequest {
+    string callId = 1;
+    string userId = 2;
+}
+
+message RejectCallResponse {
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        StateMessage status = 3;
+        ErrorMessage error = 4;
+    }
+}
+
+message EndCallRequest {
+    string callId = 1;
+    string userId = 2;
+}
+
+message EndCallResponse {
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        CallInfo call = 3;
+        ErrorMessage error = 4;
+    }
+}
+
+message GetCallHistoryRequest {
+    string userId = 1;
+    int32 limit = 2;
+    int32 offset = 3;
+}
+
+message CallInfoList {
+    repeated CallInfo calls = 1;
+}
+
+message GetCallHistoryResponse {
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        CallInfoList calls = 3;
+        ErrorMessage error = 4;
+    }
+}
+
+// ================================================ FILE & MEDIA =======================================
+
+message FileMetadata {
+    string fileName = 1;
+    string fileType = 2;
+    int64 fileSize = 3;
+    string fileUrl = 4;
+    string thumbnailUrl = 5;
+    int32 duration = 6;
+    int32 width = 7;
+    int32 height = 8;
+}
+
+message FileUploadRequest {
+    oneof data {
+        FileMetadata metadata = 1;
+        bytes chunk = 2;
+    }
+}
+
+message FileUploadResponse {
+    int32 StatusCode = 1;
+    string Message = 2;
+    oneof result {
+        FileMetadata uploadedFile = 3;
+        ErrorMessage error = 4;
+    }
+}
+
+message FileDownloadRequest {
+    string fileId = 1;
+    string userId = 2;
+}
+
+message FileDownloadResponse {
+    oneof data {
+        FileMetadata metadata = 1;
+        bytes chunk = 2;
+    }
+}
+
+// ================================================ OTHER DATA TYPES =======================================
+
+message LocationData {
+    double latitude = 1;
+    double longitude = 2;
+    string address = 3;
+    string placeName = 4;
+}
+
+message PollOption {
+    string id = 1;
+    string text = 2;
+    repeated string voterIds = 3;
+    int32 voteCount = 4;
+}
+
+message PollData {
+    string question = 1;
+    repeated PollOption options = 2;
+    bool allowMultipleAnswers = 3;
+    google.protobuf.Timestamp expiresAt = 4;
+    bool isAnonymous = 5;
+    int32 totalVotes = 6;
+}
+
+message MessageReaction {
+    string userId = 1;
+    ReactionType reactionType = 2;
+    google.protobuf.Timestamp timestamp = 3;
+}
+
+message SubscribeToScreenShareRequest {
+    string chatId = 1;
+}
+
+message ScreenShareUpdate {
+    string sessionId = 1;
+    string userId = 2;
+    string action = 3; // "started", "stopped", etc.
+    string shareUrl = 4;
+    google.protobuf.Timestamp timestamp = 5;
+}
+
+message SubscribeToChatEventsRequest {
+    string chatId = 1;
+}
+
+message ChatEvent {
+    string id = 1;
+    ChatEventType eventType = 2;
+    string userId = 3;
+    string chatId = 4;
+    string messageId = 5;
+    google.protobuf.Timestamp timestamp = 6;
+    string metadata = 7;
+}

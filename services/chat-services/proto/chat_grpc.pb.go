@@ -20,123 +20,115 @@ const _ = grpc.SupportPackageIsVersion7
 
 const (
 	ChatService_ChatStream_FullMethodName                  = "/chat.ChatService/ChatStream"
+	ChatService_SubscribeToLastMessages_FullMethodName     = "/chat.ChatService/SubscribeToLastMessages"
+	ChatService_SubscribeToUserStatus_FullMethodName       = "/chat.ChatService/SubscribeToUserStatus"
+	ChatService_SubscribeToTypingIndicators_FullMethodName = "/chat.ChatService/SubscribeToTypingIndicators"
+	ChatService_UploadFile_FullMethodName                  = "/chat.ChatService/UploadFile"
+	ChatService_DownloadFile_FullMethodName                = "/chat.ChatService/DownloadFile"
+	ChatService_SubscribeToPresence_FullMethodName         = "/chat.ChatService/SubscribeToPresence"
+	ChatService_SubscribeToMessageUpdates_FullMethodName   = "/chat.ChatService/SubscribeToMessageUpdates"
+	ChatService_SubscribeToThread_FullMethodName           = "/chat.ChatService/SubscribeToThread"
+	ChatService_SubscribeToNotifications_FullMethodName    = "/chat.ChatService/SubscribeToNotifications"
+	ChatService_SubscribeToScreenShare_FullMethodName      = "/chat.ChatService/SubscribeToScreenShare"
+	ChatService_SubscribeToChatEvents_FullMethodName       = "/chat.ChatService/SubscribeToChatEvents"
 	ChatService_SendMessage_FullMethodName                 = "/chat.ChatService/SendMessage"
+	ChatService_EditMessage_FullMethodName                 = "/chat.ChatService/EditMessage"
+	ChatService_DeleteMessage_FullMethodName               = "/chat.ChatService/DeleteMessage"
 	ChatService_GetChatHistory_FullMethodName              = "/chat.ChatService/GetChatHistory"
 	ChatService_MarkAsRead_FullMethodName                  = "/chat.ChatService/MarkAsRead"
-	ChatService_LikeMessage_FullMethodName                 = "/chat.ChatService/LikeMessage"
+	ChatService_SearchMessages_FullMethodName              = "/chat.ChatService/SearchMessages"
+	ChatService_ForwardMessage_FullMethodName              = "/chat.ChatService/ForwardMessage"
+	ChatService_PinMessage_FullMethodName                  = "/chat.ChatService/PinMessage"
+	ChatService_UnpinMessage_FullMethodName                = "/chat.ChatService/UnpinMessage"
+	ChatService_GetPinnedMessages_FullMethodName           = "/chat.ChatService/GetPinnedMessages"
+	ChatService_AddLikeMessage_FullMethodName              = "/chat.ChatService/AddLikeMessage"
+	ChatService_UpdateLikedMessage_FullMethodName          = "/chat.ChatService/UpdateLikedMessage"
 	ChatService_GetLikedMessages_FullMethodName            = "/chat.ChatService/GetLikedMessages"
 	ChatService_GetLastMessages_FullMethodName             = "/chat.ChatService/GetLastMessages"
-	ChatService_SubscribeToLastMessages_FullMethodName     = "/chat.ChatService/SubscribeToLastMessages"
-	ChatService_GetUsersByUserID_FullMethodName            = "/chat.ChatService/GetUsersByUserID"
+	ChatService_GetUsersByUserEmail_FullMethodName         = "/chat.ChatService/GetUsersByUserEmail"
 	ChatService_GetUsersInGroup_FullMethodName             = "/chat.ChatService/GetUsersInGroup"
 	ChatService_GetUserStatus_FullMethodName               = "/chat.ChatService/GetUserStatus"
-	ChatService_SubscribeToUserStatus_FullMethodName       = "/chat.ChatService/SubscribeToUserStatus"
 	ChatService_CreateGroup_FullMethodName                 = "/chat.ChatService/CreateGroup"
 	ChatService_JoinGroup_FullMethodName                   = "/chat.ChatService/JoinGroup"
 	ChatService_LeaveGroup_FullMethodName                  = "/chat.ChatService/LeaveGroup"
 	ChatService_UpdateGroup_FullMethodName                 = "/chat.ChatService/UpdateGroup"
-	ChatService_SendTypingIndicator_FullMethodName         = "/chat.ChatService/SendTypingIndicator"
-	ChatService_SubscribeToTypingIndicators_FullMethodName = "/chat.ChatService/SubscribeToTypingIndicators"
-	ChatService_SearchMessages_FullMethodName              = "/chat.ChatService/SearchMessages"
-	ChatService_SendDeliveryReceipt_FullMethodName         = "/chat.ChatService/SendDeliveryReceipt"
-	ChatService_AddReaction_FullMethodName                 = "/chat.ChatService/AddReaction"
-	ChatService_RemoveReaction_FullMethodName              = "/chat.ChatService/RemoveReaction"
-	ChatService_GetMessageReactions_FullMethodName         = "/chat.ChatService/GetMessageReactions"
-	ChatService_ForwardMessage_FullMethodName              = "/chat.ChatService/ForwardMessage"
-	ChatService_UploadFile_FullMethodName                  = "/chat.ChatService/UploadFile"
-	ChatService_DownloadFile_FullMethodName                = "/chat.ChatService/DownloadFile"
+	ChatService_GetAllGroupsByUserEmail_FullMethodName     = "/chat.ChatService/GetAllGroupsByUserEmail"
 	ChatService_InitiateCall_FullMethodName                = "/chat.ChatService/InitiateCall"
 	ChatService_AcceptCall_FullMethodName                  = "/chat.ChatService/AcceptCall"
 	ChatService_RejectCall_FullMethodName                  = "/chat.ChatService/RejectCall"
 	ChatService_EndCall_FullMethodName                     = "/chat.ChatService/EndCall"
 	ChatService_GetCallHistory_FullMethodName              = "/chat.ChatService/GetCallHistory"
-	ChatService_UpdateNotificationSettings_FullMethodName  = "/chat.ChatService/UpdateNotificationSettings"
-	ChatService_GetNotificationSettings_FullMethodName     = "/chat.ChatService/GetNotificationSettings"
-	ChatService_PinMessage_FullMethodName                  = "/chat.ChatService/PinMessage"
-	ChatService_UnpinMessage_FullMethodName                = "/chat.ChatService/UnpinMessage"
-	ChatService_GetPinnedMessages_FullMethodName           = "/chat.ChatService/GetPinnedMessages"
-	ChatService_UpdatePresenceStatus_FullMethodName        = "/chat.ChatService/UpdatePresenceStatus"
-	ChatService_SubscribeToPresence_FullMethodName         = "/chat.ChatService/SubscribeToPresence"
-	ChatService_GetUserPresence_FullMethodName             = "/chat.ChatService/GetUserPresence"
-	ChatService_EditMessage_FullMethodName                 = "/chat.ChatService/EditMessage"
-	ChatService_DeleteMessage_FullMethodName               = "/chat.ChatService/DeleteMessage"
-	ChatService_SubscribeToMessageUpdates_FullMethodName   = "/chat.ChatService/SubscribeToMessageUpdates"
-	ChatService_CreateThread_FullMethodName                = "/chat.ChatService/CreateThread"
-	ChatService_GetThreadMessages_FullMethodName           = "/chat.ChatService/GetThreadMessages"
-	ChatService_SubscribeToThread_FullMethodName           = "/chat.ChatService/SubscribeToThread"
-	ChatService_SubscribeToNotifications_FullMethodName    = "/chat.ChatService/SubscribeToNotifications"
+	ChatService_AddNotification_FullMethodName             = "/chat.ChatService/AddNotification"
+	ChatService_UpdateNotification_FullMethodName          = "/chat.ChatService/UpdateNotification"
+	ChatService_GetNotification_FullMethodName             = "/chat.ChatService/GetNotification"
 	ChatService_MarkNotificationAsRead_FullMethodName      = "/chat.ChatService/MarkNotificationAsRead"
 	ChatService_GetUnreadNotificationCount_FullMethodName  = "/chat.ChatService/GetUnreadNotificationCount"
-	ChatService_StartScreenShare_FullMethodName            = "/chat.ChatService/StartScreenShare"
-	ChatService_StopScreenShare_FullMethodName             = "/chat.ChatService/StopScreenShare"
-	ChatService_SubscribeToScreenShare_FullMethodName      = "/chat.ChatService/SubscribeToScreenShare"
-	ChatService_ScheduleMessage_FullMethodName             = "/chat.ChatService/ScheduleMessage"
+	ChatService_AddScheduleMessage_FullMethodName          = "/chat.ChatService/AddScheduleMessage"
+	ChatService_UpdateScheduleMessage_FullMethodName       = "/chat.ChatService/UpdateScheduleMessage"
 	ChatService_CancelScheduledMessage_FullMethodName      = "/chat.ChatService/CancelScheduledMessage"
 	ChatService_GetScheduledMessages_FullMethodName        = "/chat.ChatService/GetScheduledMessages"
-	ChatService_GetChatAnalytics_FullMethodName            = "/chat.ChatService/GetChatAnalytics"
-	ChatService_SubscribeToChatEvents_FullMethodName       = "/chat.ChatService/SubscribeToChatEvents"
 )
 
 // ChatServiceClient is the client API for ChatService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ChatServiceClient interface {
+	// ================================================ STREAMING =======================================
 	ChatStream(ctx context.Context, opts ...grpc.CallOption) (ChatService_ChatStreamClient, error)
+	SubscribeToLastMessages(ctx context.Context, in *LastMessageStreamRequest, opts ...grpc.CallOption) (ChatService_SubscribeToLastMessagesClient, error)
+	SubscribeToUserStatus(ctx context.Context, in *UserStatusSubscriptionRequest, opts ...grpc.CallOption) (ChatService_SubscribeToUserStatusClient, error)
+	SubscribeToTypingIndicators(ctx context.Context, in *TypingSubscriptionRequest, opts ...grpc.CallOption) (ChatService_SubscribeToTypingIndicatorsClient, error)
+	UploadFile(ctx context.Context, opts ...grpc.CallOption) (ChatService_UploadFileClient, error)
+	DownloadFile(ctx context.Context, in *FileDownloadRequest, opts ...grpc.CallOption) (ChatService_DownloadFileClient, error)
+	SubscribeToPresence(ctx context.Context, in *SubscribeToPresenceRequest, opts ...grpc.CallOption) (ChatService_SubscribeToPresenceClient, error)
+	SubscribeToMessageUpdates(ctx context.Context, in *SubscribeToMessageUpdatesRequest, opts ...grpc.CallOption) (ChatService_SubscribeToMessageUpdatesClient, error)
+	SubscribeToThread(ctx context.Context, in *SubscribeToThreadRequest, opts ...grpc.CallOption) (ChatService_SubscribeToThreadClient, error)
+	SubscribeToNotifications(ctx context.Context, in *SubscribeToNotificationsRequest, opts ...grpc.CallOption) (ChatService_SubscribeToNotificationsClient, error)
+	SubscribeToScreenShare(ctx context.Context, in *SubscribeToScreenShareRequest, opts ...grpc.CallOption) (ChatService_SubscribeToScreenShareClient, error)
+	SubscribeToChatEvents(ctx context.Context, in *SubscribeToChatEventsRequest, opts ...grpc.CallOption) (ChatService_SubscribeToChatEventsClient, error)
+	// ================================================ MESSAGE HANDLING =======================================
 	SendMessage(ctx context.Context, in *SendMessageRequest, opts ...grpc.CallOption) (*SendMessageResponse, error)
+	EditMessage(ctx context.Context, in *EditMessageRequest, opts ...grpc.CallOption) (*EditMessageResponse, error)
+	DeleteMessage(ctx context.Context, in *DeleteMessageRequest, opts ...grpc.CallOption) (*DeleteMessageResponse, error)
 	GetChatHistory(ctx context.Context, in *GetChatHistoryRequest, opts ...grpc.CallOption) (*GetChatHistoryResponse, error)
 	MarkAsRead(ctx context.Context, in *ReadReceiptRequest, opts ...grpc.CallOption) (*ReadReceiptResponse, error)
-	LikeMessage(ctx context.Context, in *LikeMessageRequest, opts ...grpc.CallOption) (*LikeMessageResponse, error)
+	SearchMessages(ctx context.Context, in *SearchMessagesRequest, opts ...grpc.CallOption) (*SearchMessagesResponse, error)
+	ForwardMessage(ctx context.Context, in *ForwardMessageRequest, opts ...grpc.CallOption) (*ForwardMessageResponse, error)
+	PinMessage(ctx context.Context, in *PinMessageRequest, opts ...grpc.CallOption) (*PinMessageResponse, error)
+	UnpinMessage(ctx context.Context, in *UnpinMessageRequest, opts ...grpc.CallOption) (*UnpinMessageResponse, error)
+	GetPinnedMessages(ctx context.Context, in *GetPinnedMessagesRequest, opts ...grpc.CallOption) (*GetPinnedMessagesResponse, error)
+	// ================================================ MESSAGE REACTIONS =======================================
+	AddLikeMessage(ctx context.Context, in *AddLikeMessageRequest, opts ...grpc.CallOption) (*AddLikeMessageResponse, error)
+	UpdateLikedMessage(ctx context.Context, in *UpdateLikedMessageRequest, opts ...grpc.CallOption) (*UpdateLikedMessageResponse, error)
 	GetLikedMessages(ctx context.Context, in *GetLikedMessagesRequest, opts ...grpc.CallOption) (*GetLikedMessagesResponse, error)
 	GetLastMessages(ctx context.Context, in *GetLastMessagesRequest, opts ...grpc.CallOption) (*GetLastMessagesResponse, error)
-	SubscribeToLastMessages(ctx context.Context, in *LastMessageStreamRequest, opts ...grpc.CallOption) (ChatService_SubscribeToLastMessagesClient, error)
-	GetUsersByUserID(ctx context.Context, in *GetUsersByUserIDRequest, opts ...grpc.CallOption) (*GetUsersByUserIDResponse, error)
+	// ================================================ USER MANAGEMENT =======================================
+	GetUsersByUserEmail(ctx context.Context, in *GetUsersByUserEmailRequest, opts ...grpc.CallOption) (*GetUsersByUserEmailResponse, error)
 	GetUsersInGroup(ctx context.Context, in *GetUsersInGroupRequest, opts ...grpc.CallOption) (*GetUsersInGroupResponse, error)
 	GetUserStatus(ctx context.Context, in *UserStatusRequest, opts ...grpc.CallOption) (*UserStatusResponse, error)
-	SubscribeToUserStatus(ctx context.Context, in *UserStatusSubscriptionRequest, opts ...grpc.CallOption) (ChatService_SubscribeToUserStatusClient, error)
+	// ================================================ GROUP MANAGEMENT =======================================
 	CreateGroup(ctx context.Context, in *CreateGroupRequest, opts ...grpc.CallOption) (*CreateGroupResponse, error)
 	JoinGroup(ctx context.Context, in *JoinGroupRequest, opts ...grpc.CallOption) (*JoinGroupResponse, error)
 	LeaveGroup(ctx context.Context, in *LeaveGroupRequest, opts ...grpc.CallOption) (*LeaveGroupResponse, error)
 	UpdateGroup(ctx context.Context, in *UpdateGroupRequest, opts ...grpc.CallOption) (*UpdateGroupResponse, error)
-	SendTypingIndicator(ctx context.Context, in *TypingIndicatorRequest, opts ...grpc.CallOption) (*TypingIndicatorResponse, error)
-	SubscribeToTypingIndicators(ctx context.Context, in *TypingSubscriptionRequest, opts ...grpc.CallOption) (ChatService_SubscribeToTypingIndicatorsClient, error)
-	SearchMessages(ctx context.Context, in *SearchMessagesRequest, opts ...grpc.CallOption) (*SearchMessagesResponse, error)
-	SendDeliveryReceipt(ctx context.Context, in *DeliveryReceiptRequest, opts ...grpc.CallOption) (*DeliveryReceiptResponse, error)
-	AddReaction(ctx context.Context, in *AddReactionRequest, opts ...grpc.CallOption) (*AddReactionResponse, error)
-	RemoveReaction(ctx context.Context, in *RemoveReactionRequest, opts ...grpc.CallOption) (*RemoveReactionResponse, error)
-	GetMessageReactions(ctx context.Context, in *GetMessageReactionsRequest, opts ...grpc.CallOption) (*GetMessageReactionsResponse, error)
-	ForwardMessage(ctx context.Context, in *ForwardMessageRequest, opts ...grpc.CallOption) (*ForwardMessageResponse, error)
-	UploadFile(ctx context.Context, opts ...grpc.CallOption) (ChatService_UploadFileClient, error)
-	DownloadFile(ctx context.Context, in *FileDownloadRequest, opts ...grpc.CallOption) (ChatService_DownloadFileClient, error)
+	GetAllGroupsByUserEmail(ctx context.Context, in *GetAllGroupsByUserEmailRequest, opts ...grpc.CallOption) (*GetAllGroupsByUserEmailResponse, error)
+	// ================================================ CALL MANAGEMENT =======================================
 	InitiateCall(ctx context.Context, in *InitiateCallRequest, opts ...grpc.CallOption) (*InitiateCallResponse, error)
 	AcceptCall(ctx context.Context, in *AcceptCallRequest, opts ...grpc.CallOption) (*AcceptCallResponse, error)
 	RejectCall(ctx context.Context, in *RejectCallRequest, opts ...grpc.CallOption) (*RejectCallResponse, error)
 	EndCall(ctx context.Context, in *EndCallRequest, opts ...grpc.CallOption) (*EndCallResponse, error)
 	GetCallHistory(ctx context.Context, in *GetCallHistoryRequest, opts ...grpc.CallOption) (*GetCallHistoryResponse, error)
-	UpdateNotificationSettings(ctx context.Context, in *UpdateNotificationSettingsRequest, opts ...grpc.CallOption) (*UpdateNotificationSettingsResponse, error)
-	GetNotificationSettings(ctx context.Context, in *GetNotificationSettingsRequest, opts ...grpc.CallOption) (*GetNotificationSettingsResponse, error)
-	PinMessage(ctx context.Context, in *PinMessageRequest, opts ...grpc.CallOption) (*PinMessageResponse, error)
-	UnpinMessage(ctx context.Context, in *UnpinMessageRequest, opts ...grpc.CallOption) (*UnpinMessageResponse, error)
-	GetPinnedMessages(ctx context.Context, in *GetPinnedMessagesRequest, opts ...grpc.CallOption) (*GetPinnedMessagesResponse, error)
-	UpdatePresenceStatus(ctx context.Context, in *UpdatePresenceStatusRequest, opts ...grpc.CallOption) (*UpdatePresenceStatusResponse, error)
-	SubscribeToPresence(ctx context.Context, in *SubscribeToPresenceRequest, opts ...grpc.CallOption) (ChatService_SubscribeToPresenceClient, error)
-	GetUserPresence(ctx context.Context, in *GetUserPresenceRequest, opts ...grpc.CallOption) (*GetUserPresenceResponse, error)
-	EditMessage(ctx context.Context, in *EditMessageRequest, opts ...grpc.CallOption) (*EditMessageResponse, error)
-	DeleteMessage(ctx context.Context, in *DeleteMessageRequest, opts ...grpc.CallOption) (*DeleteMessageResponse, error)
-	SubscribeToMessageUpdates(ctx context.Context, in *SubscribeToMessageUpdatesRequest, opts ...grpc.CallOption) (ChatService_SubscribeToMessageUpdatesClient, error)
-	CreateThread(ctx context.Context, in *CreateThreadRequest, opts ...grpc.CallOption) (*CreateThreadResponse, error)
-	GetThreadMessages(ctx context.Context, in *GetThreadMessagesRequest, opts ...grpc.CallOption) (*GetThreadMessagesResponse, error)
-	SubscribeToThread(ctx context.Context, in *SubscribeToThreadRequest, opts ...grpc.CallOption) (ChatService_SubscribeToThreadClient, error)
-	SubscribeToNotifications(ctx context.Context, in *SubscribeToNotificationsRequest, opts ...grpc.CallOption) (ChatService_SubscribeToNotificationsClient, error)
+	// ================================================ NOTIFICATIONS =======================================
+	AddNotification(ctx context.Context, in *AddNotificationRequest, opts ...grpc.CallOption) (*AddNotificationResponse, error)
+	UpdateNotification(ctx context.Context, in *UpdateNotificationRequest, opts ...grpc.CallOption) (*UpdateNotificationResponse, error)
+	GetNotification(ctx context.Context, in *GetNotificationRequest, opts ...grpc.CallOption) (*GetNotificationResponse, error)
 	MarkNotificationAsRead(ctx context.Context, in *MarkNotificationAsReadRequest, opts ...grpc.CallOption) (*MarkNotificationAsReadResponse, error)
 	GetUnreadNotificationCount(ctx context.Context, in *GetUnreadNotificationCountRequest, opts ...grpc.CallOption) (*GetUnreadNotificationCountResponse, error)
-	StartScreenShare(ctx context.Context, in *StartScreenShareRequest, opts ...grpc.CallOption) (*StartScreenShareResponse, error)
-	StopScreenShare(ctx context.Context, in *StopScreenShareRequest, opts ...grpc.CallOption) (*StopScreenShareResponse, error)
-	SubscribeToScreenShare(ctx context.Context, in *SubscribeToScreenShareRequest, opts ...grpc.CallOption) (ChatService_SubscribeToScreenShareClient, error)
-	ScheduleMessage(ctx context.Context, in *ScheduleMessageRequest, opts ...grpc.CallOption) (*ScheduleMessageResponse, error)
+	// ================================================ SCHEDULED MESSAGES =======================================
+	AddScheduleMessage(ctx context.Context, in *AddScheduleMessageRequest, opts ...grpc.CallOption) (*AddScheduleMessageResponse, error)
+	UpdateScheduleMessage(ctx context.Context, in *UpdateScheduleMessageRequest, opts ...grpc.CallOption) (*UpdateScheduleMessageResponse, error)
 	CancelScheduledMessage(ctx context.Context, in *CancelScheduledMessageRequest, opts ...grpc.CallOption) (*CancelScheduledMessageResponse, error)
 	GetScheduledMessages(ctx context.Context, in *GetScheduledMessagesRequest, opts ...grpc.CallOption) (*GetScheduledMessagesResponse, error)
-	GetChatAnalytics(ctx context.Context, in *GetChatAnalyticsRequest, opts ...grpc.CallOption) (*GetChatAnalyticsResponse, error)
-	SubscribeToChatEvents(ctx context.Context, in *SubscribeToChatEventsRequest, opts ...grpc.CallOption) (ChatService_SubscribeToChatEventsClient, error)
 }
 
 type chatServiceClient struct {
@@ -178,60 +170,6 @@ func (x *chatServiceChatStreamClient) Recv() (*ChatStreamEnvelope, error) {
 	return m, nil
 }
 
-func (c *chatServiceClient) SendMessage(ctx context.Context, in *SendMessageRequest, opts ...grpc.CallOption) (*SendMessageResponse, error) {
-	out := new(SendMessageResponse)
-	err := c.cc.Invoke(ctx, ChatService_SendMessage_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *chatServiceClient) GetChatHistory(ctx context.Context, in *GetChatHistoryRequest, opts ...grpc.CallOption) (*GetChatHistoryResponse, error) {
-	out := new(GetChatHistoryResponse)
-	err := c.cc.Invoke(ctx, ChatService_GetChatHistory_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *chatServiceClient) MarkAsRead(ctx context.Context, in *ReadReceiptRequest, opts ...grpc.CallOption) (*ReadReceiptResponse, error) {
-	out := new(ReadReceiptResponse)
-	err := c.cc.Invoke(ctx, ChatService_MarkAsRead_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *chatServiceClient) LikeMessage(ctx context.Context, in *LikeMessageRequest, opts ...grpc.CallOption) (*LikeMessageResponse, error) {
-	out := new(LikeMessageResponse)
-	err := c.cc.Invoke(ctx, ChatService_LikeMessage_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *chatServiceClient) GetLikedMessages(ctx context.Context, in *GetLikedMessagesRequest, opts ...grpc.CallOption) (*GetLikedMessagesResponse, error) {
-	out := new(GetLikedMessagesResponse)
-	err := c.cc.Invoke(ctx, ChatService_GetLikedMessages_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *chatServiceClient) GetLastMessages(ctx context.Context, in *GetLastMessagesRequest, opts ...grpc.CallOption) (*GetLastMessagesResponse, error) {
-	out := new(GetLastMessagesResponse)
-	err := c.cc.Invoke(ctx, ChatService_GetLastMessages_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *chatServiceClient) SubscribeToLastMessages(ctx context.Context, in *LastMessageStreamRequest, opts ...grpc.CallOption) (ChatService_SubscribeToLastMessagesClient, error) {
 	stream, err := c.cc.NewStream(ctx, &ChatService_ServiceDesc.Streams[1], ChatService_SubscribeToLastMessages_FullMethodName, opts...)
 	if err != nil {
@@ -262,33 +200,6 @@ func (x *chatServiceSubscribeToLastMessagesClient) Recv() (*ChatMessage, error) 
 		return nil, err
 	}
 	return m, nil
-}
-
-func (c *chatServiceClient) GetUsersByUserID(ctx context.Context, in *GetUsersByUserIDRequest, opts ...grpc.CallOption) (*GetUsersByUserIDResponse, error) {
-	out := new(GetUsersByUserIDResponse)
-	err := c.cc.Invoke(ctx, ChatService_GetUsersByUserID_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *chatServiceClient) GetUsersInGroup(ctx context.Context, in *GetUsersInGroupRequest, opts ...grpc.CallOption) (*GetUsersInGroupResponse, error) {
-	out := new(GetUsersInGroupResponse)
-	err := c.cc.Invoke(ctx, ChatService_GetUsersInGroup_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *chatServiceClient) GetUserStatus(ctx context.Context, in *UserStatusRequest, opts ...grpc.CallOption) (*UserStatusResponse, error) {
-	out := new(UserStatusResponse)
-	err := c.cc.Invoke(ctx, ChatService_GetUserStatus_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *chatServiceClient) SubscribeToUserStatus(ctx context.Context, in *UserStatusSubscriptionRequest, opts ...grpc.CallOption) (ChatService_SubscribeToUserStatusClient, error) {
@@ -323,51 +234,6 @@ func (x *chatServiceSubscribeToUserStatusClient) Recv() (*UserStatus, error) {
 	return m, nil
 }
 
-func (c *chatServiceClient) CreateGroup(ctx context.Context, in *CreateGroupRequest, opts ...grpc.CallOption) (*CreateGroupResponse, error) {
-	out := new(CreateGroupResponse)
-	err := c.cc.Invoke(ctx, ChatService_CreateGroup_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *chatServiceClient) JoinGroup(ctx context.Context, in *JoinGroupRequest, opts ...grpc.CallOption) (*JoinGroupResponse, error) {
-	out := new(JoinGroupResponse)
-	err := c.cc.Invoke(ctx, ChatService_JoinGroup_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *chatServiceClient) LeaveGroup(ctx context.Context, in *LeaveGroupRequest, opts ...grpc.CallOption) (*LeaveGroupResponse, error) {
-	out := new(LeaveGroupResponse)
-	err := c.cc.Invoke(ctx, ChatService_LeaveGroup_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *chatServiceClient) UpdateGroup(ctx context.Context, in *UpdateGroupRequest, opts ...grpc.CallOption) (*UpdateGroupResponse, error) {
-	out := new(UpdateGroupResponse)
-	err := c.cc.Invoke(ctx, ChatService_UpdateGroup_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *chatServiceClient) SendTypingIndicator(ctx context.Context, in *TypingIndicatorRequest, opts ...grpc.CallOption) (*TypingIndicatorResponse, error) {
-	out := new(TypingIndicatorResponse)
-	err := c.cc.Invoke(ctx, ChatService_SendTypingIndicator_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *chatServiceClient) SubscribeToTypingIndicators(ctx context.Context, in *TypingSubscriptionRequest, opts ...grpc.CallOption) (ChatService_SubscribeToTypingIndicatorsClient, error) {
 	stream, err := c.cc.NewStream(ctx, &ChatService_ServiceDesc.Streams[3], ChatService_SubscribeToTypingIndicators_FullMethodName, opts...)
 	if err != nil {
@@ -398,60 +264,6 @@ func (x *chatServiceSubscribeToTypingIndicatorsClient) Recv() (*TypingIndicator,
 		return nil, err
 	}
 	return m, nil
-}
-
-func (c *chatServiceClient) SearchMessages(ctx context.Context, in *SearchMessagesRequest, opts ...grpc.CallOption) (*SearchMessagesResponse, error) {
-	out := new(SearchMessagesResponse)
-	err := c.cc.Invoke(ctx, ChatService_SearchMessages_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *chatServiceClient) SendDeliveryReceipt(ctx context.Context, in *DeliveryReceiptRequest, opts ...grpc.CallOption) (*DeliveryReceiptResponse, error) {
-	out := new(DeliveryReceiptResponse)
-	err := c.cc.Invoke(ctx, ChatService_SendDeliveryReceipt_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *chatServiceClient) AddReaction(ctx context.Context, in *AddReactionRequest, opts ...grpc.CallOption) (*AddReactionResponse, error) {
-	out := new(AddReactionResponse)
-	err := c.cc.Invoke(ctx, ChatService_AddReaction_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *chatServiceClient) RemoveReaction(ctx context.Context, in *RemoveReactionRequest, opts ...grpc.CallOption) (*RemoveReactionResponse, error) {
-	out := new(RemoveReactionResponse)
-	err := c.cc.Invoke(ctx, ChatService_RemoveReaction_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *chatServiceClient) GetMessageReactions(ctx context.Context, in *GetMessageReactionsRequest, opts ...grpc.CallOption) (*GetMessageReactionsResponse, error) {
-	out := new(GetMessageReactionsResponse)
-	err := c.cc.Invoke(ctx, ChatService_GetMessageReactions_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *chatServiceClient) ForwardMessage(ctx context.Context, in *ForwardMessageRequest, opts ...grpc.CallOption) (*ForwardMessageResponse, error) {
-	out := new(ForwardMessageResponse)
-	err := c.cc.Invoke(ctx, ChatService_ForwardMessage_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *chatServiceClient) UploadFile(ctx context.Context, opts ...grpc.CallOption) (ChatService_UploadFileClient, error) {
@@ -520,105 +332,6 @@ func (x *chatServiceDownloadFileClient) Recv() (*FileDownloadResponse, error) {
 	return m, nil
 }
 
-func (c *chatServiceClient) InitiateCall(ctx context.Context, in *InitiateCallRequest, opts ...grpc.CallOption) (*InitiateCallResponse, error) {
-	out := new(InitiateCallResponse)
-	err := c.cc.Invoke(ctx, ChatService_InitiateCall_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *chatServiceClient) AcceptCall(ctx context.Context, in *AcceptCallRequest, opts ...grpc.CallOption) (*AcceptCallResponse, error) {
-	out := new(AcceptCallResponse)
-	err := c.cc.Invoke(ctx, ChatService_AcceptCall_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *chatServiceClient) RejectCall(ctx context.Context, in *RejectCallRequest, opts ...grpc.CallOption) (*RejectCallResponse, error) {
-	out := new(RejectCallResponse)
-	err := c.cc.Invoke(ctx, ChatService_RejectCall_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *chatServiceClient) EndCall(ctx context.Context, in *EndCallRequest, opts ...grpc.CallOption) (*EndCallResponse, error) {
-	out := new(EndCallResponse)
-	err := c.cc.Invoke(ctx, ChatService_EndCall_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *chatServiceClient) GetCallHistory(ctx context.Context, in *GetCallHistoryRequest, opts ...grpc.CallOption) (*GetCallHistoryResponse, error) {
-	out := new(GetCallHistoryResponse)
-	err := c.cc.Invoke(ctx, ChatService_GetCallHistory_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *chatServiceClient) UpdateNotificationSettings(ctx context.Context, in *UpdateNotificationSettingsRequest, opts ...grpc.CallOption) (*UpdateNotificationSettingsResponse, error) {
-	out := new(UpdateNotificationSettingsResponse)
-	err := c.cc.Invoke(ctx, ChatService_UpdateNotificationSettings_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *chatServiceClient) GetNotificationSettings(ctx context.Context, in *GetNotificationSettingsRequest, opts ...grpc.CallOption) (*GetNotificationSettingsResponse, error) {
-	out := new(GetNotificationSettingsResponse)
-	err := c.cc.Invoke(ctx, ChatService_GetNotificationSettings_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *chatServiceClient) PinMessage(ctx context.Context, in *PinMessageRequest, opts ...grpc.CallOption) (*PinMessageResponse, error) {
-	out := new(PinMessageResponse)
-	err := c.cc.Invoke(ctx, ChatService_PinMessage_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *chatServiceClient) UnpinMessage(ctx context.Context, in *UnpinMessageRequest, opts ...grpc.CallOption) (*UnpinMessageResponse, error) {
-	out := new(UnpinMessageResponse)
-	err := c.cc.Invoke(ctx, ChatService_UnpinMessage_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *chatServiceClient) GetPinnedMessages(ctx context.Context, in *GetPinnedMessagesRequest, opts ...grpc.CallOption) (*GetPinnedMessagesResponse, error) {
-	out := new(GetPinnedMessagesResponse)
-	err := c.cc.Invoke(ctx, ChatService_GetPinnedMessages_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *chatServiceClient) UpdatePresenceStatus(ctx context.Context, in *UpdatePresenceStatusRequest, opts ...grpc.CallOption) (*UpdatePresenceStatusResponse, error) {
-	out := new(UpdatePresenceStatusResponse)
-	err := c.cc.Invoke(ctx, ChatService_UpdatePresenceStatus_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *chatServiceClient) SubscribeToPresence(ctx context.Context, in *SubscribeToPresenceRequest, opts ...grpc.CallOption) (ChatService_SubscribeToPresenceClient, error) {
 	stream, err := c.cc.NewStream(ctx, &ChatService_ServiceDesc.Streams[6], ChatService_SubscribeToPresence_FullMethodName, opts...)
 	if err != nil {
@@ -651,33 +364,6 @@ func (x *chatServiceSubscribeToPresenceClient) Recv() (*PresenceUpdate, error) {
 	return m, nil
 }
 
-func (c *chatServiceClient) GetUserPresence(ctx context.Context, in *GetUserPresenceRequest, opts ...grpc.CallOption) (*GetUserPresenceResponse, error) {
-	out := new(GetUserPresenceResponse)
-	err := c.cc.Invoke(ctx, ChatService_GetUserPresence_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *chatServiceClient) EditMessage(ctx context.Context, in *EditMessageRequest, opts ...grpc.CallOption) (*EditMessageResponse, error) {
-	out := new(EditMessageResponse)
-	err := c.cc.Invoke(ctx, ChatService_EditMessage_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *chatServiceClient) DeleteMessage(ctx context.Context, in *DeleteMessageRequest, opts ...grpc.CallOption) (*DeleteMessageResponse, error) {
-	out := new(DeleteMessageResponse)
-	err := c.cc.Invoke(ctx, ChatService_DeleteMessage_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *chatServiceClient) SubscribeToMessageUpdates(ctx context.Context, in *SubscribeToMessageUpdatesRequest, opts ...grpc.CallOption) (ChatService_SubscribeToMessageUpdatesClient, error) {
 	stream, err := c.cc.NewStream(ctx, &ChatService_ServiceDesc.Streams[7], ChatService_SubscribeToMessageUpdates_FullMethodName, opts...)
 	if err != nil {
@@ -708,24 +394,6 @@ func (x *chatServiceSubscribeToMessageUpdatesClient) Recv() (*MessageUpdate, err
 		return nil, err
 	}
 	return m, nil
-}
-
-func (c *chatServiceClient) CreateThread(ctx context.Context, in *CreateThreadRequest, opts ...grpc.CallOption) (*CreateThreadResponse, error) {
-	out := new(CreateThreadResponse)
-	err := c.cc.Invoke(ctx, ChatService_CreateThread_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *chatServiceClient) GetThreadMessages(ctx context.Context, in *GetThreadMessagesRequest, opts ...grpc.CallOption) (*GetThreadMessagesResponse, error) {
-	out := new(GetThreadMessagesResponse)
-	err := c.cc.Invoke(ctx, ChatService_GetThreadMessages_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *chatServiceClient) SubscribeToThread(ctx context.Context, in *SubscribeToThreadRequest, opts ...grpc.CallOption) (ChatService_SubscribeToThreadClient, error) {
@@ -792,42 +460,6 @@ func (x *chatServiceSubscribeToNotificationsClient) Recv() (*NotificationUpdate,
 	return m, nil
 }
 
-func (c *chatServiceClient) MarkNotificationAsRead(ctx context.Context, in *MarkNotificationAsReadRequest, opts ...grpc.CallOption) (*MarkNotificationAsReadResponse, error) {
-	out := new(MarkNotificationAsReadResponse)
-	err := c.cc.Invoke(ctx, ChatService_MarkNotificationAsRead_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *chatServiceClient) GetUnreadNotificationCount(ctx context.Context, in *GetUnreadNotificationCountRequest, opts ...grpc.CallOption) (*GetUnreadNotificationCountResponse, error) {
-	out := new(GetUnreadNotificationCountResponse)
-	err := c.cc.Invoke(ctx, ChatService_GetUnreadNotificationCount_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *chatServiceClient) StartScreenShare(ctx context.Context, in *StartScreenShareRequest, opts ...grpc.CallOption) (*StartScreenShareResponse, error) {
-	out := new(StartScreenShareResponse)
-	err := c.cc.Invoke(ctx, ChatService_StartScreenShare_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *chatServiceClient) StopScreenShare(ctx context.Context, in *StopScreenShareRequest, opts ...grpc.CallOption) (*StopScreenShareResponse, error) {
-	out := new(StopScreenShareResponse)
-	err := c.cc.Invoke(ctx, ChatService_StopScreenShare_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *chatServiceClient) SubscribeToScreenShare(ctx context.Context, in *SubscribeToScreenShareRequest, opts ...grpc.CallOption) (ChatService_SubscribeToScreenShareClient, error) {
 	stream, err := c.cc.NewStream(ctx, &ChatService_ServiceDesc.Streams[10], ChatService_SubscribeToScreenShare_FullMethodName, opts...)
 	if err != nil {
@@ -858,42 +490,6 @@ func (x *chatServiceSubscribeToScreenShareClient) Recv() (*ScreenShareUpdate, er
 		return nil, err
 	}
 	return m, nil
-}
-
-func (c *chatServiceClient) ScheduleMessage(ctx context.Context, in *ScheduleMessageRequest, opts ...grpc.CallOption) (*ScheduleMessageResponse, error) {
-	out := new(ScheduleMessageResponse)
-	err := c.cc.Invoke(ctx, ChatService_ScheduleMessage_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *chatServiceClient) CancelScheduledMessage(ctx context.Context, in *CancelScheduledMessageRequest, opts ...grpc.CallOption) (*CancelScheduledMessageResponse, error) {
-	out := new(CancelScheduledMessageResponse)
-	err := c.cc.Invoke(ctx, ChatService_CancelScheduledMessage_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *chatServiceClient) GetScheduledMessages(ctx context.Context, in *GetScheduledMessagesRequest, opts ...grpc.CallOption) (*GetScheduledMessagesResponse, error) {
-	out := new(GetScheduledMessagesResponse)
-	err := c.cc.Invoke(ctx, ChatService_GetScheduledMessages_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *chatServiceClient) GetChatAnalytics(ctx context.Context, in *GetChatAnalyticsRequest, opts ...grpc.CallOption) (*GetChatAnalyticsResponse, error) {
-	out := new(GetChatAnalyticsResponse)
-	err := c.cc.Invoke(ctx, ChatService_GetChatAnalytics_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *chatServiceClient) SubscribeToChatEvents(ctx context.Context, in *SubscribeToChatEventsRequest, opts ...grpc.CallOption) (ChatService_SubscribeToChatEventsClient, error) {
@@ -928,66 +524,390 @@ func (x *chatServiceSubscribeToChatEventsClient) Recv() (*ChatEvent, error) {
 	return m, nil
 }
 
+func (c *chatServiceClient) SendMessage(ctx context.Context, in *SendMessageRequest, opts ...grpc.CallOption) (*SendMessageResponse, error) {
+	out := new(SendMessageResponse)
+	err := c.cc.Invoke(ctx, ChatService_SendMessage_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) EditMessage(ctx context.Context, in *EditMessageRequest, opts ...grpc.CallOption) (*EditMessageResponse, error) {
+	out := new(EditMessageResponse)
+	err := c.cc.Invoke(ctx, ChatService_EditMessage_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) DeleteMessage(ctx context.Context, in *DeleteMessageRequest, opts ...grpc.CallOption) (*DeleteMessageResponse, error) {
+	out := new(DeleteMessageResponse)
+	err := c.cc.Invoke(ctx, ChatService_DeleteMessage_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) GetChatHistory(ctx context.Context, in *GetChatHistoryRequest, opts ...grpc.CallOption) (*GetChatHistoryResponse, error) {
+	out := new(GetChatHistoryResponse)
+	err := c.cc.Invoke(ctx, ChatService_GetChatHistory_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) MarkAsRead(ctx context.Context, in *ReadReceiptRequest, opts ...grpc.CallOption) (*ReadReceiptResponse, error) {
+	out := new(ReadReceiptResponse)
+	err := c.cc.Invoke(ctx, ChatService_MarkAsRead_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) SearchMessages(ctx context.Context, in *SearchMessagesRequest, opts ...grpc.CallOption) (*SearchMessagesResponse, error) {
+	out := new(SearchMessagesResponse)
+	err := c.cc.Invoke(ctx, ChatService_SearchMessages_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) ForwardMessage(ctx context.Context, in *ForwardMessageRequest, opts ...grpc.CallOption) (*ForwardMessageResponse, error) {
+	out := new(ForwardMessageResponse)
+	err := c.cc.Invoke(ctx, ChatService_ForwardMessage_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) PinMessage(ctx context.Context, in *PinMessageRequest, opts ...grpc.CallOption) (*PinMessageResponse, error) {
+	out := new(PinMessageResponse)
+	err := c.cc.Invoke(ctx, ChatService_PinMessage_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) UnpinMessage(ctx context.Context, in *UnpinMessageRequest, opts ...grpc.CallOption) (*UnpinMessageResponse, error) {
+	out := new(UnpinMessageResponse)
+	err := c.cc.Invoke(ctx, ChatService_UnpinMessage_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) GetPinnedMessages(ctx context.Context, in *GetPinnedMessagesRequest, opts ...grpc.CallOption) (*GetPinnedMessagesResponse, error) {
+	out := new(GetPinnedMessagesResponse)
+	err := c.cc.Invoke(ctx, ChatService_GetPinnedMessages_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) AddLikeMessage(ctx context.Context, in *AddLikeMessageRequest, opts ...grpc.CallOption) (*AddLikeMessageResponse, error) {
+	out := new(AddLikeMessageResponse)
+	err := c.cc.Invoke(ctx, ChatService_AddLikeMessage_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) UpdateLikedMessage(ctx context.Context, in *UpdateLikedMessageRequest, opts ...grpc.CallOption) (*UpdateLikedMessageResponse, error) {
+	out := new(UpdateLikedMessageResponse)
+	err := c.cc.Invoke(ctx, ChatService_UpdateLikedMessage_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) GetLikedMessages(ctx context.Context, in *GetLikedMessagesRequest, opts ...grpc.CallOption) (*GetLikedMessagesResponse, error) {
+	out := new(GetLikedMessagesResponse)
+	err := c.cc.Invoke(ctx, ChatService_GetLikedMessages_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) GetLastMessages(ctx context.Context, in *GetLastMessagesRequest, opts ...grpc.CallOption) (*GetLastMessagesResponse, error) {
+	out := new(GetLastMessagesResponse)
+	err := c.cc.Invoke(ctx, ChatService_GetLastMessages_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) GetUsersByUserEmail(ctx context.Context, in *GetUsersByUserEmailRequest, opts ...grpc.CallOption) (*GetUsersByUserEmailResponse, error) {
+	out := new(GetUsersByUserEmailResponse)
+	err := c.cc.Invoke(ctx, ChatService_GetUsersByUserEmail_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) GetUsersInGroup(ctx context.Context, in *GetUsersInGroupRequest, opts ...grpc.CallOption) (*GetUsersInGroupResponse, error) {
+	out := new(GetUsersInGroupResponse)
+	err := c.cc.Invoke(ctx, ChatService_GetUsersInGroup_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) GetUserStatus(ctx context.Context, in *UserStatusRequest, opts ...grpc.CallOption) (*UserStatusResponse, error) {
+	out := new(UserStatusResponse)
+	err := c.cc.Invoke(ctx, ChatService_GetUserStatus_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) CreateGroup(ctx context.Context, in *CreateGroupRequest, opts ...grpc.CallOption) (*CreateGroupResponse, error) {
+	out := new(CreateGroupResponse)
+	err := c.cc.Invoke(ctx, ChatService_CreateGroup_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) JoinGroup(ctx context.Context, in *JoinGroupRequest, opts ...grpc.CallOption) (*JoinGroupResponse, error) {
+	out := new(JoinGroupResponse)
+	err := c.cc.Invoke(ctx, ChatService_JoinGroup_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) LeaveGroup(ctx context.Context, in *LeaveGroupRequest, opts ...grpc.CallOption) (*LeaveGroupResponse, error) {
+	out := new(LeaveGroupResponse)
+	err := c.cc.Invoke(ctx, ChatService_LeaveGroup_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) UpdateGroup(ctx context.Context, in *UpdateGroupRequest, opts ...grpc.CallOption) (*UpdateGroupResponse, error) {
+	out := new(UpdateGroupResponse)
+	err := c.cc.Invoke(ctx, ChatService_UpdateGroup_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) GetAllGroupsByUserEmail(ctx context.Context, in *GetAllGroupsByUserEmailRequest, opts ...grpc.CallOption) (*GetAllGroupsByUserEmailResponse, error) {
+	out := new(GetAllGroupsByUserEmailResponse)
+	err := c.cc.Invoke(ctx, ChatService_GetAllGroupsByUserEmail_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) InitiateCall(ctx context.Context, in *InitiateCallRequest, opts ...grpc.CallOption) (*InitiateCallResponse, error) {
+	out := new(InitiateCallResponse)
+	err := c.cc.Invoke(ctx, ChatService_InitiateCall_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) AcceptCall(ctx context.Context, in *AcceptCallRequest, opts ...grpc.CallOption) (*AcceptCallResponse, error) {
+	out := new(AcceptCallResponse)
+	err := c.cc.Invoke(ctx, ChatService_AcceptCall_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) RejectCall(ctx context.Context, in *RejectCallRequest, opts ...grpc.CallOption) (*RejectCallResponse, error) {
+	out := new(RejectCallResponse)
+	err := c.cc.Invoke(ctx, ChatService_RejectCall_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) EndCall(ctx context.Context, in *EndCallRequest, opts ...grpc.CallOption) (*EndCallResponse, error) {
+	out := new(EndCallResponse)
+	err := c.cc.Invoke(ctx, ChatService_EndCall_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) GetCallHistory(ctx context.Context, in *GetCallHistoryRequest, opts ...grpc.CallOption) (*GetCallHistoryResponse, error) {
+	out := new(GetCallHistoryResponse)
+	err := c.cc.Invoke(ctx, ChatService_GetCallHistory_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) AddNotification(ctx context.Context, in *AddNotificationRequest, opts ...grpc.CallOption) (*AddNotificationResponse, error) {
+	out := new(AddNotificationResponse)
+	err := c.cc.Invoke(ctx, ChatService_AddNotification_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) UpdateNotification(ctx context.Context, in *UpdateNotificationRequest, opts ...grpc.CallOption) (*UpdateNotificationResponse, error) {
+	out := new(UpdateNotificationResponse)
+	err := c.cc.Invoke(ctx, ChatService_UpdateNotification_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) GetNotification(ctx context.Context, in *GetNotificationRequest, opts ...grpc.CallOption) (*GetNotificationResponse, error) {
+	out := new(GetNotificationResponse)
+	err := c.cc.Invoke(ctx, ChatService_GetNotification_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) MarkNotificationAsRead(ctx context.Context, in *MarkNotificationAsReadRequest, opts ...grpc.CallOption) (*MarkNotificationAsReadResponse, error) {
+	out := new(MarkNotificationAsReadResponse)
+	err := c.cc.Invoke(ctx, ChatService_MarkNotificationAsRead_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) GetUnreadNotificationCount(ctx context.Context, in *GetUnreadNotificationCountRequest, opts ...grpc.CallOption) (*GetUnreadNotificationCountResponse, error) {
+	out := new(GetUnreadNotificationCountResponse)
+	err := c.cc.Invoke(ctx, ChatService_GetUnreadNotificationCount_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) AddScheduleMessage(ctx context.Context, in *AddScheduleMessageRequest, opts ...grpc.CallOption) (*AddScheduleMessageResponse, error) {
+	out := new(AddScheduleMessageResponse)
+	err := c.cc.Invoke(ctx, ChatService_AddScheduleMessage_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) UpdateScheduleMessage(ctx context.Context, in *UpdateScheduleMessageRequest, opts ...grpc.CallOption) (*UpdateScheduleMessageResponse, error) {
+	out := new(UpdateScheduleMessageResponse)
+	err := c.cc.Invoke(ctx, ChatService_UpdateScheduleMessage_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) CancelScheduledMessage(ctx context.Context, in *CancelScheduledMessageRequest, opts ...grpc.CallOption) (*CancelScheduledMessageResponse, error) {
+	out := new(CancelScheduledMessageResponse)
+	err := c.cc.Invoke(ctx, ChatService_CancelScheduledMessage_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) GetScheduledMessages(ctx context.Context, in *GetScheduledMessagesRequest, opts ...grpc.CallOption) (*GetScheduledMessagesResponse, error) {
+	out := new(GetScheduledMessagesResponse)
+	err := c.cc.Invoke(ctx, ChatService_GetScheduledMessages_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ChatServiceServer is the server API for ChatService service.
 // All implementations must embed UnimplementedChatServiceServer
 // for forward compatibility
 type ChatServiceServer interface {
+	// ================================================ STREAMING =======================================
 	ChatStream(ChatService_ChatStreamServer) error
+	SubscribeToLastMessages(*LastMessageStreamRequest, ChatService_SubscribeToLastMessagesServer) error
+	SubscribeToUserStatus(*UserStatusSubscriptionRequest, ChatService_SubscribeToUserStatusServer) error
+	SubscribeToTypingIndicators(*TypingSubscriptionRequest, ChatService_SubscribeToTypingIndicatorsServer) error
+	UploadFile(ChatService_UploadFileServer) error
+	DownloadFile(*FileDownloadRequest, ChatService_DownloadFileServer) error
+	SubscribeToPresence(*SubscribeToPresenceRequest, ChatService_SubscribeToPresenceServer) error
+	SubscribeToMessageUpdates(*SubscribeToMessageUpdatesRequest, ChatService_SubscribeToMessageUpdatesServer) error
+	SubscribeToThread(*SubscribeToThreadRequest, ChatService_SubscribeToThreadServer) error
+	SubscribeToNotifications(*SubscribeToNotificationsRequest, ChatService_SubscribeToNotificationsServer) error
+	SubscribeToScreenShare(*SubscribeToScreenShareRequest, ChatService_SubscribeToScreenShareServer) error
+	SubscribeToChatEvents(*SubscribeToChatEventsRequest, ChatService_SubscribeToChatEventsServer) error
+	// ================================================ MESSAGE HANDLING =======================================
 	SendMessage(context.Context, *SendMessageRequest) (*SendMessageResponse, error)
+	EditMessage(context.Context, *EditMessageRequest) (*EditMessageResponse, error)
+	DeleteMessage(context.Context, *DeleteMessageRequest) (*DeleteMessageResponse, error)
 	GetChatHistory(context.Context, *GetChatHistoryRequest) (*GetChatHistoryResponse, error)
 	MarkAsRead(context.Context, *ReadReceiptRequest) (*ReadReceiptResponse, error)
-	LikeMessage(context.Context, *LikeMessageRequest) (*LikeMessageResponse, error)
+	SearchMessages(context.Context, *SearchMessagesRequest) (*SearchMessagesResponse, error)
+	ForwardMessage(context.Context, *ForwardMessageRequest) (*ForwardMessageResponse, error)
+	PinMessage(context.Context, *PinMessageRequest) (*PinMessageResponse, error)
+	UnpinMessage(context.Context, *UnpinMessageRequest) (*UnpinMessageResponse, error)
+	GetPinnedMessages(context.Context, *GetPinnedMessagesRequest) (*GetPinnedMessagesResponse, error)
+	// ================================================ MESSAGE REACTIONS =======================================
+	AddLikeMessage(context.Context, *AddLikeMessageRequest) (*AddLikeMessageResponse, error)
+	UpdateLikedMessage(context.Context, *UpdateLikedMessageRequest) (*UpdateLikedMessageResponse, error)
 	GetLikedMessages(context.Context, *GetLikedMessagesRequest) (*GetLikedMessagesResponse, error)
 	GetLastMessages(context.Context, *GetLastMessagesRequest) (*GetLastMessagesResponse, error)
-	SubscribeToLastMessages(*LastMessageStreamRequest, ChatService_SubscribeToLastMessagesServer) error
-	GetUsersByUserID(context.Context, *GetUsersByUserIDRequest) (*GetUsersByUserIDResponse, error)
+	// ================================================ USER MANAGEMENT =======================================
+	GetUsersByUserEmail(context.Context, *GetUsersByUserEmailRequest) (*GetUsersByUserEmailResponse, error)
 	GetUsersInGroup(context.Context, *GetUsersInGroupRequest) (*GetUsersInGroupResponse, error)
 	GetUserStatus(context.Context, *UserStatusRequest) (*UserStatusResponse, error)
-	SubscribeToUserStatus(*UserStatusSubscriptionRequest, ChatService_SubscribeToUserStatusServer) error
+	// ================================================ GROUP MANAGEMENT =======================================
 	CreateGroup(context.Context, *CreateGroupRequest) (*CreateGroupResponse, error)
 	JoinGroup(context.Context, *JoinGroupRequest) (*JoinGroupResponse, error)
 	LeaveGroup(context.Context, *LeaveGroupRequest) (*LeaveGroupResponse, error)
 	UpdateGroup(context.Context, *UpdateGroupRequest) (*UpdateGroupResponse, error)
-	SendTypingIndicator(context.Context, *TypingIndicatorRequest) (*TypingIndicatorResponse, error)
-	SubscribeToTypingIndicators(*TypingSubscriptionRequest, ChatService_SubscribeToTypingIndicatorsServer) error
-	SearchMessages(context.Context, *SearchMessagesRequest) (*SearchMessagesResponse, error)
-	SendDeliveryReceipt(context.Context, *DeliveryReceiptRequest) (*DeliveryReceiptResponse, error)
-	AddReaction(context.Context, *AddReactionRequest) (*AddReactionResponse, error)
-	RemoveReaction(context.Context, *RemoveReactionRequest) (*RemoveReactionResponse, error)
-	GetMessageReactions(context.Context, *GetMessageReactionsRequest) (*GetMessageReactionsResponse, error)
-	ForwardMessage(context.Context, *ForwardMessageRequest) (*ForwardMessageResponse, error)
-	UploadFile(ChatService_UploadFileServer) error
-	DownloadFile(*FileDownloadRequest, ChatService_DownloadFileServer) error
+	GetAllGroupsByUserEmail(context.Context, *GetAllGroupsByUserEmailRequest) (*GetAllGroupsByUserEmailResponse, error)
+	// ================================================ CALL MANAGEMENT =======================================
 	InitiateCall(context.Context, *InitiateCallRequest) (*InitiateCallResponse, error)
 	AcceptCall(context.Context, *AcceptCallRequest) (*AcceptCallResponse, error)
 	RejectCall(context.Context, *RejectCallRequest) (*RejectCallResponse, error)
 	EndCall(context.Context, *EndCallRequest) (*EndCallResponse, error)
 	GetCallHistory(context.Context, *GetCallHistoryRequest) (*GetCallHistoryResponse, error)
-	UpdateNotificationSettings(context.Context, *UpdateNotificationSettingsRequest) (*UpdateNotificationSettingsResponse, error)
-	GetNotificationSettings(context.Context, *GetNotificationSettingsRequest) (*GetNotificationSettingsResponse, error)
-	PinMessage(context.Context, *PinMessageRequest) (*PinMessageResponse, error)
-	UnpinMessage(context.Context, *UnpinMessageRequest) (*UnpinMessageResponse, error)
-	GetPinnedMessages(context.Context, *GetPinnedMessagesRequest) (*GetPinnedMessagesResponse, error)
-	UpdatePresenceStatus(context.Context, *UpdatePresenceStatusRequest) (*UpdatePresenceStatusResponse, error)
-	SubscribeToPresence(*SubscribeToPresenceRequest, ChatService_SubscribeToPresenceServer) error
-	GetUserPresence(context.Context, *GetUserPresenceRequest) (*GetUserPresenceResponse, error)
-	EditMessage(context.Context, *EditMessageRequest) (*EditMessageResponse, error)
-	DeleteMessage(context.Context, *DeleteMessageRequest) (*DeleteMessageResponse, error)
-	SubscribeToMessageUpdates(*SubscribeToMessageUpdatesRequest, ChatService_SubscribeToMessageUpdatesServer) error
-	CreateThread(context.Context, *CreateThreadRequest) (*CreateThreadResponse, error)
-	GetThreadMessages(context.Context, *GetThreadMessagesRequest) (*GetThreadMessagesResponse, error)
-	SubscribeToThread(*SubscribeToThreadRequest, ChatService_SubscribeToThreadServer) error
-	SubscribeToNotifications(*SubscribeToNotificationsRequest, ChatService_SubscribeToNotificationsServer) error
+	// ================================================ NOTIFICATIONS =======================================
+	AddNotification(context.Context, *AddNotificationRequest) (*AddNotificationResponse, error)
+	UpdateNotification(context.Context, *UpdateNotificationRequest) (*UpdateNotificationResponse, error)
+	GetNotification(context.Context, *GetNotificationRequest) (*GetNotificationResponse, error)
 	MarkNotificationAsRead(context.Context, *MarkNotificationAsReadRequest) (*MarkNotificationAsReadResponse, error)
 	GetUnreadNotificationCount(context.Context, *GetUnreadNotificationCountRequest) (*GetUnreadNotificationCountResponse, error)
-	StartScreenShare(context.Context, *StartScreenShareRequest) (*StartScreenShareResponse, error)
-	StopScreenShare(context.Context, *StopScreenShareRequest) (*StopScreenShareResponse, error)
-	SubscribeToScreenShare(*SubscribeToScreenShareRequest, ChatService_SubscribeToScreenShareServer) error
-	ScheduleMessage(context.Context, *ScheduleMessageRequest) (*ScheduleMessageResponse, error)
+	// ================================================ SCHEDULED MESSAGES =======================================
+	AddScheduleMessage(context.Context, *AddScheduleMessageRequest) (*AddScheduleMessageResponse, error)
+	UpdateScheduleMessage(context.Context, *UpdateScheduleMessageRequest) (*UpdateScheduleMessageResponse, error)
 	CancelScheduledMessage(context.Context, *CancelScheduledMessageRequest) (*CancelScheduledMessageResponse, error)
 	GetScheduledMessages(context.Context, *GetScheduledMessagesRequest) (*GetScheduledMessagesResponse, error)
-	GetChatAnalytics(context.Context, *GetChatAnalyticsRequest) (*GetChatAnalyticsResponse, error)
-	SubscribeToChatEvents(*SubscribeToChatEventsRequest, ChatService_SubscribeToChatEventsServer) error
 	mustEmbedUnimplementedChatServiceServer()
 }
 
@@ -998,8 +918,47 @@ type UnimplementedChatServiceServer struct {
 func (UnimplementedChatServiceServer) ChatStream(ChatService_ChatStreamServer) error {
 	return status.Errorf(codes.Unimplemented, "method ChatStream not implemented")
 }
+func (UnimplementedChatServiceServer) SubscribeToLastMessages(*LastMessageStreamRequest, ChatService_SubscribeToLastMessagesServer) error {
+	return status.Errorf(codes.Unimplemented, "method SubscribeToLastMessages not implemented")
+}
+func (UnimplementedChatServiceServer) SubscribeToUserStatus(*UserStatusSubscriptionRequest, ChatService_SubscribeToUserStatusServer) error {
+	return status.Errorf(codes.Unimplemented, "method SubscribeToUserStatus not implemented")
+}
+func (UnimplementedChatServiceServer) SubscribeToTypingIndicators(*TypingSubscriptionRequest, ChatService_SubscribeToTypingIndicatorsServer) error {
+	return status.Errorf(codes.Unimplemented, "method SubscribeToTypingIndicators not implemented")
+}
+func (UnimplementedChatServiceServer) UploadFile(ChatService_UploadFileServer) error {
+	return status.Errorf(codes.Unimplemented, "method UploadFile not implemented")
+}
+func (UnimplementedChatServiceServer) DownloadFile(*FileDownloadRequest, ChatService_DownloadFileServer) error {
+	return status.Errorf(codes.Unimplemented, "method DownloadFile not implemented")
+}
+func (UnimplementedChatServiceServer) SubscribeToPresence(*SubscribeToPresenceRequest, ChatService_SubscribeToPresenceServer) error {
+	return status.Errorf(codes.Unimplemented, "method SubscribeToPresence not implemented")
+}
+func (UnimplementedChatServiceServer) SubscribeToMessageUpdates(*SubscribeToMessageUpdatesRequest, ChatService_SubscribeToMessageUpdatesServer) error {
+	return status.Errorf(codes.Unimplemented, "method SubscribeToMessageUpdates not implemented")
+}
+func (UnimplementedChatServiceServer) SubscribeToThread(*SubscribeToThreadRequest, ChatService_SubscribeToThreadServer) error {
+	return status.Errorf(codes.Unimplemented, "method SubscribeToThread not implemented")
+}
+func (UnimplementedChatServiceServer) SubscribeToNotifications(*SubscribeToNotificationsRequest, ChatService_SubscribeToNotificationsServer) error {
+	return status.Errorf(codes.Unimplemented, "method SubscribeToNotifications not implemented")
+}
+func (UnimplementedChatServiceServer) SubscribeToScreenShare(*SubscribeToScreenShareRequest, ChatService_SubscribeToScreenShareServer) error {
+	return status.Errorf(codes.Unimplemented, "method SubscribeToScreenShare not implemented")
+}
+func (UnimplementedChatServiceServer) SubscribeToChatEvents(*SubscribeToChatEventsRequest, ChatService_SubscribeToChatEventsServer) error {
+	return status.Errorf(codes.Unimplemented, "method SubscribeToChatEvents not implemented")
+}
 func (UnimplementedChatServiceServer) SendMessage(context.Context, *SendMessageRequest) (*SendMessageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendMessage not implemented")
+}
+func (UnimplementedChatServiceServer) EditMessage(context.Context, *EditMessageRequest) (*EditMessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EditMessage not implemented")
+}
+func (UnimplementedChatServiceServer) DeleteMessage(context.Context, *DeleteMessageRequest) (*DeleteMessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteMessage not implemented")
 }
 func (UnimplementedChatServiceServer) GetChatHistory(context.Context, *GetChatHistoryRequest) (*GetChatHistoryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetChatHistory not implemented")
@@ -1007,8 +966,26 @@ func (UnimplementedChatServiceServer) GetChatHistory(context.Context, *GetChatHi
 func (UnimplementedChatServiceServer) MarkAsRead(context.Context, *ReadReceiptRequest) (*ReadReceiptResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method MarkAsRead not implemented")
 }
-func (UnimplementedChatServiceServer) LikeMessage(context.Context, *LikeMessageRequest) (*LikeMessageResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method LikeMessage not implemented")
+func (UnimplementedChatServiceServer) SearchMessages(context.Context, *SearchMessagesRequest) (*SearchMessagesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SearchMessages not implemented")
+}
+func (UnimplementedChatServiceServer) ForwardMessage(context.Context, *ForwardMessageRequest) (*ForwardMessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ForwardMessage not implemented")
+}
+func (UnimplementedChatServiceServer) PinMessage(context.Context, *PinMessageRequest) (*PinMessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PinMessage not implemented")
+}
+func (UnimplementedChatServiceServer) UnpinMessage(context.Context, *UnpinMessageRequest) (*UnpinMessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UnpinMessage not implemented")
+}
+func (UnimplementedChatServiceServer) GetPinnedMessages(context.Context, *GetPinnedMessagesRequest) (*GetPinnedMessagesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPinnedMessages not implemented")
+}
+func (UnimplementedChatServiceServer) AddLikeMessage(context.Context, *AddLikeMessageRequest) (*AddLikeMessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddLikeMessage not implemented")
+}
+func (UnimplementedChatServiceServer) UpdateLikedMessage(context.Context, *UpdateLikedMessageRequest) (*UpdateLikedMessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateLikedMessage not implemented")
 }
 func (UnimplementedChatServiceServer) GetLikedMessages(context.Context, *GetLikedMessagesRequest) (*GetLikedMessagesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLikedMessages not implemented")
@@ -1016,20 +993,14 @@ func (UnimplementedChatServiceServer) GetLikedMessages(context.Context, *GetLike
 func (UnimplementedChatServiceServer) GetLastMessages(context.Context, *GetLastMessagesRequest) (*GetLastMessagesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLastMessages not implemented")
 }
-func (UnimplementedChatServiceServer) SubscribeToLastMessages(*LastMessageStreamRequest, ChatService_SubscribeToLastMessagesServer) error {
-	return status.Errorf(codes.Unimplemented, "method SubscribeToLastMessages not implemented")
-}
-func (UnimplementedChatServiceServer) GetUsersByUserID(context.Context, *GetUsersByUserIDRequest) (*GetUsersByUserIDResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetUsersByUserID not implemented")
+func (UnimplementedChatServiceServer) GetUsersByUserEmail(context.Context, *GetUsersByUserEmailRequest) (*GetUsersByUserEmailResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUsersByUserEmail not implemented")
 }
 func (UnimplementedChatServiceServer) GetUsersInGroup(context.Context, *GetUsersInGroupRequest) (*GetUsersInGroupResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUsersInGroup not implemented")
 }
 func (UnimplementedChatServiceServer) GetUserStatus(context.Context, *UserStatusRequest) (*UserStatusResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserStatus not implemented")
-}
-func (UnimplementedChatServiceServer) SubscribeToUserStatus(*UserStatusSubscriptionRequest, ChatService_SubscribeToUserStatusServer) error {
-	return status.Errorf(codes.Unimplemented, "method SubscribeToUserStatus not implemented")
 }
 func (UnimplementedChatServiceServer) CreateGroup(context.Context, *CreateGroupRequest) (*CreateGroupResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateGroup not implemented")
@@ -1043,35 +1014,8 @@ func (UnimplementedChatServiceServer) LeaveGroup(context.Context, *LeaveGroupReq
 func (UnimplementedChatServiceServer) UpdateGroup(context.Context, *UpdateGroupRequest) (*UpdateGroupResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateGroup not implemented")
 }
-func (UnimplementedChatServiceServer) SendTypingIndicator(context.Context, *TypingIndicatorRequest) (*TypingIndicatorResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SendTypingIndicator not implemented")
-}
-func (UnimplementedChatServiceServer) SubscribeToTypingIndicators(*TypingSubscriptionRequest, ChatService_SubscribeToTypingIndicatorsServer) error {
-	return status.Errorf(codes.Unimplemented, "method SubscribeToTypingIndicators not implemented")
-}
-func (UnimplementedChatServiceServer) SearchMessages(context.Context, *SearchMessagesRequest) (*SearchMessagesResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SearchMessages not implemented")
-}
-func (UnimplementedChatServiceServer) SendDeliveryReceipt(context.Context, *DeliveryReceiptRequest) (*DeliveryReceiptResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SendDeliveryReceipt not implemented")
-}
-func (UnimplementedChatServiceServer) AddReaction(context.Context, *AddReactionRequest) (*AddReactionResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AddReaction not implemented")
-}
-func (UnimplementedChatServiceServer) RemoveReaction(context.Context, *RemoveReactionRequest) (*RemoveReactionResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RemoveReaction not implemented")
-}
-func (UnimplementedChatServiceServer) GetMessageReactions(context.Context, *GetMessageReactionsRequest) (*GetMessageReactionsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetMessageReactions not implemented")
-}
-func (UnimplementedChatServiceServer) ForwardMessage(context.Context, *ForwardMessageRequest) (*ForwardMessageResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ForwardMessage not implemented")
-}
-func (UnimplementedChatServiceServer) UploadFile(ChatService_UploadFileServer) error {
-	return status.Errorf(codes.Unimplemented, "method UploadFile not implemented")
-}
-func (UnimplementedChatServiceServer) DownloadFile(*FileDownloadRequest, ChatService_DownloadFileServer) error {
-	return status.Errorf(codes.Unimplemented, "method DownloadFile not implemented")
+func (UnimplementedChatServiceServer) GetAllGroupsByUserEmail(context.Context, *GetAllGroupsByUserEmailRequest) (*GetAllGroupsByUserEmailResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllGroupsByUserEmail not implemented")
 }
 func (UnimplementedChatServiceServer) InitiateCall(context.Context, *InitiateCallRequest) (*InitiateCallResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InitiateCall not implemented")
@@ -1088,50 +1032,14 @@ func (UnimplementedChatServiceServer) EndCall(context.Context, *EndCallRequest) 
 func (UnimplementedChatServiceServer) GetCallHistory(context.Context, *GetCallHistoryRequest) (*GetCallHistoryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCallHistory not implemented")
 }
-func (UnimplementedChatServiceServer) UpdateNotificationSettings(context.Context, *UpdateNotificationSettingsRequest) (*UpdateNotificationSettingsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateNotificationSettings not implemented")
+func (UnimplementedChatServiceServer) AddNotification(context.Context, *AddNotificationRequest) (*AddNotificationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddNotification not implemented")
 }
-func (UnimplementedChatServiceServer) GetNotificationSettings(context.Context, *GetNotificationSettingsRequest) (*GetNotificationSettingsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetNotificationSettings not implemented")
+func (UnimplementedChatServiceServer) UpdateNotification(context.Context, *UpdateNotificationRequest) (*UpdateNotificationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateNotification not implemented")
 }
-func (UnimplementedChatServiceServer) PinMessage(context.Context, *PinMessageRequest) (*PinMessageResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method PinMessage not implemented")
-}
-func (UnimplementedChatServiceServer) UnpinMessage(context.Context, *UnpinMessageRequest) (*UnpinMessageResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UnpinMessage not implemented")
-}
-func (UnimplementedChatServiceServer) GetPinnedMessages(context.Context, *GetPinnedMessagesRequest) (*GetPinnedMessagesResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPinnedMessages not implemented")
-}
-func (UnimplementedChatServiceServer) UpdatePresenceStatus(context.Context, *UpdatePresenceStatusRequest) (*UpdatePresenceStatusResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdatePresenceStatus not implemented")
-}
-func (UnimplementedChatServiceServer) SubscribeToPresence(*SubscribeToPresenceRequest, ChatService_SubscribeToPresenceServer) error {
-	return status.Errorf(codes.Unimplemented, "method SubscribeToPresence not implemented")
-}
-func (UnimplementedChatServiceServer) GetUserPresence(context.Context, *GetUserPresenceRequest) (*GetUserPresenceResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetUserPresence not implemented")
-}
-func (UnimplementedChatServiceServer) EditMessage(context.Context, *EditMessageRequest) (*EditMessageResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method EditMessage not implemented")
-}
-func (UnimplementedChatServiceServer) DeleteMessage(context.Context, *DeleteMessageRequest) (*DeleteMessageResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteMessage not implemented")
-}
-func (UnimplementedChatServiceServer) SubscribeToMessageUpdates(*SubscribeToMessageUpdatesRequest, ChatService_SubscribeToMessageUpdatesServer) error {
-	return status.Errorf(codes.Unimplemented, "method SubscribeToMessageUpdates not implemented")
-}
-func (UnimplementedChatServiceServer) CreateThread(context.Context, *CreateThreadRequest) (*CreateThreadResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateThread not implemented")
-}
-func (UnimplementedChatServiceServer) GetThreadMessages(context.Context, *GetThreadMessagesRequest) (*GetThreadMessagesResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetThreadMessages not implemented")
-}
-func (UnimplementedChatServiceServer) SubscribeToThread(*SubscribeToThreadRequest, ChatService_SubscribeToThreadServer) error {
-	return status.Errorf(codes.Unimplemented, "method SubscribeToThread not implemented")
-}
-func (UnimplementedChatServiceServer) SubscribeToNotifications(*SubscribeToNotificationsRequest, ChatService_SubscribeToNotificationsServer) error {
-	return status.Errorf(codes.Unimplemented, "method SubscribeToNotifications not implemented")
+func (UnimplementedChatServiceServer) GetNotification(context.Context, *GetNotificationRequest) (*GetNotificationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetNotification not implemented")
 }
 func (UnimplementedChatServiceServer) MarkNotificationAsRead(context.Context, *MarkNotificationAsReadRequest) (*MarkNotificationAsReadResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method MarkNotificationAsRead not implemented")
@@ -1139,29 +1047,17 @@ func (UnimplementedChatServiceServer) MarkNotificationAsRead(context.Context, *M
 func (UnimplementedChatServiceServer) GetUnreadNotificationCount(context.Context, *GetUnreadNotificationCountRequest) (*GetUnreadNotificationCountResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUnreadNotificationCount not implemented")
 }
-func (UnimplementedChatServiceServer) StartScreenShare(context.Context, *StartScreenShareRequest) (*StartScreenShareResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method StartScreenShare not implemented")
+func (UnimplementedChatServiceServer) AddScheduleMessage(context.Context, *AddScheduleMessageRequest) (*AddScheduleMessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddScheduleMessage not implemented")
 }
-func (UnimplementedChatServiceServer) StopScreenShare(context.Context, *StopScreenShareRequest) (*StopScreenShareResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method StopScreenShare not implemented")
-}
-func (UnimplementedChatServiceServer) SubscribeToScreenShare(*SubscribeToScreenShareRequest, ChatService_SubscribeToScreenShareServer) error {
-	return status.Errorf(codes.Unimplemented, "method SubscribeToScreenShare not implemented")
-}
-func (UnimplementedChatServiceServer) ScheduleMessage(context.Context, *ScheduleMessageRequest) (*ScheduleMessageResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ScheduleMessage not implemented")
+func (UnimplementedChatServiceServer) UpdateScheduleMessage(context.Context, *UpdateScheduleMessageRequest) (*UpdateScheduleMessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateScheduleMessage not implemented")
 }
 func (UnimplementedChatServiceServer) CancelScheduledMessage(context.Context, *CancelScheduledMessageRequest) (*CancelScheduledMessageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CancelScheduledMessage not implemented")
 }
 func (UnimplementedChatServiceServer) GetScheduledMessages(context.Context, *GetScheduledMessagesRequest) (*GetScheduledMessagesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetScheduledMessages not implemented")
-}
-func (UnimplementedChatServiceServer) GetChatAnalytics(context.Context, *GetChatAnalyticsRequest) (*GetChatAnalyticsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetChatAnalytics not implemented")
-}
-func (UnimplementedChatServiceServer) SubscribeToChatEvents(*SubscribeToChatEventsRequest, ChatService_SubscribeToChatEventsServer) error {
-	return status.Errorf(codes.Unimplemented, "method SubscribeToChatEvents not implemented")
 }
 func (UnimplementedChatServiceServer) mustEmbedUnimplementedChatServiceServer() {}
 
@@ -1202,6 +1098,242 @@ func (x *chatServiceChatStreamServer) Recv() (*ChatStreamEnvelope, error) {
 	return m, nil
 }
 
+func _ChatService_SubscribeToLastMessages_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(LastMessageStreamRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(ChatServiceServer).SubscribeToLastMessages(m, &chatServiceSubscribeToLastMessagesServer{stream})
+}
+
+type ChatService_SubscribeToLastMessagesServer interface {
+	Send(*ChatMessage) error
+	grpc.ServerStream
+}
+
+type chatServiceSubscribeToLastMessagesServer struct {
+	grpc.ServerStream
+}
+
+func (x *chatServiceSubscribeToLastMessagesServer) Send(m *ChatMessage) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func _ChatService_SubscribeToUserStatus_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(UserStatusSubscriptionRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(ChatServiceServer).SubscribeToUserStatus(m, &chatServiceSubscribeToUserStatusServer{stream})
+}
+
+type ChatService_SubscribeToUserStatusServer interface {
+	Send(*UserStatus) error
+	grpc.ServerStream
+}
+
+type chatServiceSubscribeToUserStatusServer struct {
+	grpc.ServerStream
+}
+
+func (x *chatServiceSubscribeToUserStatusServer) Send(m *UserStatus) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func _ChatService_SubscribeToTypingIndicators_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(TypingSubscriptionRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(ChatServiceServer).SubscribeToTypingIndicators(m, &chatServiceSubscribeToTypingIndicatorsServer{stream})
+}
+
+type ChatService_SubscribeToTypingIndicatorsServer interface {
+	Send(*TypingIndicator) error
+	grpc.ServerStream
+}
+
+type chatServiceSubscribeToTypingIndicatorsServer struct {
+	grpc.ServerStream
+}
+
+func (x *chatServiceSubscribeToTypingIndicatorsServer) Send(m *TypingIndicator) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func _ChatService_UploadFile_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(ChatServiceServer).UploadFile(&chatServiceUploadFileServer{stream})
+}
+
+type ChatService_UploadFileServer interface {
+	SendAndClose(*FileUploadResponse) error
+	Recv() (*FileUploadRequest, error)
+	grpc.ServerStream
+}
+
+type chatServiceUploadFileServer struct {
+	grpc.ServerStream
+}
+
+func (x *chatServiceUploadFileServer) SendAndClose(m *FileUploadResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *chatServiceUploadFileServer) Recv() (*FileUploadRequest, error) {
+	m := new(FileUploadRequest)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func _ChatService_DownloadFile_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(FileDownloadRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(ChatServiceServer).DownloadFile(m, &chatServiceDownloadFileServer{stream})
+}
+
+type ChatService_DownloadFileServer interface {
+	Send(*FileDownloadResponse) error
+	grpc.ServerStream
+}
+
+type chatServiceDownloadFileServer struct {
+	grpc.ServerStream
+}
+
+func (x *chatServiceDownloadFileServer) Send(m *FileDownloadResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func _ChatService_SubscribeToPresence_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(SubscribeToPresenceRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(ChatServiceServer).SubscribeToPresence(m, &chatServiceSubscribeToPresenceServer{stream})
+}
+
+type ChatService_SubscribeToPresenceServer interface {
+	Send(*PresenceUpdate) error
+	grpc.ServerStream
+}
+
+type chatServiceSubscribeToPresenceServer struct {
+	grpc.ServerStream
+}
+
+func (x *chatServiceSubscribeToPresenceServer) Send(m *PresenceUpdate) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func _ChatService_SubscribeToMessageUpdates_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(SubscribeToMessageUpdatesRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(ChatServiceServer).SubscribeToMessageUpdates(m, &chatServiceSubscribeToMessageUpdatesServer{stream})
+}
+
+type ChatService_SubscribeToMessageUpdatesServer interface {
+	Send(*MessageUpdate) error
+	grpc.ServerStream
+}
+
+type chatServiceSubscribeToMessageUpdatesServer struct {
+	grpc.ServerStream
+}
+
+func (x *chatServiceSubscribeToMessageUpdatesServer) Send(m *MessageUpdate) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func _ChatService_SubscribeToThread_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(SubscribeToThreadRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(ChatServiceServer).SubscribeToThread(m, &chatServiceSubscribeToThreadServer{stream})
+}
+
+type ChatService_SubscribeToThreadServer interface {
+	Send(*ThreadUpdate) error
+	grpc.ServerStream
+}
+
+type chatServiceSubscribeToThreadServer struct {
+	grpc.ServerStream
+}
+
+func (x *chatServiceSubscribeToThreadServer) Send(m *ThreadUpdate) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func _ChatService_SubscribeToNotifications_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(SubscribeToNotificationsRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(ChatServiceServer).SubscribeToNotifications(m, &chatServiceSubscribeToNotificationsServer{stream})
+}
+
+type ChatService_SubscribeToNotificationsServer interface {
+	Send(*NotificationUpdate) error
+	grpc.ServerStream
+}
+
+type chatServiceSubscribeToNotificationsServer struct {
+	grpc.ServerStream
+}
+
+func (x *chatServiceSubscribeToNotificationsServer) Send(m *NotificationUpdate) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func _ChatService_SubscribeToScreenShare_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(SubscribeToScreenShareRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(ChatServiceServer).SubscribeToScreenShare(m, &chatServiceSubscribeToScreenShareServer{stream})
+}
+
+type ChatService_SubscribeToScreenShareServer interface {
+	Send(*ScreenShareUpdate) error
+	grpc.ServerStream
+}
+
+type chatServiceSubscribeToScreenShareServer struct {
+	grpc.ServerStream
+}
+
+func (x *chatServiceSubscribeToScreenShareServer) Send(m *ScreenShareUpdate) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func _ChatService_SubscribeToChatEvents_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(SubscribeToChatEventsRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(ChatServiceServer).SubscribeToChatEvents(m, &chatServiceSubscribeToChatEventsServer{stream})
+}
+
+type ChatService_SubscribeToChatEventsServer interface {
+	Send(*ChatEvent) error
+	grpc.ServerStream
+}
+
+type chatServiceSubscribeToChatEventsServer struct {
+	grpc.ServerStream
+}
+
+func (x *chatServiceSubscribeToChatEventsServer) Send(m *ChatEvent) error {
+	return x.ServerStream.SendMsg(m)
+}
+
 func _ChatService_SendMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SendMessageRequest)
 	if err := dec(in); err != nil {
@@ -1216,6 +1348,42 @@ func _ChatService_SendMessage_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ChatServiceServer).SendMessage(ctx, req.(*SendMessageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ChatService_EditMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EditMessageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServiceServer).EditMessage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ChatService_EditMessage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServiceServer).EditMessage(ctx, req.(*EditMessageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ChatService_DeleteMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteMessageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServiceServer).DeleteMessage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ChatService_DeleteMessage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServiceServer).DeleteMessage(ctx, req.(*DeleteMessageRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1256,20 +1424,128 @@ func _ChatService_MarkAsRead_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ChatService_LikeMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(LikeMessageRequest)
+func _ChatService_SearchMessages_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SearchMessagesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ChatServiceServer).LikeMessage(ctx, in)
+		return srv.(ChatServiceServer).SearchMessages(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: ChatService_LikeMessage_FullMethodName,
+		FullMethod: ChatService_SearchMessages_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).LikeMessage(ctx, req.(*LikeMessageRequest))
+		return srv.(ChatServiceServer).SearchMessages(ctx, req.(*SearchMessagesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ChatService_ForwardMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ForwardMessageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServiceServer).ForwardMessage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ChatService_ForwardMessage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServiceServer).ForwardMessage(ctx, req.(*ForwardMessageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ChatService_PinMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PinMessageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServiceServer).PinMessage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ChatService_PinMessage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServiceServer).PinMessage(ctx, req.(*PinMessageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ChatService_UnpinMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UnpinMessageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServiceServer).UnpinMessage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ChatService_UnpinMessage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServiceServer).UnpinMessage(ctx, req.(*UnpinMessageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ChatService_GetPinnedMessages_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPinnedMessagesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServiceServer).GetPinnedMessages(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ChatService_GetPinnedMessages_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServiceServer).GetPinnedMessages(ctx, req.(*GetPinnedMessagesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ChatService_AddLikeMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddLikeMessageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServiceServer).AddLikeMessage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ChatService_AddLikeMessage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServiceServer).AddLikeMessage(ctx, req.(*AddLikeMessageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ChatService_UpdateLikedMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateLikedMessageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServiceServer).UpdateLikedMessage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ChatService_UpdateLikedMessage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServiceServer).UpdateLikedMessage(ctx, req.(*UpdateLikedMessageRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1310,41 +1586,20 @@ func _ChatService_GetLastMessages_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ChatService_SubscribeToLastMessages_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(LastMessageStreamRequest)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
-	}
-	return srv.(ChatServiceServer).SubscribeToLastMessages(m, &chatServiceSubscribeToLastMessagesServer{stream})
-}
-
-type ChatService_SubscribeToLastMessagesServer interface {
-	Send(*ChatMessage) error
-	grpc.ServerStream
-}
-
-type chatServiceSubscribeToLastMessagesServer struct {
-	grpc.ServerStream
-}
-
-func (x *chatServiceSubscribeToLastMessagesServer) Send(m *ChatMessage) error {
-	return x.ServerStream.SendMsg(m)
-}
-
-func _ChatService_GetUsersByUserID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetUsersByUserIDRequest)
+func _ChatService_GetUsersByUserEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUsersByUserEmailRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ChatServiceServer).GetUsersByUserID(ctx, in)
+		return srv.(ChatServiceServer).GetUsersByUserEmail(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: ChatService_GetUsersByUserID_FullMethodName,
+		FullMethod: ChatService_GetUsersByUserEmail_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).GetUsersByUserID(ctx, req.(*GetUsersByUserIDRequest))
+		return srv.(ChatServiceServer).GetUsersByUserEmail(ctx, req.(*GetUsersByUserEmailRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1383,27 +1638,6 @@ func _ChatService_GetUserStatus_Handler(srv interface{}, ctx context.Context, de
 		return srv.(ChatServiceServer).GetUserStatus(ctx, req.(*UserStatusRequest))
 	}
 	return interceptor(ctx, in, info, handler)
-}
-
-func _ChatService_SubscribeToUserStatus_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(UserStatusSubscriptionRequest)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
-	}
-	return srv.(ChatServiceServer).SubscribeToUserStatus(m, &chatServiceSubscribeToUserStatusServer{stream})
-}
-
-type ChatService_SubscribeToUserStatusServer interface {
-	Send(*UserStatus) error
-	grpc.ServerStream
-}
-
-type chatServiceSubscribeToUserStatusServer struct {
-	grpc.ServerStream
-}
-
-func (x *chatServiceSubscribeToUserStatusServer) Send(m *UserStatus) error {
-	return x.ServerStream.SendMsg(m)
 }
 
 func _ChatService_CreateGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -1478,198 +1712,22 @@ func _ChatService_UpdateGroup_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ChatService_SendTypingIndicator_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(TypingIndicatorRequest)
+func _ChatService_GetAllGroupsByUserEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAllGroupsByUserEmailRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ChatServiceServer).SendTypingIndicator(ctx, in)
+		return srv.(ChatServiceServer).GetAllGroupsByUserEmail(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: ChatService_SendTypingIndicator_FullMethodName,
+		FullMethod: ChatService_GetAllGroupsByUserEmail_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).SendTypingIndicator(ctx, req.(*TypingIndicatorRequest))
+		return srv.(ChatServiceServer).GetAllGroupsByUserEmail(ctx, req.(*GetAllGroupsByUserEmailRequest))
 	}
 	return interceptor(ctx, in, info, handler)
-}
-
-func _ChatService_SubscribeToTypingIndicators_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(TypingSubscriptionRequest)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
-	}
-	return srv.(ChatServiceServer).SubscribeToTypingIndicators(m, &chatServiceSubscribeToTypingIndicatorsServer{stream})
-}
-
-type ChatService_SubscribeToTypingIndicatorsServer interface {
-	Send(*TypingIndicator) error
-	grpc.ServerStream
-}
-
-type chatServiceSubscribeToTypingIndicatorsServer struct {
-	grpc.ServerStream
-}
-
-func (x *chatServiceSubscribeToTypingIndicatorsServer) Send(m *TypingIndicator) error {
-	return x.ServerStream.SendMsg(m)
-}
-
-func _ChatService_SearchMessages_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SearchMessagesRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ChatServiceServer).SearchMessages(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: ChatService_SearchMessages_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).SearchMessages(ctx, req.(*SearchMessagesRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ChatService_SendDeliveryReceipt_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeliveryReceiptRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ChatServiceServer).SendDeliveryReceipt(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: ChatService_SendDeliveryReceipt_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).SendDeliveryReceipt(ctx, req.(*DeliveryReceiptRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ChatService_AddReaction_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AddReactionRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ChatServiceServer).AddReaction(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: ChatService_AddReaction_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).AddReaction(ctx, req.(*AddReactionRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ChatService_RemoveReaction_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RemoveReactionRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ChatServiceServer).RemoveReaction(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: ChatService_RemoveReaction_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).RemoveReaction(ctx, req.(*RemoveReactionRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ChatService_GetMessageReactions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetMessageReactionsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ChatServiceServer).GetMessageReactions(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: ChatService_GetMessageReactions_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).GetMessageReactions(ctx, req.(*GetMessageReactionsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ChatService_ForwardMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ForwardMessageRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ChatServiceServer).ForwardMessage(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: ChatService_ForwardMessage_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).ForwardMessage(ctx, req.(*ForwardMessageRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ChatService_UploadFile_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(ChatServiceServer).UploadFile(&chatServiceUploadFileServer{stream})
-}
-
-type ChatService_UploadFileServer interface {
-	SendAndClose(*FileUploadResponse) error
-	Recv() (*FileUploadRequest, error)
-	grpc.ServerStream
-}
-
-type chatServiceUploadFileServer struct {
-	grpc.ServerStream
-}
-
-func (x *chatServiceUploadFileServer) SendAndClose(m *FileUploadResponse) error {
-	return x.ServerStream.SendMsg(m)
-}
-
-func (x *chatServiceUploadFileServer) Recv() (*FileUploadRequest, error) {
-	m := new(FileUploadRequest)
-	if err := x.ServerStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
-func _ChatService_DownloadFile_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(FileDownloadRequest)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
-	}
-	return srv.(ChatServiceServer).DownloadFile(m, &chatServiceDownloadFileServer{stream})
-}
-
-type ChatService_DownloadFileServer interface {
-	Send(*FileDownloadResponse) error
-	grpc.ServerStream
-}
-
-type chatServiceDownloadFileServer struct {
-	grpc.ServerStream
-}
-
-func (x *chatServiceDownloadFileServer) Send(m *FileDownloadResponse) error {
-	return x.ServerStream.SendMsg(m)
 }
 
 func _ChatService_InitiateCall_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -1762,286 +1820,58 @@ func _ChatService_GetCallHistory_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ChatService_UpdateNotificationSettings_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateNotificationSettingsRequest)
+func _ChatService_AddNotification_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddNotificationRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ChatServiceServer).UpdateNotificationSettings(ctx, in)
+		return srv.(ChatServiceServer).AddNotification(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: ChatService_UpdateNotificationSettings_FullMethodName,
+		FullMethod: ChatService_AddNotification_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).UpdateNotificationSettings(ctx, req.(*UpdateNotificationSettingsRequest))
+		return srv.(ChatServiceServer).AddNotification(ctx, req.(*AddNotificationRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ChatService_GetNotificationSettings_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetNotificationSettingsRequest)
+func _ChatService_UpdateNotification_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateNotificationRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ChatServiceServer).GetNotificationSettings(ctx, in)
+		return srv.(ChatServiceServer).UpdateNotification(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: ChatService_GetNotificationSettings_FullMethodName,
+		FullMethod: ChatService_UpdateNotification_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).GetNotificationSettings(ctx, req.(*GetNotificationSettingsRequest))
+		return srv.(ChatServiceServer).UpdateNotification(ctx, req.(*UpdateNotificationRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ChatService_PinMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PinMessageRequest)
+func _ChatService_GetNotification_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetNotificationRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ChatServiceServer).PinMessage(ctx, in)
+		return srv.(ChatServiceServer).GetNotification(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: ChatService_PinMessage_FullMethodName,
+		FullMethod: ChatService_GetNotification_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).PinMessage(ctx, req.(*PinMessageRequest))
+		return srv.(ChatServiceServer).GetNotification(ctx, req.(*GetNotificationRequest))
 	}
 	return interceptor(ctx, in, info, handler)
-}
-
-func _ChatService_UnpinMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UnpinMessageRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ChatServiceServer).UnpinMessage(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: ChatService_UnpinMessage_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).UnpinMessage(ctx, req.(*UnpinMessageRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ChatService_GetPinnedMessages_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetPinnedMessagesRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ChatServiceServer).GetPinnedMessages(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: ChatService_GetPinnedMessages_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).GetPinnedMessages(ctx, req.(*GetPinnedMessagesRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ChatService_UpdatePresenceStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdatePresenceStatusRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ChatServiceServer).UpdatePresenceStatus(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: ChatService_UpdatePresenceStatus_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).UpdatePresenceStatus(ctx, req.(*UpdatePresenceStatusRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ChatService_SubscribeToPresence_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(SubscribeToPresenceRequest)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
-	}
-	return srv.(ChatServiceServer).SubscribeToPresence(m, &chatServiceSubscribeToPresenceServer{stream})
-}
-
-type ChatService_SubscribeToPresenceServer interface {
-	Send(*PresenceUpdate) error
-	grpc.ServerStream
-}
-
-type chatServiceSubscribeToPresenceServer struct {
-	grpc.ServerStream
-}
-
-func (x *chatServiceSubscribeToPresenceServer) Send(m *PresenceUpdate) error {
-	return x.ServerStream.SendMsg(m)
-}
-
-func _ChatService_GetUserPresence_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetUserPresenceRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ChatServiceServer).GetUserPresence(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: ChatService_GetUserPresence_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).GetUserPresence(ctx, req.(*GetUserPresenceRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ChatService_EditMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(EditMessageRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ChatServiceServer).EditMessage(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: ChatService_EditMessage_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).EditMessage(ctx, req.(*EditMessageRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ChatService_DeleteMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteMessageRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ChatServiceServer).DeleteMessage(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: ChatService_DeleteMessage_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).DeleteMessage(ctx, req.(*DeleteMessageRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ChatService_SubscribeToMessageUpdates_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(SubscribeToMessageUpdatesRequest)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
-	}
-	return srv.(ChatServiceServer).SubscribeToMessageUpdates(m, &chatServiceSubscribeToMessageUpdatesServer{stream})
-}
-
-type ChatService_SubscribeToMessageUpdatesServer interface {
-	Send(*MessageUpdate) error
-	grpc.ServerStream
-}
-
-type chatServiceSubscribeToMessageUpdatesServer struct {
-	grpc.ServerStream
-}
-
-func (x *chatServiceSubscribeToMessageUpdatesServer) Send(m *MessageUpdate) error {
-	return x.ServerStream.SendMsg(m)
-}
-
-func _ChatService_CreateThread_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateThreadRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ChatServiceServer).CreateThread(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: ChatService_CreateThread_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).CreateThread(ctx, req.(*CreateThreadRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ChatService_GetThreadMessages_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetThreadMessagesRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ChatServiceServer).GetThreadMessages(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: ChatService_GetThreadMessages_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).GetThreadMessages(ctx, req.(*GetThreadMessagesRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ChatService_SubscribeToThread_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(SubscribeToThreadRequest)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
-	}
-	return srv.(ChatServiceServer).SubscribeToThread(m, &chatServiceSubscribeToThreadServer{stream})
-}
-
-type ChatService_SubscribeToThreadServer interface {
-	Send(*ThreadUpdate) error
-	grpc.ServerStream
-}
-
-type chatServiceSubscribeToThreadServer struct {
-	grpc.ServerStream
-}
-
-func (x *chatServiceSubscribeToThreadServer) Send(m *ThreadUpdate) error {
-	return x.ServerStream.SendMsg(m)
-}
-
-func _ChatService_SubscribeToNotifications_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(SubscribeToNotificationsRequest)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
-	}
-	return srv.(ChatServiceServer).SubscribeToNotifications(m, &chatServiceSubscribeToNotificationsServer{stream})
-}
-
-type ChatService_SubscribeToNotificationsServer interface {
-	Send(*NotificationUpdate) error
-	grpc.ServerStream
-}
-
-type chatServiceSubscribeToNotificationsServer struct {
-	grpc.ServerStream
-}
-
-func (x *chatServiceSubscribeToNotificationsServer) Send(m *NotificationUpdate) error {
-	return x.ServerStream.SendMsg(m)
 }
 
 func _ChatService_MarkNotificationAsRead_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -2080,77 +1910,38 @@ func _ChatService_GetUnreadNotificationCount_Handler(srv interface{}, ctx contex
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ChatService_StartScreenShare_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(StartScreenShareRequest)
+func _ChatService_AddScheduleMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddScheduleMessageRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ChatServiceServer).StartScreenShare(ctx, in)
+		return srv.(ChatServiceServer).AddScheduleMessage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: ChatService_StartScreenShare_FullMethodName,
+		FullMethod: ChatService_AddScheduleMessage_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).StartScreenShare(ctx, req.(*StartScreenShareRequest))
+		return srv.(ChatServiceServer).AddScheduleMessage(ctx, req.(*AddScheduleMessageRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ChatService_StopScreenShare_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(StopScreenShareRequest)
+func _ChatService_UpdateScheduleMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateScheduleMessageRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ChatServiceServer).StopScreenShare(ctx, in)
+		return srv.(ChatServiceServer).UpdateScheduleMessage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: ChatService_StopScreenShare_FullMethodName,
+		FullMethod: ChatService_UpdateScheduleMessage_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).StopScreenShare(ctx, req.(*StopScreenShareRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ChatService_SubscribeToScreenShare_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(SubscribeToScreenShareRequest)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
-	}
-	return srv.(ChatServiceServer).SubscribeToScreenShare(m, &chatServiceSubscribeToScreenShareServer{stream})
-}
-
-type ChatService_SubscribeToScreenShareServer interface {
-	Send(*ScreenShareUpdate) error
-	grpc.ServerStream
-}
-
-type chatServiceSubscribeToScreenShareServer struct {
-	grpc.ServerStream
-}
-
-func (x *chatServiceSubscribeToScreenShareServer) Send(m *ScreenShareUpdate) error {
-	return x.ServerStream.SendMsg(m)
-}
-
-func _ChatService_ScheduleMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ScheduleMessageRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ChatServiceServer).ScheduleMessage(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: ChatService_ScheduleMessage_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).ScheduleMessage(ctx, req.(*ScheduleMessageRequest))
+		return srv.(ChatServiceServer).UpdateScheduleMessage(ctx, req.(*UpdateScheduleMessageRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -2191,45 +1982,6 @@ func _ChatService_GetScheduledMessages_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ChatService_GetChatAnalytics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetChatAnalyticsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ChatServiceServer).GetChatAnalytics(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: ChatService_GetChatAnalytics_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).GetChatAnalytics(ctx, req.(*GetChatAnalyticsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ChatService_SubscribeToChatEvents_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(SubscribeToChatEventsRequest)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
-	}
-	return srv.(ChatServiceServer).SubscribeToChatEvents(m, &chatServiceSubscribeToChatEventsServer{stream})
-}
-
-type ChatService_SubscribeToChatEventsServer interface {
-	Send(*ChatEvent) error
-	grpc.ServerStream
-}
-
-type chatServiceSubscribeToChatEventsServer struct {
-	grpc.ServerStream
-}
-
-func (x *chatServiceSubscribeToChatEventsServer) Send(m *ChatEvent) error {
-	return x.ServerStream.SendMsg(m)
-}
-
 // ChatService_ServiceDesc is the grpc.ServiceDesc for ChatService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -2242,6 +1994,14 @@ var ChatService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _ChatService_SendMessage_Handler,
 		},
 		{
+			MethodName: "EditMessage",
+			Handler:    _ChatService_EditMessage_Handler,
+		},
+		{
+			MethodName: "DeleteMessage",
+			Handler:    _ChatService_DeleteMessage_Handler,
+		},
+		{
 			MethodName: "GetChatHistory",
 			Handler:    _ChatService_GetChatHistory_Handler,
 		},
@@ -2250,8 +2010,32 @@ var ChatService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _ChatService_MarkAsRead_Handler,
 		},
 		{
-			MethodName: "LikeMessage",
-			Handler:    _ChatService_LikeMessage_Handler,
+			MethodName: "SearchMessages",
+			Handler:    _ChatService_SearchMessages_Handler,
+		},
+		{
+			MethodName: "ForwardMessage",
+			Handler:    _ChatService_ForwardMessage_Handler,
+		},
+		{
+			MethodName: "PinMessage",
+			Handler:    _ChatService_PinMessage_Handler,
+		},
+		{
+			MethodName: "UnpinMessage",
+			Handler:    _ChatService_UnpinMessage_Handler,
+		},
+		{
+			MethodName: "GetPinnedMessages",
+			Handler:    _ChatService_GetPinnedMessages_Handler,
+		},
+		{
+			MethodName: "AddLikeMessage",
+			Handler:    _ChatService_AddLikeMessage_Handler,
+		},
+		{
+			MethodName: "UpdateLikedMessage",
+			Handler:    _ChatService_UpdateLikedMessage_Handler,
 		},
 		{
 			MethodName: "GetLikedMessages",
@@ -2262,8 +2046,8 @@ var ChatService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _ChatService_GetLastMessages_Handler,
 		},
 		{
-			MethodName: "GetUsersByUserID",
-			Handler:    _ChatService_GetUsersByUserID_Handler,
+			MethodName: "GetUsersByUserEmail",
+			Handler:    _ChatService_GetUsersByUserEmail_Handler,
 		},
 		{
 			MethodName: "GetUsersInGroup",
@@ -2290,32 +2074,8 @@ var ChatService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _ChatService_UpdateGroup_Handler,
 		},
 		{
-			MethodName: "SendTypingIndicator",
-			Handler:    _ChatService_SendTypingIndicator_Handler,
-		},
-		{
-			MethodName: "SearchMessages",
-			Handler:    _ChatService_SearchMessages_Handler,
-		},
-		{
-			MethodName: "SendDeliveryReceipt",
-			Handler:    _ChatService_SendDeliveryReceipt_Handler,
-		},
-		{
-			MethodName: "AddReaction",
-			Handler:    _ChatService_AddReaction_Handler,
-		},
-		{
-			MethodName: "RemoveReaction",
-			Handler:    _ChatService_RemoveReaction_Handler,
-		},
-		{
-			MethodName: "GetMessageReactions",
-			Handler:    _ChatService_GetMessageReactions_Handler,
-		},
-		{
-			MethodName: "ForwardMessage",
-			Handler:    _ChatService_ForwardMessage_Handler,
+			MethodName: "GetAllGroupsByUserEmail",
+			Handler:    _ChatService_GetAllGroupsByUserEmail_Handler,
 		},
 		{
 			MethodName: "InitiateCall",
@@ -2338,48 +2098,16 @@ var ChatService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _ChatService_GetCallHistory_Handler,
 		},
 		{
-			MethodName: "UpdateNotificationSettings",
-			Handler:    _ChatService_UpdateNotificationSettings_Handler,
+			MethodName: "AddNotification",
+			Handler:    _ChatService_AddNotification_Handler,
 		},
 		{
-			MethodName: "GetNotificationSettings",
-			Handler:    _ChatService_GetNotificationSettings_Handler,
+			MethodName: "UpdateNotification",
+			Handler:    _ChatService_UpdateNotification_Handler,
 		},
 		{
-			MethodName: "PinMessage",
-			Handler:    _ChatService_PinMessage_Handler,
-		},
-		{
-			MethodName: "UnpinMessage",
-			Handler:    _ChatService_UnpinMessage_Handler,
-		},
-		{
-			MethodName: "GetPinnedMessages",
-			Handler:    _ChatService_GetPinnedMessages_Handler,
-		},
-		{
-			MethodName: "UpdatePresenceStatus",
-			Handler:    _ChatService_UpdatePresenceStatus_Handler,
-		},
-		{
-			MethodName: "GetUserPresence",
-			Handler:    _ChatService_GetUserPresence_Handler,
-		},
-		{
-			MethodName: "EditMessage",
-			Handler:    _ChatService_EditMessage_Handler,
-		},
-		{
-			MethodName: "DeleteMessage",
-			Handler:    _ChatService_DeleteMessage_Handler,
-		},
-		{
-			MethodName: "CreateThread",
-			Handler:    _ChatService_CreateThread_Handler,
-		},
-		{
-			MethodName: "GetThreadMessages",
-			Handler:    _ChatService_GetThreadMessages_Handler,
+			MethodName: "GetNotification",
+			Handler:    _ChatService_GetNotification_Handler,
 		},
 		{
 			MethodName: "MarkNotificationAsRead",
@@ -2390,16 +2118,12 @@ var ChatService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _ChatService_GetUnreadNotificationCount_Handler,
 		},
 		{
-			MethodName: "StartScreenShare",
-			Handler:    _ChatService_StartScreenShare_Handler,
+			MethodName: "AddScheduleMessage",
+			Handler:    _ChatService_AddScheduleMessage_Handler,
 		},
 		{
-			MethodName: "StopScreenShare",
-			Handler:    _ChatService_StopScreenShare_Handler,
-		},
-		{
-			MethodName: "ScheduleMessage",
-			Handler:    _ChatService_ScheduleMessage_Handler,
+			MethodName: "UpdateScheduleMessage",
+			Handler:    _ChatService_UpdateScheduleMessage_Handler,
 		},
 		{
 			MethodName: "CancelScheduledMessage",
@@ -2408,10 +2132,6 @@ var ChatService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetScheduledMessages",
 			Handler:    _ChatService_GetScheduledMessages_Handler,
-		},
-		{
-			MethodName: "GetChatAnalytics",
-			Handler:    _ChatService_GetChatAnalytics_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

@@ -7,62 +7,51 @@ import (
 	"os/signal"
 	"syscall"
 
-	"chat-services/internal/config"
-	"chat-services/internal/repository/postgres"
-	"chat-services/internal/server"
-	"chat-services/internal/service"
-	"chat-services/pkg/database"
-	"chat-services/proto"
+	pb "chat-services/proto"
+	"chat-services/server"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
 
 func main() {
-	// Load configuration
-	cfg := config.Load()
-
-	// Initialize database
-	db, err := database.NewPostgresConnection(cfg.DatabaseURL)
-	if err != nil {
-		log.Fatalf("Failed to connect to database: %v", err)
-	}
-	defer db.Close()
-
-	// Initialize repository
-	chatRepo := postgres.NewChatRepository(db)
-
-	// Initialize service
-	chatService := service.NewChatService(chatRepo)
-
-	// Initialize gRPC server
-	grpcServer := grpc.NewServer()
-	chatServer := server.NewChatServer(chatService)
-
-	// Register services
-	proto.RegisterChatServiceServer(grpcServer, chatServer.UnimplementedChatServiceServer)
-	reflection.Register(grpcServer)
-
-	// Start server
-	lis, err := net.Listen("tcp", cfg.Port)
-	if err != nil {
-		log.Fatalf("Failed to listen: %v", err)
+	// Get port from environment or use default
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "50054" // Default port for chat service
 	}
 
-	log.Printf("Chat service starting on port %s", cfg.Port)
+	// Create listener
+	lis, err := net.Listen("tcp", ":"+port)
+	if err != nil {
+		log.Fatalf("Failed to listen on port %s: %v", port, err)
+	}
 
-	// Graceful shutdown
-	go func() {
-		if err := grpcServer.Serve(lis); err != nil {
-			log.Fatalf("Failed to serve: %v", err)
-		}
-	}()
+	// Create gRPC server
+	s := grpc.NewServer()
 
-	// Wait for interrupt signal
+	// Register chat service
+	chatServer := server.NewChatServer()
+	pb.RegisterChatServiceServer(s, chatServer)
+
+	// Enable reflection for development
+	reflection.Register(s)
+
+	log.Printf("Chat Service starting on port %s", port)
+	log.Printf("gRPC server listening at %v", lis.Addr())
+
+	// Handle graceful shutdown
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
-	<-c
 
-	log.Println("Shutting down gracefully...")
-	grpcServer.GracefulStop()
+	go func() {
+		<-c
+		log.Println("Shutting down gRPC server...")
+		s.GracefulStop()
+	}()
+
+	// Start the server
+	if err := s.Serve(lis); err != nil {
+		log.Fatalf("Failed to serve: %v", err)
+	}
 }
