@@ -5,10 +5,12 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"os"
 	"time"
 
 	pb "chat-services/proto"
 
+	"github.com/OneSignal/onesignal-go-api"
 	"github.com/google/uuid"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/protobuf/types/known/timestamppb"
@@ -3549,7 +3551,12 @@ func (s *ChatServer) AddNotification(ctx context.Context, req *pb.AddNotificatio
 			},
 		}, nil
 	}
-
+	// NEW: Send push notification via OneSignal
+	err = s.sendPushNotification(claims.UserID, notification.Title, notification.Content)
+	if err != nil {
+		log.Printf("Failed to send push notification: %v", err)
+		// Don't fail the entire request if push notification fails
+	}
 	// Return the created notification
 	notification.Id = notificationID
 	notification.Timestamp = timestamppb.New(time.Now())
@@ -3561,6 +3568,37 @@ func (s *ChatServer) AddNotification(ctx context.Context, req *pb.AddNotificatio
 			Notification: notification,
 		},
 	}, nil
+}
+func (s *ChatServer) sendPushNotification(userID, title, content string) error {
+	config := onesignal.NewConfiguration()
+	client := onesignal.NewAPIClient(config)
+	if client == nil {
+		return fmt.Errorf("failed to initialize OneSignal client")
+	}
+	authCtx := context.WithValue(context.Background(), onesignal.ContextAPIKeys, map[string]onesignal.APIKey{
+		"app_key": {Key: os.Getenv("ONESIGNAL_REST_API_KEY")},
+	})
+
+	notification := onesignal.NewNotification(os.Getenv("ONESIGNAL_APP_ID"))
+	notification.SetAppId(os.Getenv("ONESIGNAL_APP_ID"))
+
+	headings := onesignal.StringMap{}
+	headings.Set("en", title)
+	notification.SetHeadings(headings)
+
+	contents := onesignal.StringMap{}
+	contents.Set("en", content)
+	notification.SetContents(contents)
+
+	notification.SetIncludeExternalUserIds([]string{userID})
+
+	resp, _, err := client.DefaultApi.CreateNotification(authCtx).Notification(*notification).Execute()
+	if err != nil {
+		return fmt.Errorf("OneSignal API error: %v", err)
+	}
+
+	log.Printf("OneSignal notification sent, ID: %v", resp.GetId())
+	return nil
 }
 
 func (s *ChatServer) UpdateNotification(ctx context.Context, req *pb.UpdateNotificationRequest) (*pb.UpdateNotificationResponse, error) {

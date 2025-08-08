@@ -30,9 +30,13 @@ func main() {
 	// Create gRPC server
 	s := grpc.NewServer()
 
-	// Register chat service
+	// Register both regular and streaming servers
 	chatServer := server.NewChatServer()
-	pb.RegisterChatServiceServer(s, chatServer)
+	streamServer := server.NewChatStreamServer()
+
+	// Register services
+	pb.RegisterChatServiceServer(s, chatServer)  // For non-streaming methods
+	pb.RegisterChatServiceServer(s, streamServer) // For streaming methods
 
 	// Enable reflection for development
 	reflection.Register(s)

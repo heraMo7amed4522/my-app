@@ -23,14 +23,11 @@ const (
 	ChatService_SubscribeToLastMessages_FullMethodName     = "/chat.ChatService/SubscribeToLastMessages"
 	ChatService_SubscribeToUserStatus_FullMethodName       = "/chat.ChatService/SubscribeToUserStatus"
 	ChatService_SubscribeToTypingIndicators_FullMethodName = "/chat.ChatService/SubscribeToTypingIndicators"
-	ChatService_UploadFile_FullMethodName                  = "/chat.ChatService/UploadFile"
-	ChatService_DownloadFile_FullMethodName                = "/chat.ChatService/DownloadFile"
-	ChatService_SubscribeToPresence_FullMethodName         = "/chat.ChatService/SubscribeToPresence"
-	ChatService_SubscribeToMessageUpdates_FullMethodName   = "/chat.ChatService/SubscribeToMessageUpdates"
-	ChatService_SubscribeToThread_FullMethodName           = "/chat.ChatService/SubscribeToThread"
 	ChatService_SubscribeToNotifications_FullMethodName    = "/chat.ChatService/SubscribeToNotifications"
-	ChatService_SubscribeToScreenShare_FullMethodName      = "/chat.ChatService/SubscribeToScreenShare"
-	ChatService_SubscribeToChatEvents_FullMethodName       = "/chat.ChatService/SubscribeToChatEvents"
+	ChatService_VideoCallStream_FullMethodName             = "/chat.ChatService/VideoCallStream"
+	ChatService_PhoneCallStream_FullMethodName             = "/chat.ChatService/PhoneCallStream"
+	ChatService_SubscribeToCallUpdates_FullMethodName      = "/chat.ChatService/SubscribeToCallUpdates"
+	ChatService_SubscribeToCallSignaling_FullMethodName    = "/chat.ChatService/SubscribeToCallSignaling"
 	ChatService_SendMessage_FullMethodName                 = "/chat.ChatService/SendMessage"
 	ChatService_EditMessage_FullMethodName                 = "/chat.ChatService/EditMessage"
 	ChatService_DeleteMessage_FullMethodName               = "/chat.ChatService/DeleteMessage"
@@ -78,14 +75,11 @@ type ChatServiceClient interface {
 	SubscribeToLastMessages(ctx context.Context, in *LastMessageStreamRequest, opts ...grpc.CallOption) (ChatService_SubscribeToLastMessagesClient, error)
 	SubscribeToUserStatus(ctx context.Context, in *UserStatusSubscriptionRequest, opts ...grpc.CallOption) (ChatService_SubscribeToUserStatusClient, error)
 	SubscribeToTypingIndicators(ctx context.Context, in *TypingSubscriptionRequest, opts ...grpc.CallOption) (ChatService_SubscribeToTypingIndicatorsClient, error)
-	UploadFile(ctx context.Context, opts ...grpc.CallOption) (ChatService_UploadFileClient, error)
-	DownloadFile(ctx context.Context, in *FileDownloadRequest, opts ...grpc.CallOption) (ChatService_DownloadFileClient, error)
-	SubscribeToPresence(ctx context.Context, in *SubscribeToPresenceRequest, opts ...grpc.CallOption) (ChatService_SubscribeToPresenceClient, error)
-	SubscribeToMessageUpdates(ctx context.Context, in *SubscribeToMessageUpdatesRequest, opts ...grpc.CallOption) (ChatService_SubscribeToMessageUpdatesClient, error)
-	SubscribeToThread(ctx context.Context, in *SubscribeToThreadRequest, opts ...grpc.CallOption) (ChatService_SubscribeToThreadClient, error)
 	SubscribeToNotifications(ctx context.Context, in *SubscribeToNotificationsRequest, opts ...grpc.CallOption) (ChatService_SubscribeToNotificationsClient, error)
-	SubscribeToScreenShare(ctx context.Context, in *SubscribeToScreenShareRequest, opts ...grpc.CallOption) (ChatService_SubscribeToScreenShareClient, error)
-	SubscribeToChatEvents(ctx context.Context, in *SubscribeToChatEventsRequest, opts ...grpc.CallOption) (ChatService_SubscribeToChatEventsClient, error)
+	VideoCallStream(ctx context.Context, opts ...grpc.CallOption) (ChatService_VideoCallStreamClient, error)
+	PhoneCallStream(ctx context.Context, opts ...grpc.CallOption) (ChatService_PhoneCallStreamClient, error)
+	SubscribeToCallUpdates(ctx context.Context, in *CallSubscriptionRequest, opts ...grpc.CallOption) (ChatService_SubscribeToCallUpdatesClient, error)
+	SubscribeToCallSignaling(ctx context.Context, in *CallSignalingRequest, opts ...grpc.CallOption) (ChatService_SubscribeToCallSignalingClient, error)
 	// ================================================ MESSAGE HANDLING =======================================
 	SendMessage(ctx context.Context, in *SendMessageRequest, opts ...grpc.CallOption) (*SendMessageResponse, error)
 	EditMessage(ctx context.Context, in *EditMessageRequest, opts ...grpc.CallOption) (*EditMessageResponse, error)
@@ -266,170 +260,8 @@ func (x *chatServiceSubscribeToTypingIndicatorsClient) Recv() (*TypingIndicator,
 	return m, nil
 }
 
-func (c *chatServiceClient) UploadFile(ctx context.Context, opts ...grpc.CallOption) (ChatService_UploadFileClient, error) {
-	stream, err := c.cc.NewStream(ctx, &ChatService_ServiceDesc.Streams[4], ChatService_UploadFile_FullMethodName, opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &chatServiceUploadFileClient{stream}
-	return x, nil
-}
-
-type ChatService_UploadFileClient interface {
-	Send(*FileUploadRequest) error
-	CloseAndRecv() (*FileUploadResponse, error)
-	grpc.ClientStream
-}
-
-type chatServiceUploadFileClient struct {
-	grpc.ClientStream
-}
-
-func (x *chatServiceUploadFileClient) Send(m *FileUploadRequest) error {
-	return x.ClientStream.SendMsg(m)
-}
-
-func (x *chatServiceUploadFileClient) CloseAndRecv() (*FileUploadResponse, error) {
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	m := new(FileUploadResponse)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
-func (c *chatServiceClient) DownloadFile(ctx context.Context, in *FileDownloadRequest, opts ...grpc.CallOption) (ChatService_DownloadFileClient, error) {
-	stream, err := c.cc.NewStream(ctx, &ChatService_ServiceDesc.Streams[5], ChatService_DownloadFile_FullMethodName, opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &chatServiceDownloadFileClient{stream}
-	if err := x.ClientStream.SendMsg(in); err != nil {
-		return nil, err
-	}
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	return x, nil
-}
-
-type ChatService_DownloadFileClient interface {
-	Recv() (*FileDownloadResponse, error)
-	grpc.ClientStream
-}
-
-type chatServiceDownloadFileClient struct {
-	grpc.ClientStream
-}
-
-func (x *chatServiceDownloadFileClient) Recv() (*FileDownloadResponse, error) {
-	m := new(FileDownloadResponse)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
-func (c *chatServiceClient) SubscribeToPresence(ctx context.Context, in *SubscribeToPresenceRequest, opts ...grpc.CallOption) (ChatService_SubscribeToPresenceClient, error) {
-	stream, err := c.cc.NewStream(ctx, &ChatService_ServiceDesc.Streams[6], ChatService_SubscribeToPresence_FullMethodName, opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &chatServiceSubscribeToPresenceClient{stream}
-	if err := x.ClientStream.SendMsg(in); err != nil {
-		return nil, err
-	}
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	return x, nil
-}
-
-type ChatService_SubscribeToPresenceClient interface {
-	Recv() (*PresenceUpdate, error)
-	grpc.ClientStream
-}
-
-type chatServiceSubscribeToPresenceClient struct {
-	grpc.ClientStream
-}
-
-func (x *chatServiceSubscribeToPresenceClient) Recv() (*PresenceUpdate, error) {
-	m := new(PresenceUpdate)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
-func (c *chatServiceClient) SubscribeToMessageUpdates(ctx context.Context, in *SubscribeToMessageUpdatesRequest, opts ...grpc.CallOption) (ChatService_SubscribeToMessageUpdatesClient, error) {
-	stream, err := c.cc.NewStream(ctx, &ChatService_ServiceDesc.Streams[7], ChatService_SubscribeToMessageUpdates_FullMethodName, opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &chatServiceSubscribeToMessageUpdatesClient{stream}
-	if err := x.ClientStream.SendMsg(in); err != nil {
-		return nil, err
-	}
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	return x, nil
-}
-
-type ChatService_SubscribeToMessageUpdatesClient interface {
-	Recv() (*MessageUpdate, error)
-	grpc.ClientStream
-}
-
-type chatServiceSubscribeToMessageUpdatesClient struct {
-	grpc.ClientStream
-}
-
-func (x *chatServiceSubscribeToMessageUpdatesClient) Recv() (*MessageUpdate, error) {
-	m := new(MessageUpdate)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
-func (c *chatServiceClient) SubscribeToThread(ctx context.Context, in *SubscribeToThreadRequest, opts ...grpc.CallOption) (ChatService_SubscribeToThreadClient, error) {
-	stream, err := c.cc.NewStream(ctx, &ChatService_ServiceDesc.Streams[8], ChatService_SubscribeToThread_FullMethodName, opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &chatServiceSubscribeToThreadClient{stream}
-	if err := x.ClientStream.SendMsg(in); err != nil {
-		return nil, err
-	}
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	return x, nil
-}
-
-type ChatService_SubscribeToThreadClient interface {
-	Recv() (*ThreadUpdate, error)
-	grpc.ClientStream
-}
-
-type chatServiceSubscribeToThreadClient struct {
-	grpc.ClientStream
-}
-
-func (x *chatServiceSubscribeToThreadClient) Recv() (*ThreadUpdate, error) {
-	m := new(ThreadUpdate)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
 func (c *chatServiceClient) SubscribeToNotifications(ctx context.Context, in *SubscribeToNotificationsRequest, opts ...grpc.CallOption) (ChatService_SubscribeToNotificationsClient, error) {
-	stream, err := c.cc.NewStream(ctx, &ChatService_ServiceDesc.Streams[9], ChatService_SubscribeToNotifications_FullMethodName, opts...)
+	stream, err := c.cc.NewStream(ctx, &ChatService_ServiceDesc.Streams[4], ChatService_SubscribeToNotifications_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -460,44 +292,74 @@ func (x *chatServiceSubscribeToNotificationsClient) Recv() (*NotificationUpdate,
 	return m, nil
 }
 
-func (c *chatServiceClient) SubscribeToScreenShare(ctx context.Context, in *SubscribeToScreenShareRequest, opts ...grpc.CallOption) (ChatService_SubscribeToScreenShareClient, error) {
-	stream, err := c.cc.NewStream(ctx, &ChatService_ServiceDesc.Streams[10], ChatService_SubscribeToScreenShare_FullMethodName, opts...)
+func (c *chatServiceClient) VideoCallStream(ctx context.Context, opts ...grpc.CallOption) (ChatService_VideoCallStreamClient, error) {
+	stream, err := c.cc.NewStream(ctx, &ChatService_ServiceDesc.Streams[5], ChatService_VideoCallStream_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &chatServiceSubscribeToScreenShareClient{stream}
-	if err := x.ClientStream.SendMsg(in); err != nil {
-		return nil, err
-	}
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
+	x := &chatServiceVideoCallStreamClient{stream}
 	return x, nil
 }
 
-type ChatService_SubscribeToScreenShareClient interface {
-	Recv() (*ScreenShareUpdate, error)
+type ChatService_VideoCallStreamClient interface {
+	Send(*VideoCallStreamEnvelope) error
+	Recv() (*VideoCallStreamEnvelope, error)
 	grpc.ClientStream
 }
 
-type chatServiceSubscribeToScreenShareClient struct {
+type chatServiceVideoCallStreamClient struct {
 	grpc.ClientStream
 }
 
-func (x *chatServiceSubscribeToScreenShareClient) Recv() (*ScreenShareUpdate, error) {
-	m := new(ScreenShareUpdate)
+func (x *chatServiceVideoCallStreamClient) Send(m *VideoCallStreamEnvelope) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *chatServiceVideoCallStreamClient) Recv() (*VideoCallStreamEnvelope, error) {
+	m := new(VideoCallStreamEnvelope)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
 }
 
-func (c *chatServiceClient) SubscribeToChatEvents(ctx context.Context, in *SubscribeToChatEventsRequest, opts ...grpc.CallOption) (ChatService_SubscribeToChatEventsClient, error) {
-	stream, err := c.cc.NewStream(ctx, &ChatService_ServiceDesc.Streams[11], ChatService_SubscribeToChatEvents_FullMethodName, opts...)
+func (c *chatServiceClient) PhoneCallStream(ctx context.Context, opts ...grpc.CallOption) (ChatService_PhoneCallStreamClient, error) {
+	stream, err := c.cc.NewStream(ctx, &ChatService_ServiceDesc.Streams[6], ChatService_PhoneCallStream_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &chatServiceSubscribeToChatEventsClient{stream}
+	x := &chatServicePhoneCallStreamClient{stream}
+	return x, nil
+}
+
+type ChatService_PhoneCallStreamClient interface {
+	Send(*PhoneCallStreamEnvelope) error
+	Recv() (*PhoneCallStreamEnvelope, error)
+	grpc.ClientStream
+}
+
+type chatServicePhoneCallStreamClient struct {
+	grpc.ClientStream
+}
+
+func (x *chatServicePhoneCallStreamClient) Send(m *PhoneCallStreamEnvelope) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *chatServicePhoneCallStreamClient) Recv() (*PhoneCallStreamEnvelope, error) {
+	m := new(PhoneCallStreamEnvelope)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *chatServiceClient) SubscribeToCallUpdates(ctx context.Context, in *CallSubscriptionRequest, opts ...grpc.CallOption) (ChatService_SubscribeToCallUpdatesClient, error) {
+	stream, err := c.cc.NewStream(ctx, &ChatService_ServiceDesc.Streams[7], ChatService_SubscribeToCallUpdates_FullMethodName, opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &chatServiceSubscribeToCallUpdatesClient{stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -507,17 +369,49 @@ func (c *chatServiceClient) SubscribeToChatEvents(ctx context.Context, in *Subsc
 	return x, nil
 }
 
-type ChatService_SubscribeToChatEventsClient interface {
-	Recv() (*ChatEvent, error)
+type ChatService_SubscribeToCallUpdatesClient interface {
+	Recv() (*CallUpdate, error)
 	grpc.ClientStream
 }
 
-type chatServiceSubscribeToChatEventsClient struct {
+type chatServiceSubscribeToCallUpdatesClient struct {
 	grpc.ClientStream
 }
 
-func (x *chatServiceSubscribeToChatEventsClient) Recv() (*ChatEvent, error) {
-	m := new(ChatEvent)
+func (x *chatServiceSubscribeToCallUpdatesClient) Recv() (*CallUpdate, error) {
+	m := new(CallUpdate)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *chatServiceClient) SubscribeToCallSignaling(ctx context.Context, in *CallSignalingRequest, opts ...grpc.CallOption) (ChatService_SubscribeToCallSignalingClient, error) {
+	stream, err := c.cc.NewStream(ctx, &ChatService_ServiceDesc.Streams[8], ChatService_SubscribeToCallSignaling_FullMethodName, opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &chatServiceSubscribeToCallSignalingClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type ChatService_SubscribeToCallSignalingClient interface {
+	Recv() (*CallSignalingMessage, error)
+	grpc.ClientStream
+}
+
+type chatServiceSubscribeToCallSignalingClient struct {
+	grpc.ClientStream
+}
+
+func (x *chatServiceSubscribeToCallSignalingClient) Recv() (*CallSignalingMessage, error) {
+	m := new(CallSignalingMessage)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
@@ -857,14 +751,11 @@ type ChatServiceServer interface {
 	SubscribeToLastMessages(*LastMessageStreamRequest, ChatService_SubscribeToLastMessagesServer) error
 	SubscribeToUserStatus(*UserStatusSubscriptionRequest, ChatService_SubscribeToUserStatusServer) error
 	SubscribeToTypingIndicators(*TypingSubscriptionRequest, ChatService_SubscribeToTypingIndicatorsServer) error
-	UploadFile(ChatService_UploadFileServer) error
-	DownloadFile(*FileDownloadRequest, ChatService_DownloadFileServer) error
-	SubscribeToPresence(*SubscribeToPresenceRequest, ChatService_SubscribeToPresenceServer) error
-	SubscribeToMessageUpdates(*SubscribeToMessageUpdatesRequest, ChatService_SubscribeToMessageUpdatesServer) error
-	SubscribeToThread(*SubscribeToThreadRequest, ChatService_SubscribeToThreadServer) error
 	SubscribeToNotifications(*SubscribeToNotificationsRequest, ChatService_SubscribeToNotificationsServer) error
-	SubscribeToScreenShare(*SubscribeToScreenShareRequest, ChatService_SubscribeToScreenShareServer) error
-	SubscribeToChatEvents(*SubscribeToChatEventsRequest, ChatService_SubscribeToChatEventsServer) error
+	VideoCallStream(ChatService_VideoCallStreamServer) error
+	PhoneCallStream(ChatService_PhoneCallStreamServer) error
+	SubscribeToCallUpdates(*CallSubscriptionRequest, ChatService_SubscribeToCallUpdatesServer) error
+	SubscribeToCallSignaling(*CallSignalingRequest, ChatService_SubscribeToCallSignalingServer) error
 	// ================================================ MESSAGE HANDLING =======================================
 	SendMessage(context.Context, *SendMessageRequest) (*SendMessageResponse, error)
 	EditMessage(context.Context, *EditMessageRequest) (*EditMessageResponse, error)
@@ -927,29 +818,20 @@ func (UnimplementedChatServiceServer) SubscribeToUserStatus(*UserStatusSubscript
 func (UnimplementedChatServiceServer) SubscribeToTypingIndicators(*TypingSubscriptionRequest, ChatService_SubscribeToTypingIndicatorsServer) error {
 	return status.Errorf(codes.Unimplemented, "method SubscribeToTypingIndicators not implemented")
 }
-func (UnimplementedChatServiceServer) UploadFile(ChatService_UploadFileServer) error {
-	return status.Errorf(codes.Unimplemented, "method UploadFile not implemented")
-}
-func (UnimplementedChatServiceServer) DownloadFile(*FileDownloadRequest, ChatService_DownloadFileServer) error {
-	return status.Errorf(codes.Unimplemented, "method DownloadFile not implemented")
-}
-func (UnimplementedChatServiceServer) SubscribeToPresence(*SubscribeToPresenceRequest, ChatService_SubscribeToPresenceServer) error {
-	return status.Errorf(codes.Unimplemented, "method SubscribeToPresence not implemented")
-}
-func (UnimplementedChatServiceServer) SubscribeToMessageUpdates(*SubscribeToMessageUpdatesRequest, ChatService_SubscribeToMessageUpdatesServer) error {
-	return status.Errorf(codes.Unimplemented, "method SubscribeToMessageUpdates not implemented")
-}
-func (UnimplementedChatServiceServer) SubscribeToThread(*SubscribeToThreadRequest, ChatService_SubscribeToThreadServer) error {
-	return status.Errorf(codes.Unimplemented, "method SubscribeToThread not implemented")
-}
 func (UnimplementedChatServiceServer) SubscribeToNotifications(*SubscribeToNotificationsRequest, ChatService_SubscribeToNotificationsServer) error {
 	return status.Errorf(codes.Unimplemented, "method SubscribeToNotifications not implemented")
 }
-func (UnimplementedChatServiceServer) SubscribeToScreenShare(*SubscribeToScreenShareRequest, ChatService_SubscribeToScreenShareServer) error {
-	return status.Errorf(codes.Unimplemented, "method SubscribeToScreenShare not implemented")
+func (UnimplementedChatServiceServer) VideoCallStream(ChatService_VideoCallStreamServer) error {
+	return status.Errorf(codes.Unimplemented, "method VideoCallStream not implemented")
 }
-func (UnimplementedChatServiceServer) SubscribeToChatEvents(*SubscribeToChatEventsRequest, ChatService_SubscribeToChatEventsServer) error {
-	return status.Errorf(codes.Unimplemented, "method SubscribeToChatEvents not implemented")
+func (UnimplementedChatServiceServer) PhoneCallStream(ChatService_PhoneCallStreamServer) error {
+	return status.Errorf(codes.Unimplemented, "method PhoneCallStream not implemented")
+}
+func (UnimplementedChatServiceServer) SubscribeToCallUpdates(*CallSubscriptionRequest, ChatService_SubscribeToCallUpdatesServer) error {
+	return status.Errorf(codes.Unimplemented, "method SubscribeToCallUpdates not implemented")
+}
+func (UnimplementedChatServiceServer) SubscribeToCallSignaling(*CallSignalingRequest, ChatService_SubscribeToCallSignalingServer) error {
+	return status.Errorf(codes.Unimplemented, "method SubscribeToCallSignaling not implemented")
 }
 func (UnimplementedChatServiceServer) SendMessage(context.Context, *SendMessageRequest) (*SendMessageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendMessage not implemented")
@@ -1161,116 +1043,6 @@ func (x *chatServiceSubscribeToTypingIndicatorsServer) Send(m *TypingIndicator) 
 	return x.ServerStream.SendMsg(m)
 }
 
-func _ChatService_UploadFile_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(ChatServiceServer).UploadFile(&chatServiceUploadFileServer{stream})
-}
-
-type ChatService_UploadFileServer interface {
-	SendAndClose(*FileUploadResponse) error
-	Recv() (*FileUploadRequest, error)
-	grpc.ServerStream
-}
-
-type chatServiceUploadFileServer struct {
-	grpc.ServerStream
-}
-
-func (x *chatServiceUploadFileServer) SendAndClose(m *FileUploadResponse) error {
-	return x.ServerStream.SendMsg(m)
-}
-
-func (x *chatServiceUploadFileServer) Recv() (*FileUploadRequest, error) {
-	m := new(FileUploadRequest)
-	if err := x.ServerStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
-func _ChatService_DownloadFile_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(FileDownloadRequest)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
-	}
-	return srv.(ChatServiceServer).DownloadFile(m, &chatServiceDownloadFileServer{stream})
-}
-
-type ChatService_DownloadFileServer interface {
-	Send(*FileDownloadResponse) error
-	grpc.ServerStream
-}
-
-type chatServiceDownloadFileServer struct {
-	grpc.ServerStream
-}
-
-func (x *chatServiceDownloadFileServer) Send(m *FileDownloadResponse) error {
-	return x.ServerStream.SendMsg(m)
-}
-
-func _ChatService_SubscribeToPresence_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(SubscribeToPresenceRequest)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
-	}
-	return srv.(ChatServiceServer).SubscribeToPresence(m, &chatServiceSubscribeToPresenceServer{stream})
-}
-
-type ChatService_SubscribeToPresenceServer interface {
-	Send(*PresenceUpdate) error
-	grpc.ServerStream
-}
-
-type chatServiceSubscribeToPresenceServer struct {
-	grpc.ServerStream
-}
-
-func (x *chatServiceSubscribeToPresenceServer) Send(m *PresenceUpdate) error {
-	return x.ServerStream.SendMsg(m)
-}
-
-func _ChatService_SubscribeToMessageUpdates_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(SubscribeToMessageUpdatesRequest)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
-	}
-	return srv.(ChatServiceServer).SubscribeToMessageUpdates(m, &chatServiceSubscribeToMessageUpdatesServer{stream})
-}
-
-type ChatService_SubscribeToMessageUpdatesServer interface {
-	Send(*MessageUpdate) error
-	grpc.ServerStream
-}
-
-type chatServiceSubscribeToMessageUpdatesServer struct {
-	grpc.ServerStream
-}
-
-func (x *chatServiceSubscribeToMessageUpdatesServer) Send(m *MessageUpdate) error {
-	return x.ServerStream.SendMsg(m)
-}
-
-func _ChatService_SubscribeToThread_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(SubscribeToThreadRequest)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
-	}
-	return srv.(ChatServiceServer).SubscribeToThread(m, &chatServiceSubscribeToThreadServer{stream})
-}
-
-type ChatService_SubscribeToThreadServer interface {
-	Send(*ThreadUpdate) error
-	grpc.ServerStream
-}
-
-type chatServiceSubscribeToThreadServer struct {
-	grpc.ServerStream
-}
-
-func (x *chatServiceSubscribeToThreadServer) Send(m *ThreadUpdate) error {
-	return x.ServerStream.SendMsg(m)
-}
-
 func _ChatService_SubscribeToNotifications_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(SubscribeToNotificationsRequest)
 	if err := stream.RecvMsg(m); err != nil {
@@ -1292,45 +1064,97 @@ func (x *chatServiceSubscribeToNotificationsServer) Send(m *NotificationUpdate) 
 	return x.ServerStream.SendMsg(m)
 }
 
-func _ChatService_SubscribeToScreenShare_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(SubscribeToScreenShareRequest)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
-	}
-	return srv.(ChatServiceServer).SubscribeToScreenShare(m, &chatServiceSubscribeToScreenShareServer{stream})
+func _ChatService_VideoCallStream_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(ChatServiceServer).VideoCallStream(&chatServiceVideoCallStreamServer{stream})
 }
 
-type ChatService_SubscribeToScreenShareServer interface {
-	Send(*ScreenShareUpdate) error
+type ChatService_VideoCallStreamServer interface {
+	Send(*VideoCallStreamEnvelope) error
+	Recv() (*VideoCallStreamEnvelope, error)
 	grpc.ServerStream
 }
 
-type chatServiceSubscribeToScreenShareServer struct {
+type chatServiceVideoCallStreamServer struct {
 	grpc.ServerStream
 }
 
-func (x *chatServiceSubscribeToScreenShareServer) Send(m *ScreenShareUpdate) error {
+func (x *chatServiceVideoCallStreamServer) Send(m *VideoCallStreamEnvelope) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func _ChatService_SubscribeToChatEvents_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(SubscribeToChatEventsRequest)
+func (x *chatServiceVideoCallStreamServer) Recv() (*VideoCallStreamEnvelope, error) {
+	m := new(VideoCallStreamEnvelope)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func _ChatService_PhoneCallStream_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(ChatServiceServer).PhoneCallStream(&chatServicePhoneCallStreamServer{stream})
+}
+
+type ChatService_PhoneCallStreamServer interface {
+	Send(*PhoneCallStreamEnvelope) error
+	Recv() (*PhoneCallStreamEnvelope, error)
+	grpc.ServerStream
+}
+
+type chatServicePhoneCallStreamServer struct {
+	grpc.ServerStream
+}
+
+func (x *chatServicePhoneCallStreamServer) Send(m *PhoneCallStreamEnvelope) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *chatServicePhoneCallStreamServer) Recv() (*PhoneCallStreamEnvelope, error) {
+	m := new(PhoneCallStreamEnvelope)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func _ChatService_SubscribeToCallUpdates_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(CallSubscriptionRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(ChatServiceServer).SubscribeToChatEvents(m, &chatServiceSubscribeToChatEventsServer{stream})
+	return srv.(ChatServiceServer).SubscribeToCallUpdates(m, &chatServiceSubscribeToCallUpdatesServer{stream})
 }
 
-type ChatService_SubscribeToChatEventsServer interface {
-	Send(*ChatEvent) error
+type ChatService_SubscribeToCallUpdatesServer interface {
+	Send(*CallUpdate) error
 	grpc.ServerStream
 }
 
-type chatServiceSubscribeToChatEventsServer struct {
+type chatServiceSubscribeToCallUpdatesServer struct {
 	grpc.ServerStream
 }
 
-func (x *chatServiceSubscribeToChatEventsServer) Send(m *ChatEvent) error {
+func (x *chatServiceSubscribeToCallUpdatesServer) Send(m *CallUpdate) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func _ChatService_SubscribeToCallSignaling_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(CallSignalingRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(ChatServiceServer).SubscribeToCallSignaling(m, &chatServiceSubscribeToCallSignalingServer{stream})
+}
+
+type ChatService_SubscribeToCallSignalingServer interface {
+	Send(*CallSignalingMessage) error
+	grpc.ServerStream
+}
+
+type chatServiceSubscribeToCallSignalingServer struct {
+	grpc.ServerStream
+}
+
+func (x *chatServiceSubscribeToCallSignalingServer) Send(m *CallSignalingMessage) error {
 	return x.ServerStream.SendMsg(m)
 }
 
@@ -2157,43 +1981,30 @@ var ChatService_ServiceDesc = grpc.ServiceDesc{
 			ServerStreams: true,
 		},
 		{
-			StreamName:    "UploadFile",
-			Handler:       _ChatService_UploadFile_Handler,
-			ClientStreams: true,
-		},
-		{
-			StreamName:    "DownloadFile",
-			Handler:       _ChatService_DownloadFile_Handler,
-			ServerStreams: true,
-		},
-		{
-			StreamName:    "SubscribeToPresence",
-			Handler:       _ChatService_SubscribeToPresence_Handler,
-			ServerStreams: true,
-		},
-		{
-			StreamName:    "SubscribeToMessageUpdates",
-			Handler:       _ChatService_SubscribeToMessageUpdates_Handler,
-			ServerStreams: true,
-		},
-		{
-			StreamName:    "SubscribeToThread",
-			Handler:       _ChatService_SubscribeToThread_Handler,
-			ServerStreams: true,
-		},
-		{
 			StreamName:    "SubscribeToNotifications",
 			Handler:       _ChatService_SubscribeToNotifications_Handler,
 			ServerStreams: true,
 		},
 		{
-			StreamName:    "SubscribeToScreenShare",
-			Handler:       _ChatService_SubscribeToScreenShare_Handler,
+			StreamName:    "VideoCallStream",
+			Handler:       _ChatService_VideoCallStream_Handler,
+			ServerStreams: true,
+			ClientStreams: true,
+		},
+		{
+			StreamName:    "PhoneCallStream",
+			Handler:       _ChatService_PhoneCallStream_Handler,
+			ServerStreams: true,
+			ClientStreams: true,
+		},
+		{
+			StreamName:    "SubscribeToCallUpdates",
+			Handler:       _ChatService_SubscribeToCallUpdates_Handler,
 			ServerStreams: true,
 		},
 		{
-			StreamName:    "SubscribeToChatEvents",
-			Handler:       _ChatService_SubscribeToChatEvents_Handler,
+			StreamName:    "SubscribeToCallSignaling",
+			Handler:       _ChatService_SubscribeToCallSignaling_Handler,
 			ServerStreams: true,
 		},
 	},
