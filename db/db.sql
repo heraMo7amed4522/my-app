@@ -1315,14 +1315,12 @@ VALUES
 INSERT INTO content_sources (id, template_id, section_id, source_title, source_url, source_type, citation_reference, created_at)
 VALUES
   ('40000000-0000-0000-0000-000000000111', '00000000-0000-0000-0000-000000000101', '10000000-0000-0000-0000-000000000111', 'Papyrus Chronicle', 'https://source.example.com/ancient', 'PRIMARY', 'Chronicle‑I', NOW()),
-  ('40000000-0000-0000-0000-000000000112', '00000000-0000-0000-0000-000000000101', '10000000-0000-0000-0000-000000000112', 'Excavation Journal', 'https://source.example.com/archaeology', 'SECONDARY', 'JournalX', NOW()),
-  -- similarly add for each section as needed...
+  ('40000000-0000-0000-0000-000000000112', '00000000-0000-0000-0000-000000000101', '10000000-0000-0000-0000-000000000112', 'Excavation Journal', 'https://source.example.com/archaeology', 'SECONDARY', 'JournalX', NOW());
 
 -- TEMPLATE TRANSLATIONS
 INSERT INTO template_translations (id, base_template_id, language, title, description, content_language_links, created_at, updated_at)
 VALUES
-  ('50000000-0000-0000-0000-000000000101', '00000000-0000-0000-0000-000000000101', 'es', 'Ascenso del Reino Antiguo', 'Descripción en español.', '{}', NOW(), NOW()),
-  -- repeat for each template...
+  ('50000000-0000-0000-0000-000000000101', '00000000-0000-0000-0000-000000000101', 'es', 'Ascenso del Reino Antiguo', 'Descripción en español.', '{}', NOW(), NOW());
 
 -- TEMPLATE VERSIONS
 INSERT INTO template_versions (id, template_id, version, change_log, created_at)

@@ -66,8 +66,8 @@ services:
   # Card Service (GO)
   card-service:
     build:
-      context: ./services/card-services
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./services/card-services/Dockerfile
     container_name: card_service
     env_file:
       - ./services/card-services/.env
@@ -225,6 +225,27 @@ services:
       - "50060:50060"
     environment:
       - PHARAOH_SERVICE_PORT=50060
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=2521
+      - DB_NAME=userdb
+    depends_on:
+      - postgres
+    networks:
+      - user_network
+    restart: unless-stopped
+
+  # Chat Service (GO)
+  chat-service:
+    build:
+      context: .
+      dockerfile: ./services/chat-services/Dockerfile
+    container_name: chat_service
+    ports:
+      - "50061:50061"
+    environment:
+      - PHARAOH_SERVICE_PORT=50061
       - DB_HOST=postgres
       - DB_PORT=5432
       - DB_USER=postgres

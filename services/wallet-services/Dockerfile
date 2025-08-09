@@ -25,6 +25,9 @@ WORKDIR /root/
 # Copy the binary from builder stage
 COPY --from=builder /app/services/wallet-services/wallet-service .
 
+# Copy .env file
+COPY --from=builder /app/services/wallet-services/.env .
+
 # Expose the port the app runs on
 EXPOSE 50055
 

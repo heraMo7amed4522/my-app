@@ -48,7 +48,7 @@ message GetWalletByUserIDResponse {
 
 message CreateWalletRequest {
     string userID = 1;
-    string currency = 2; // Optional: default to USD
+    string currency = 2; 
 }
 
 message CreateWalletResponse {
@@ -112,7 +112,7 @@ message GetWalletTransactionsRequest {
 message GetWalletTransactionsResponse {
     int32 statusCode = 1;
     string message = 2;
-    repeated transaction.Transaction transactions = 3; // From transaction.proto
+    repeated transaction.Transaction transactions = 3;
 }
 
 message RefundToWalletRequest {

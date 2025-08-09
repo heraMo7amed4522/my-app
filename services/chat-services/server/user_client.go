@@ -44,8 +44,6 @@ func NewUserServiceClient() (UserServiceClient, error) {
 }
 
 func (c *userServiceClient) ValidateToken(ctx context.Context, token string) (*TokenClaims, error) {
-	log.Printf("Validating token with user service: %s", token)
-
 	if token == "" {
 		return nil, fmt.Errorf("token is required")
 	}

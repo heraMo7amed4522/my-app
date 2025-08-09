@@ -5,8 +5,8 @@ import (
 	"net"
 	"os"
 
-	"auth-services/server"
 	pb "auth-services/proto"
+	"auth-services/server"
 
 	"google.golang.org/grpc"
 )
@@ -16,32 +16,21 @@ func main() {
 	if err != nil {
 		log.Fatalf("Failed to listen: %v", err)
 	}
-
-	// Create a gRPC server object
 	s := grpc.NewServer()
-
-	// Get environment variables
 	firebaseCredentials := os.Getenv("FIREBASE_CREDENTIALS_PATH")
-	userServiceAddr := os.Getenv("USER_SERVICE_ADDR") // e.g., "localhost:50051"
+	userServiceAddr := os.Getenv("USER_SERVICE_ADDR")
 	jwtSecret := os.Getenv("JWT_SECRET")
 
 	if firebaseCredentials == "" || userServiceAddr == "" || jwtSecret == "" {
 		log.Fatal("Missing required environment variables")
 	}
-
-	// Create auth server with gRPC connection to user-services
 	authServer, err := server.NewAuthServer(firebaseCredentials, userServiceAddr, jwtSecret)
 	if err != nil {
 		log.Fatalf("Failed to create auth server: %v", err)
 	}
-	defer authServer.Close() // Clean up gRPC connection
-
-	// Register the auth service with the gRPC server
+	defer authServer.Close()
 	pb.RegisterAuthServiceServer(s, authServer)
-
 	log.Println("Auth service is running on port 50052...")
-
-	// Start the server
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("Failed to serve: %v", err)
 	}

@@ -83,8 +83,6 @@ func (s *ChatStreamServer) handleAudioData(userID string, audioData *pb.AudioCal
 	s.broadcastAudioData(audioData, userID)
 }
 
-// ... existing code ...
-
 // broadcastCallControl broadcasts call control messages to all participants in a call
 func (s *ChatStreamServer) broadcastCallControl(control *pb.CallControlMessage, senderID string) {
 	s.mutex.RLock()
@@ -765,7 +763,6 @@ func (s *ChatStreamServer) StreamDeleteMessage(userID string, req *pb.DeleteMess
 	s.handleDeleteMessageResponse(response, stream)
 }
 
-// StreamGetChatHistory handles GetChatHistory through streaming
 func (s *ChatStreamServer) StreamGetChatHistory(userID string, req *pb.GetChatHistoryRequest, stream pb.ChatService_ChatStreamServer) {
 	ctx := stream.Context()
 	response, err := s.ChatServer.GetChatHistory(ctx, req)
@@ -773,12 +770,9 @@ func (s *ChatStreamServer) StreamGetChatHistory(userID string, req *pb.GetChatHi
 		s.sendStreamError(stream, 500, "Internal Server Error", err.Error())
 		return
 	}
-
-	// Send chat history through stream
 	s.handleGetChatHistoryResponse(response, stream)
 }
 
-// StreamMarkAsRead handles MarkAsRead through streaming
 func (s *ChatStreamServer) StreamMarkAsRead(userID string, req *pb.ReadReceiptRequest, stream pb.ChatService_ChatStreamServer) {
 	ctx := stream.Context()
 	response, err := s.ChatServer.MarkAsRead(ctx, req)
@@ -786,12 +780,9 @@ func (s *ChatStreamServer) StreamMarkAsRead(userID string, req *pb.ReadReceiptRe
 		s.sendStreamError(stream, 500, "Internal Server Error", err.Error())
 		return
 	}
-
-	// Handle response and broadcast read receipts
 	s.handleMarkAsReadResponse(response, stream)
 }
 
-// StreamSearchMessages handles SearchMessages through streaming
 func (s *ChatStreamServer) StreamSearchMessages(userID string, req *pb.SearchMessagesRequest, stream pb.ChatService_ChatStreamServer) {
 	ctx := stream.Context()
 	response, err := s.ChatServer.SearchMessages(ctx, req)
@@ -799,12 +790,9 @@ func (s *ChatStreamServer) StreamSearchMessages(userID string, req *pb.SearchMes
 		s.sendStreamError(stream, 500, "Internal Server Error", err.Error())
 		return
 	}
-
-	// Send search results through stream
 	s.handleSearchMessagesResponse(response, stream)
 }
 
-// StreamForwardMessage handles ForwardMessage through streaming
 func (s *ChatStreamServer) StreamForwardMessage(userID string, req *pb.ForwardMessageRequest, stream pb.ChatService_ChatStreamServer) {
 	ctx := stream.Context()
 	response, err := s.ChatServer.ForwardMessage(ctx, req)
@@ -812,12 +800,9 @@ func (s *ChatStreamServer) StreamForwardMessage(userID string, req *pb.ForwardMe
 		s.sendStreamError(stream, 500, "Internal Server Error", err.Error())
 		return
 	}
-
-	// Handle response and broadcast forwarded messages
 	s.handleForwardMessageResponse(response, stream)
 }
 
-// StreamPinMessage handles PinMessage through streaming
 func (s *ChatStreamServer) StreamPinMessage(userID string, req *pb.PinMessageRequest, stream pb.ChatService_ChatStreamServer) {
 	ctx := stream.Context()
 	response, err := s.ChatServer.PinMessage(ctx, req)
@@ -825,12 +810,9 @@ func (s *ChatStreamServer) StreamPinMessage(userID string, req *pb.PinMessageReq
 		s.sendStreamError(stream, 500, "Internal Server Error", err.Error())
 		return
 	}
-
-	// Handle response and broadcast pin status
 	s.handlePinMessageResponse(response, stream)
 }
 
-// StreamUnpinMessage handles UnpinMessage through streaming
 func (s *ChatStreamServer) StreamUnpinMessage(userID string, req *pb.UnpinMessageRequest, stream pb.ChatService_ChatStreamServer) {
 	ctx := stream.Context()
 	response, err := s.ChatServer.UnpinMessage(ctx, req)
@@ -838,12 +820,9 @@ func (s *ChatStreamServer) StreamUnpinMessage(userID string, req *pb.UnpinMessag
 		s.sendStreamError(stream, 500, "Internal Server Error", err.Error())
 		return
 	}
-
-	// Handle response and broadcast unpin status
 	s.handleUnpinMessageResponse(response, stream)
 }
 
-// StreamGetPinnedMessages handles GetPinnedMessages through streaming
 func (s *ChatStreamServer) StreamGetPinnedMessages(userID string, req *pb.GetPinnedMessagesRequest, stream pb.ChatService_ChatStreamServer) {
 	ctx := stream.Context()
 	response, err := s.ChatServer.GetPinnedMessages(ctx, req)
@@ -851,8 +830,6 @@ func (s *ChatStreamServer) StreamGetPinnedMessages(userID string, req *pb.GetPin
 		s.sendStreamError(stream, 500, "Internal Server Error", err.Error())
 		return
 	}
-
-	// Send pinned messages through stream
 	s.handleGetPinnedMessagesResponse(response, stream)
 }
 
@@ -866,8 +843,6 @@ func (s *ChatStreamServer) handleSendMessageResponse(response *pb.SendMessageRes
 				},
 			}
 			s.broadcastMessage(savedMsg.SavedMessage)
-
-			// Also broadcast as last message update
 			s.broadcastLastMessageUpdate(savedMsg.SavedMessage)
 		}
 	} else {
@@ -939,7 +914,6 @@ func (s *ChatStreamServer) handleDeleteMessageResponse(response *pb.DeleteMessag
 func (s *ChatStreamServer) handleGetChatHistoryResponse(response *pb.GetChatHistoryResponse, stream pb.ChatService_ChatStreamServer) {
 	if response.StatusCode == 200 {
 		if messages, ok := response.Result.(*pb.GetChatHistoryResponse_Messages); ok {
-			// Send each message individually through the stream
 			for _, message := range messages.Messages.Messages {
 				envelope := &pb.ChatStreamEnvelope{
 					Payload: &pb.ChatStreamEnvelope_Message{
@@ -989,7 +963,6 @@ func (s *ChatStreamServer) handleMarkAsReadResponse(response *pb.ReadReceiptResp
 func (s *ChatStreamServer) handleSearchMessagesResponse(response *pb.SearchMessagesResponse, stream pb.ChatService_ChatStreamServer) {
 	if response.StatusCode == 200 {
 		if messages, ok := response.Result.(*pb.SearchMessagesResponse_Messages); ok {
-			// Send each search result individually through the stream
 			for _, message := range messages.Messages.Messages {
 				envelope := &pb.ChatStreamEnvelope{
 					Payload: &pb.ChatStreamEnvelope_Message{
@@ -1014,12 +987,9 @@ func (s *ChatStreamServer) handleSearchMessagesResponse(response *pb.SearchMessa
 func (s *ChatStreamServer) handleForwardMessageResponse(response *pb.ForwardMessageResponse, stream pb.ChatService_ChatStreamServer) {
 	if response.StatusCode == 200 {
 		if messages, ok := response.Result.(*pb.ForwardMessageResponse_ForwardedMessages); ok {
-			// Broadcast forwarded messages to relevant users
 			for _, message := range messages.ForwardedMessages.Messages {
 				s.broadcastMessage(message)
 			}
-
-			// Send confirmation to sender
 			envelope := &pb.ChatStreamEnvelope{
 				Payload: &pb.ChatStreamEnvelope_State{
 					State: &pb.StateMessage{
@@ -1062,7 +1032,6 @@ func (s *ChatStreamServer) handlePinMessageResponse(response *pb.PinMessageRespo
 			}
 		}
 	}
-
 	if envelope != nil {
 		stream.Send(envelope)
 	}
@@ -1087,7 +1056,6 @@ func (s *ChatStreamServer) handleUnpinMessageResponse(response *pb.UnpinMessageR
 			}
 		}
 	}
-
 	if envelope != nil {
 		stream.Send(envelope)
 	}
@@ -1096,7 +1064,6 @@ func (s *ChatStreamServer) handleUnpinMessageResponse(response *pb.UnpinMessageR
 func (s *ChatStreamServer) handleGetPinnedMessagesResponse(response *pb.GetPinnedMessagesResponse, stream pb.ChatService_ChatStreamServer) {
 	if response.StatusCode == 200 {
 		if messages, ok := response.Result.(*pb.GetPinnedMessagesResponse_PinnedMessages); ok {
-			// Send each pinned message individually through the stream
 			for _, message := range messages.PinnedMessages.Messages {
 				envelope := &pb.ChatStreamEnvelope{
 					Payload: &pb.ChatStreamEnvelope_Message{
@@ -1124,15 +1091,12 @@ func (s *ChatStreamServer) SubscribeToLastMessages(req *pb.LastMessageStreamRequ
 	if err != nil {
 		return err
 	}
-
 	userID := claims.UserID
-	log.Printf("User %s subscribed to last messages", userID)
 	lastMessageChan := make(chan *pb.ChatMessage, 100)
 	s.registerLastMessageSubscription(userID, lastMessageChan)
 	defer s.unregisterLastMessageSubscription(userID)
 
 	if err := s.sendInitialLastMessages(userID, stream); err != nil {
-		log.Printf("Failed to send initial last messages: %v", err)
 		return err
 	}
 	for {
@@ -1148,7 +1112,6 @@ func (s *ChatStreamServer) SubscribeToLastMessages(req *pb.LastMessageStreamRequ
 	}
 }
 
-// Helper methods for last message subscription
 func (s *ChatStreamServer) registerLastMessageSubscription(userID string, ch chan *pb.ChatMessage) {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
@@ -1188,7 +1151,6 @@ func (s *ChatStreamServer) sendInitialLastMessages(userID string, stream pb.Chat
 	return nil
 }
 
-// Broadcast last message updates when new messages arrive
 func (s *ChatStreamServer) broadcastLastMessageUpdate(message *pb.ChatMessage) {
 	s.mutex.RLock()
 	defer s.mutex.RUnlock()
@@ -1202,16 +1164,13 @@ func (s *ChatStreamServer) broadcastLastMessageUpdate(message *pb.ChatMessage) {
 		if ch, exists := s.lastMessageSubscriptions[userID]; exists {
 			select {
 			case ch <- message:
-				// Message sent successfully
 			default:
-				// Channel is full, skip this update
 				log.Printf("Last message channel full for user %s", userID)
 			}
 		}
 	}
 }
 
-// SubscribeToUserStatus implements server-side streaming for user status updates
 func (s *ChatStreamServer) SubscribeToUserStatus(req *pb.UserStatusSubscriptionRequest, stream pb.ChatService_SubscribeToUserStatusServer) error {
 	ctx := stream.Context()
 	claims, err := s.validateStreamRequest(ctx)
@@ -1219,18 +1178,13 @@ func (s *ChatStreamServer) SubscribeToUserStatus(req *pb.UserStatusSubscriptionR
 		return err
 	}
 	subscriberID := claims.UserID
-	log.Printf("User %s subscribed to status updates for users: %v", subscriberID, req.UserIds)
-	// Create a channel for status updates
 	statusChan := make(chan *pb.UserStatus, 100)
-	// Register for status updates
 	s.registerUserStatusSubscription(subscriberID, req.UserIds, statusChan)
 	defer s.unregisterUserStatusSubscription(subscriberID)
-	// Send initial status for requested users
 	if err := s.sendInitialUserStatuses(req.UserIds, stream); err != nil {
 		log.Printf("Failed to send initial user statuses: %v", err)
 		return err
 	}
-	// Listen for status updates
 	for {
 		select {
 		case <-ctx.Done():
@@ -1244,7 +1198,6 @@ func (s *ChatStreamServer) SubscribeToUserStatus(req *pb.UserStatusSubscriptionR
 	}
 }
 
-// Helper methods for user status subscription
 func (s *ChatStreamServer) registerUserStatusSubscription(subscriberID string, userIDs []string, ch chan *pb.UserStatus) {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
@@ -1252,15 +1205,13 @@ func (s *ChatStreamServer) registerUserStatusSubscription(subscriberID string, u
 		s.userStatusSubscriptions = make(map[string]chan *pb.UserStatus)
 	}
 	if s.userStatusWatchers == nil {
-		s.userStatusWatchers = make(map[string][]string) // userID -> list of subscribers
+		s.userStatusWatchers = make(map[string][]string)
 	}
 	s.userStatusSubscriptions[subscriberID] = ch
-	// Register this subscriber for each requested user
 	for _, userID := range userIDs {
 		s.userStatusWatchers[userID] = append(s.userStatusWatchers[userID], subscriberID)
 	}
 }
-
 func (s *ChatStreamServer) unregisterUserStatusSubscription(subscriberID string) {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
@@ -1282,7 +1233,6 @@ func (s *ChatStreamServer) unregisterUserStatusSubscription(subscriberID string)
 }
 
 func (s *ChatStreamServer) sendInitialUserStatuses(userIDs []string, stream pb.ChatService_SubscribeToUserStatusServer) error {
-	// Get current status for requested users
 	req := &pb.UserStatusRequest{
 		UserIds: userIDs,
 	}
@@ -1302,25 +1252,20 @@ func (s *ChatStreamServer) sendInitialUserStatuses(userIDs []string, stream pb.C
 	return nil
 }
 
-// Broadcast user status updates
 func (s *ChatStreamServer) broadcastUserStatusUpdate(userID string, isOnline bool, lastSeen *timestamppb.Timestamp) {
 	s.mutex.RLock()
 	defer s.mutex.RUnlock()
-
 	status := &pb.UserStatus{
 		UserId:   userID,
 		IsOnline: isOnline,
 		LastSeen: lastSeen,
 	}
-	// Send to all subscribers watching this user
 	if subscribers, exists := s.userStatusWatchers[userID]; exists {
 		for _, subscriberID := range subscribers {
 			if ch, exists := s.userStatusSubscriptions[subscriberID]; exists {
 				select {
 				case ch <- status:
-					// Status sent successfully
 				default:
-					// Channel is full, skip this update
 					log.Printf("Status channel full for subscriber %s", subscriberID)
 				}
 			}
@@ -1330,25 +1275,15 @@ func (s *ChatStreamServer) broadcastUserStatusUpdate(userID string, isOnline boo
 
 func (s *ChatStreamServer) SubscribeToNotifications(req *pb.SubscribeToNotificationsRequest, stream pb.ChatService_SubscribeToNotificationsServer) error {
 	ctx := stream.Context()
-
-	// Validate request
 	claims, err := s.validateStreamRequest(ctx)
 	if err != nil {
 		return err
 	}
-
 	userID := claims.UserID
-	log.Printf("User %s subscribed to notifications", userID)
-
-	// Create notification channel
 	notificationChan := make(chan *pb.NotificationUpdate, 100)
 	s.registerNotificationSubscription(userID, notificationChan)
 	defer s.unregisterNotificationSubscription(userID)
-
-	// Send initial notifications (recent unread notifications)
 	go s.sendInitialNotifications(userID, stream)
-
-	// Listen for new notifications
 	for {
 		select {
 		case <-ctx.Done():
@@ -1364,25 +1299,15 @@ func (s *ChatStreamServer) SubscribeToNotifications(req *pb.SubscribeToNotificat
 
 func (s *ChatStreamServer) VideoCallStream(stream pb.ChatService_VideoCallStreamServer) error {
 	ctx := stream.Context()
-
-	// Validate request
 	claims, err := s.validateStreamRequest(ctx)
 	if err != nil {
 		return err
 	}
-
 	userID := claims.UserID
-	log.Printf("User %s connected to VideoCallStream", userID)
-
-	// Create call context
 	callCtx, cancel := context.WithCancel(ctx)
 	defer cancel()
-
-	// Register video call connection
 	s.registerVideoCallConnection(userID, stream)
 	defer s.unregisterVideoCallConnection(userID)
-
-	// Handle bidirectional video call streaming
 	for {
 		select {
 		case <-callCtx.Done():
@@ -1397,7 +1322,6 @@ func (s *ChatStreamServer) VideoCallStream(stream pb.ChatService_VideoCallStream
 				return err
 			}
 
-			// Process video call message
 			go s.handleVideoCallMessage(userID, envelope, stream)
 		}
 	}
@@ -1405,25 +1329,15 @@ func (s *ChatStreamServer) VideoCallStream(stream pb.ChatService_VideoCallStream
 
 func (s *ChatStreamServer) PhoneCallStream(stream pb.ChatService_PhoneCallStreamServer) error {
 	ctx := stream.Context()
-
-	// Validate request
 	claims, err := s.validateStreamRequest(ctx)
 	if err != nil {
 		return err
 	}
-
 	userID := claims.UserID
-	log.Printf("User %s connected to PhoneCallStream", userID)
-
-	// Create call context
 	callCtx, cancel := context.WithCancel(ctx)
 	defer cancel()
-
-	// Register phone call connection
 	s.registerPhoneCallConnection(userID, stream)
 	defer s.unregisterPhoneCallConnection(userID)
-
-	// Handle bidirectional phone call streaming
 	for {
 		select {
 		case <-callCtx.Done():
@@ -1437,8 +1351,6 @@ func (s *ChatStreamServer) PhoneCallStream(stream pb.ChatService_PhoneCallStream
 				log.Printf("Phone call stream receive error: %v", err)
 				return err
 			}
-
-			// Process phone call message
 			go s.handlePhoneCallMessage(userID, envelope, stream)
 		}
 	}
@@ -1446,22 +1358,15 @@ func (s *ChatStreamServer) PhoneCallStream(stream pb.ChatService_PhoneCallStream
 
 func (s *ChatStreamServer) SubscribeToCallUpdates(req *pb.CallSubscriptionRequest, stream pb.ChatService_SubscribeToCallUpdatesServer) error {
 	ctx := stream.Context()
-
-	// Validate request
 	claims, err := s.validateStreamRequest(ctx)
 	if err != nil {
 		return err
 	}
-
 	userID := claims.UserID
-	log.Printf("User %s subscribed to call updates", userID)
-
-	// Create call updates channel
 	callUpdatesChan := make(chan *pb.CallUpdate, 100)
 	s.registerCallUpdatesSubscription(userID, req.CallIds, callUpdatesChan)
 	defer s.unregisterCallUpdatesSubscription(userID)
 
-	// Listen for call updates
 	for {
 		select {
 		case <-ctx.Done():
@@ -1477,22 +1382,17 @@ func (s *ChatStreamServer) SubscribeToCallUpdates(req *pb.CallSubscriptionReques
 
 func (s *ChatStreamServer) SubscribeToCallSignaling(req *pb.CallSignalingRequest, stream pb.ChatService_SubscribeToCallSignalingServer) error {
 	ctx := stream.Context()
-
-	// Validate request
 	claims, err := s.validateStreamRequest(ctx)
 	if err != nil {
 		return err
 	}
-
 	userID := claims.UserID
 	log.Printf("User %s subscribed to call signaling for call %s", userID, req.CallId)
 
-	// Create signaling channel
 	signalingChan := make(chan *pb.CallSignalingMessage, 100)
 	s.registerCallSignalingSubscription(userID, req.CallId, signalingChan)
 	defer s.unregisterCallSignalingSubscription(userID, req.CallId)
 
-	// Listen for signaling messages
 	for {
 		select {
 		case <-ctx.Done():

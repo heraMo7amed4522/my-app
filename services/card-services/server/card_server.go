@@ -31,41 +31,31 @@ func NewCardServer() *CardServer {
 	}
 }
 
-// extractTokenFromContext extracts the authorization token from gRPC metadata
 func (s *CardServer) extractTokenFromContext(ctx context.Context) (string, error) {
 	md, ok := metadata.FromIncomingContext(ctx)
 	if !ok {
 		return "", fmt.Errorf("no metadata found")
 	}
-
 	auth := md.Get("authorization")
 	if len(auth) == 0 {
 		return "", fmt.Errorf("no authorization header found")
 	}
-
 	return auth[0], nil
 }
 
-// validateRequest validates the token and returns user claims
 func (s *CardServer) validateRequest(ctx context.Context) (*TokenClaims, error) {
 	token, err := s.extractTokenFromContext(ctx)
 	if err != nil {
 		return nil, err
 	}
-
 	claims, err := ValidateTokenMiddleware(s.userClient, token)
 	if err != nil {
 		return nil, err
 	}
-
 	return claims, nil
 }
 
-// GetCardByID retrieves a card by its ID
 func (s *CardServer) GetCardByID(ctx context.Context, req *pb.GetCardByIDRequest) (*pb.GetCardByIDResponse, error) {
-	log.Printf("GetCardByID called with ID: %s", req.Id)
-
-	// Validate token
 	claims, err := s.validateRequest(ctx)
 	if err != nil {
 		return &pb.GetCardByIDResponse{
@@ -81,7 +71,6 @@ func (s *CardServer) GetCardByID(ctx context.Context, req *pb.GetCardByIDRequest
 			},
 		}, nil
 	}
-
 	if req.Id == "" {
 		return &pb.GetCardByIDResponse{
 			StatusCode: 400,
@@ -96,7 +85,6 @@ func (s *CardServer) GetCardByID(ctx context.Context, req *pb.GetCardByIDRequest
 			},
 		}, nil
 	}
-
 	query := `
 		SELECT id, user_id, encrypted_cardholder_name, encrypted_card_number, 
 		       encrypted_cvv, masked_card_number, expiration_date, card_type, 
@@ -104,18 +92,15 @@ func (s *CardServer) GetCardByID(ctx context.Context, req *pb.GetCardByIDRequest
 		FROM cards 
 		WHERE id = $1 AND user_id = $2
 	`
-
 	var card pb.Card
 	var encryptedName, encryptedNumber, encryptedCVV string
 	var createdAt, updatedAt time.Time
-
 	err = s.db.GetDB().QueryRow(query, req.Id, claims.UserID).Scan(
 		&card.Id, &card.UserId, &encryptedName, &encryptedNumber,
 		&encryptedCVV, &card.CardNumber, &card.ExpirationDate,
 		&card.CardType, &card.Status, &card.Balance,
 		&createdAt, &updatedAt,
 	)
-
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return &pb.GetCardByIDResponse{
@@ -144,25 +129,20 @@ func (s *CardServer) GetCardByID(ctx context.Context, req *pb.GetCardByIDRequest
 			},
 		}, nil
 	}
-
-	// Decrypt sensitive data
 	cardHolderName, err := DecryptData(encryptedName)
 	if err != nil {
 		log.Printf("Failed to decrypt cardholder name: %v", err)
 		cardHolderName = "[ENCRYPTED]"
 	}
-
 	cvv, err := DecryptData(encryptedCVV)
 	if err != nil {
 		log.Printf("Failed to decrypt CVV: %v", err)
 		cvv = "***"
 	}
-
 	card.CardHolderName = cardHolderName
 	card.Cvv = cvv
 	card.CreateAt = createdAt.Format(time.RFC3339)
 	card.UpdateAt = updatedAt.Format(time.RFC3339)
-
 	return &pb.GetCardByIDResponse{
 		StatusCode: 200,
 		Message:    "Card retrieved successfully",
@@ -172,11 +152,7 @@ func (s *CardServer) GetCardByID(ctx context.Context, req *pb.GetCardByIDRequest
 	}, nil
 }
 
-// CreateNewCard creates a new card with encrypted sensitive data
 func (s *CardServer) CreateNewCard(ctx context.Context, req *pb.CreateNewCardRequest) (*pb.CreateNewCardResponse, error) {
-	log.Printf("CreateNewCard called for user: %s", req.UserId)
-
-	// Validate token
 	claims, err := s.validateRequest(ctx)
 	if err != nil {
 		return &pb.CreateNewCardResponse{
@@ -192,8 +168,6 @@ func (s *CardServer) CreateNewCard(ctx context.Context, req *pb.CreateNewCardReq
 			},
 		}, nil
 	}
-
-	// Validate input
 	if req.CardNumber == "" || req.CardHolderName == "" || req.ExpirationDate == "" || req.Cvv == "" {
 		return &pb.CreateNewCardResponse{
 			StatusCode: 400,
@@ -208,8 +182,6 @@ func (s *CardServer) CreateNewCard(ctx context.Context, req *pb.CreateNewCardReq
 			},
 		}, nil
 	}
-
-	// Validate card number
 	if !ValidateCardNumber(req.CardNumber) {
 		return &pb.CreateNewCardResponse{
 			StatusCode: 400,
@@ -224,8 +196,6 @@ func (s *CardServer) CreateNewCard(ctx context.Context, req *pb.CreateNewCardReq
 			},
 		}, nil
 	}
-
-	// Encrypt sensitive data
 	encryptedName, err := EncryptData(req.CardHolderName)
 	if err != nil {
 		return &pb.CreateNewCardResponse{
@@ -241,7 +211,6 @@ func (s *CardServer) CreateNewCard(ctx context.Context, req *pb.CreateNewCardReq
 			},
 		}, nil
 	}
-
 	encryptedNumber, err := EncryptData(req.CardNumber)
 	if err != nil {
 		return &pb.CreateNewCardResponse{
@@ -257,7 +226,6 @@ func (s *CardServer) CreateNewCard(ctx context.Context, req *pb.CreateNewCardReq
 			},
 		}, nil
 	}
-
 	encryptedCVV, err := EncryptData(req.Cvv)
 	if err != nil {
 		return &pb.CreateNewCardResponse{
@@ -273,12 +241,8 @@ func (s *CardServer) CreateNewCard(ctx context.Context, req *pb.CreateNewCardReq
 			},
 		}, nil
 	}
-
-	// Generate card ID and mask card number
 	cardID := uuid.New().String()
 	maskedNumber := MaskCardNumber(req.CardNumber)
-
-	// Insert into database
 	query := `
 		INSERT INTO cards (id, user_id, encrypted_cardholder_name, encrypted_card_number, 
 		                   encrypted_cvv, masked_card_number, expiration_date, card_type, 
@@ -286,12 +250,10 @@ func (s *CardServer) CreateNewCard(ctx context.Context, req *pb.CreateNewCardReq
 		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
 		RETURNING created_at, updated_at
 	`
-
 	var createdAt, updatedAt time.Time
 	err = s.db.GetDB().QueryRow(query, cardID, claims.UserID, encryptedName,
 		encryptedNumber, encryptedCVV, maskedNumber, req.ExpirationDate,
 		req.CardType, req.Status, req.Balance).Scan(&createdAt, &updatedAt)
-
 	if err != nil {
 		return &pb.CreateNewCardResponse{
 			StatusCode: 500,
@@ -306,22 +268,19 @@ func (s *CardServer) CreateNewCard(ctx context.Context, req *pb.CreateNewCardReq
 			},
 		}, nil
 	}
-
-	// Return the created card (with masked sensitive data)
 	card := &pb.Card{
 		Id:             cardID,
 		UserId:         claims.UserID,
 		CardNumber:     maskedNumber,
 		CardHolderName: req.CardHolderName,
 		ExpirationDate: req.ExpirationDate,
-		Cvv:            "***", // Never return real CVV
+		Cvv:            "***",
 		Status:         req.Status,
 		CardType:       req.CardType,
 		Balance:        req.Balance,
 		CreateAt:       createdAt.Format(time.RFC3339),
 		UpdateAt:       updatedAt.Format(time.RFC3339),
 	}
-
 	return &pb.CreateNewCardResponse{
 		StatusCode: 201,
 		Message:    "Card created successfully",

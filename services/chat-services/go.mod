@@ -2,7 +2,7 @@ module chat-services
 
 go 1.23.0
 
-toolchain go1.24.5
+
 
 require (
 	github.com/google/uuid v1.6.0
@@ -12,7 +12,10 @@ require (
 	user-services v0.0.0-00010101000000-000000000000
 )
 
-replace user-services => ../user-services
+replace user-services => ../user-services 
+
+toolchain go1.24.5
+
 
 require (
 	github.com/OneSignal/onesignal-go-api v1.0.4 // direct

@@ -1,7 +1,5 @@
 import { ObjectType, Field, InputType, Int, registerEnumType } from '@nestjs/graphql';
 
-// ================================================ ENUMS =======================================
-
 export enum MessageType {
   MSG_TEXT = 'MSG_TEXT',
   MSG_IMAGE = 'MSG_IMAGE',
@@ -65,7 +63,6 @@ export enum MessageStatus {
   FAILED = 'FAILED',
 }
 
-// Register enums with GraphQL
 registerEnumType(MessageType, { name: 'MessageType' });
 registerEnumType(CallType, { name: 'CallType' });
 registerEnumType(CallStatus, { name: 'CallStatus' });
@@ -74,7 +71,6 @@ registerEnumType(NotificationType, { name: 'NotificationType' });
 registerEnumType(GroupRole, { name: 'GroupRole' });
 registerEnumType(MessageStatus, { name: 'MessageStatus' });
 
-// ================================================ OBJECT TYPES =======================================
 
 @ObjectType()
 export class FileMetadata {
@@ -290,7 +286,7 @@ export class ChatMessageList {
 }
 
 @ObjectType()
-export class UserInfo {
+export class ChatUserInfo {
   @Field()
   id: string;
 
@@ -309,8 +305,8 @@ export class UserInfo {
 
 @ObjectType()
 export class UserInfoList {
-  @Field(() => [UserInfo])
-  users: UserInfo[];
+  @Field(() => [ChatUserInfo])  
+  users: ChatUserInfo[];
 }
 
 @ObjectType()
@@ -496,7 +492,6 @@ export class ErrorMessage {
   timestamp: string;
 }
 
-// ================================================ RESPONSE TYPES =======================================
 
 @ObjectType()
 export class SendMessageResponse {
@@ -678,7 +673,6 @@ export class GetScheduledMessagesResponse {
   error?: ErrorMessage;
 }
 
-// ================================================ INPUT TYPES =======================================
 
 @InputType()
 export class SendMessageInput {

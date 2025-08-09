@@ -7,7 +7,7 @@ import "google/protobuf/timestamp.proto";
 
 
 service ChatService {
-    // ================================================ STREAMING =======================================
+
     rpc ChatStream(stream ChatStreamEnvelope) returns (stream ChatStreamEnvelope);
     rpc SubscribeToLastMessages(LastMessageStreamRequest) returns (stream ChatMessage);
     rpc SubscribeToUserStatus(UserStatusSubscriptionRequest) returns (stream UserStatus);
@@ -19,7 +19,6 @@ service ChatService {
     rpc SubscribeToCallSignaling(CallSignalingRequest) returns (stream CallSignalingMessage);
 
 
-    // ================================================ MESSAGE HANDLING =======================================
     rpc SendMessage(SendMessageRequest) returns (SendMessageResponse);
     rpc EditMessage(EditMessageRequest) returns (EditMessageResponse);
     rpc DeleteMessage(DeleteMessageRequest) returns (DeleteMessageResponse);
@@ -31,46 +30,45 @@ service ChatService {
     rpc UnpinMessage(UnpinMessageRequest) returns (UnpinMessageResponse);
     rpc GetPinnedMessages(GetPinnedMessagesRequest) returns (GetPinnedMessagesResponse);
 
-    // ================================================ MESSAGE REACTIONS =======================================
+  
     rpc AddLikeMessage(AddLikeMessageRequest) returns (AddLikeMessageResponse);
     rpc UpdateLikedMessage(UpdateLikedMessageRequest) returns (UpdateLikedMessageResponse);
     rpc GetLikedMessages(GetLikedMessagesRequest) returns (GetLikedMessagesResponse);
     rpc GetLastMessages(GetLastMessagesRequest) returns (GetLastMessagesResponse);
 
-    // ================================================ USER MANAGEMENT =======================================
     rpc GetUsersByUserEmail(GetUsersByUserEmailRequest) returns (GetUsersByUserEmailResponse);
     rpc GetUsersInGroup(GetUsersInGroupRequest) returns (GetUsersInGroupResponse);
     rpc GetUserStatus(UserStatusRequest) returns (UserStatusResponse);
 
-    // ================================================ GROUP MANAGEMENT =======================================
+
     rpc CreateGroup(CreateGroupRequest) returns (CreateGroupResponse);
     rpc JoinGroup(JoinGroupRequest) returns (JoinGroupResponse);
     rpc LeaveGroup(LeaveGroupRequest) returns (LeaveGroupResponse);
     rpc UpdateGroup(UpdateGroupRequest) returns (UpdateGroupResponse);
     rpc GetAllGroupsByUserEmail(GetAllGroupsByUserEmailRequest) returns (GetAllGroupsByUserEmailResponse);
 
-    // ================================================ CALL MANAGEMENT =======================================
+   
     rpc InitiateCall(InitiateCallRequest) returns (InitiateCallResponse);
     rpc AcceptCall(AcceptCallRequest) returns (AcceptCallResponse);
     rpc RejectCall(RejectCallRequest) returns (RejectCallResponse);
     rpc EndCall(EndCallRequest) returns (EndCallResponse);
     rpc GetCallHistory(GetCallHistoryRequest) returns (GetCallHistoryResponse);
 
-    // ================================================ NOTIFICATIONS =======================================
+    
     rpc AddNotification(AddNotificationRequest) returns (AddNotificationResponse);
     rpc UpdateNotification(UpdateNotificationRequest) returns (UpdateNotificationResponse);
     rpc GetNotification(GetNotificationRequest) returns (GetNotificationResponse);
     rpc MarkNotificationAsRead(MarkNotificationAsReadRequest) returns (MarkNotificationAsReadResponse);
     rpc GetUnreadNotificationCount(GetUnreadNotificationCountRequest) returns (GetUnreadNotificationCountResponse);
 
-    // ================================================ SCHEDULED MESSAGES =======================================
+   
     rpc AddScheduleMessage(AddScheduleMessageRequest) returns (AddScheduleMessageResponse);
     rpc UpdateScheduleMessage(UpdateScheduleMessageRequest) returns (UpdateScheduleMessageResponse);
     rpc CancelScheduledMessage(CancelScheduledMessageRequest) returns (CancelScheduledMessageResponse);
     rpc GetScheduledMessages(GetScheduledMessagesRequest) returns (GetScheduledMessagesResponse);
 }
 
-// ================================================ ENUMS =======================================
+
 
 enum MessageType {
     MSG_TEXT = 0;
@@ -200,8 +198,8 @@ enum CallControlType {
     CONTROL_QUALITY_CHANGE = 7;
     CONTROL_RECONNECT = 8;
 }
-// ================================================ MESSAGES =======================================
-// Video Call Streaming
+
+
 message VideoCallStreamEnvelope {
     oneof payload {
         VideoCallData videoData = 1;
@@ -211,7 +209,7 @@ message VideoCallStreamEnvelope {
         ErrorMessage error = 5;
     }
 }
-// Phone Call Streaming
+
 message PhoneCallStreamEnvelope {
     oneof payload {
         AudioCallData audioData = 1;
@@ -221,7 +219,7 @@ message PhoneCallStreamEnvelope {
     }
 }
 
-// Call Data Messages
+
 message VideoCallData {
     string callId = 1;
     string senderId = 2;
@@ -245,7 +243,7 @@ message AudioCallData {
     int32 bitrate = 8;
 }
 
-// Call Control Messages
+
 message CallControlMessage {
     string callId = 1;
     string senderId = 2;
@@ -253,7 +251,7 @@ message CallControlMessage {
     google.protobuf.Timestamp timestamp = 4;
     map<string, string> parameters = 5;
 }
-// Call State Messages
+
 message CallStateMessage {
     string callId = 1;
     CallStatus status = 2;
@@ -263,7 +261,7 @@ message CallStateMessage {
     map<string, string> metadata = 6;
 }
 
-// Call Updates Subscription
+
 message CallSubscriptionRequest {
     string userId = 1;
     repeated string callIds = 2;
@@ -284,7 +282,7 @@ message StateMessage {
     string message = 2;
     google.protobuf.Timestamp timestamp = 3;
 }
-// Call Signaling (WebRTC)
+
 message CallSignalingRequest {
     string callId = 1;
     string userId = 2;
@@ -343,7 +341,7 @@ message ChatStreamEnvelope {
     }
 }
 
-// ================================================ CHAT MESSAGES =======================================
+
 
 message ChatMessage {
     string messageId = 1;
@@ -505,7 +503,7 @@ message ForwardMessageResponse {
     }
 }
 
-// ================================================ MESSAGE PINNING =======================================
+
 
 message PinMessageRequest {
     string messageId = 1;
@@ -553,7 +551,7 @@ message GetPinnedMessagesResponse {
     }
 }
 
-// ================================================ REACTIONS =======================================
+
 
 message AddLikeMessageRequest {
     string messageId = 1;
@@ -610,7 +608,6 @@ message GetLastMessagesResponse {
     }
 }
 
-// ================================================ USERS & GROUPS =======================================
 
 message GetUsersByUserEmailRequest {
     repeated string userEmail = 1;
@@ -681,7 +678,7 @@ message LastMessageStreamRequest {
     string userId = 1;
 }
 
-// ================================================ GROUPS =======================================
+
 
 message CreateGroupRequest {
     string creatorId = 1;
@@ -782,7 +779,6 @@ message GetAllGroupsByUserEmailResponse {
     }
 }
 
-// ================================================ TYPING & PRESENCE =======================================
 
 message TypingSubscriptionRequest {
     string userId = 1;
@@ -810,7 +806,7 @@ message PresenceUpdate {
     google.protobuf.Timestamp lastSeen = 4;
 }
 
-// ================================================ MESSAGE UPDATES (REAL-TIME) =======================================
+
 
 message SubscribeToMessageUpdatesRequest {
     string chatId = 1;
@@ -824,7 +820,7 @@ message MessageUpdate {
     google.protobuf.Timestamp timestamp = 5;
 }
 
-// ================================================ THREADS =======================================
+
 
 message SubscribeToThreadRequest {
     string threadId = 1;
@@ -837,7 +833,7 @@ message ThreadUpdate {
     google.protobuf.Timestamp timestamp = 4;
 }
 
-// ================================================ NOTIFICATIONS =======================================
+
 
 message SubscribeToNotificationsRequest {
     string userId = 1;
@@ -922,8 +918,6 @@ message GetUnreadNotificationCountResponse {
     }
 }
 
-// ================================================ SCHEDULED MESSAGES =======================================
-
 message AddScheduleMessageRequest {
     string chatId = 1;
     string senderId = 2;
@@ -1001,7 +995,7 @@ message GetScheduledMessagesResponse {
     }
 }
 
-// ================================================ CALLS =======================================
+
 
 message InitiateCallRequest {
     string callerId = 1;
@@ -1095,7 +1089,7 @@ message GetCallHistoryResponse {
     }
 }
 
-// ================================================ FILE & MEDIA =======================================
+
 
 message FileMetadata {
     string fileName = 1;
@@ -1136,7 +1130,7 @@ message FileDownloadResponse {
     }
 }
 
-// ================================================ OTHER DATA TYPES =======================================
+
 
 message LocationData {
     double latitude = 1;
@@ -1174,7 +1168,7 @@ message SubscribeToScreenShareRequest {
 message ScreenShareUpdate {
     string sessionId = 1;
     string userId = 2;
-    string action = 3; // "started", "stopped", etc.
+    string action = 3; 
     string shareUrl = 4;
     google.protobuf.Timestamp timestamp = 5;
 }

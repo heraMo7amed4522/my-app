@@ -13,7 +13,7 @@ WORKDIR /app/services/upload-services
 RUN go mod download
 
 # Build the application
-RUN CGO_ENABLED=0 GOOS=linux go build -o upload-service .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o upload-service .
 
 # Use a minimal base image for the final stage
 FROM alpine:latest
@@ -23,7 +23,10 @@ RUN apk --no-cache add ca-certificates
 WORKDIR /root/
 
 # Copy the binary from builder stage
-COPY --from=builder /app/services/upload-services/upload-service .
+COPY --from=builder /app/upload-service .
+
+# Copy .env file
+COPY --from=builder /app/.env .
 
 # Expose the port the app runs on
 EXPOSE 50061

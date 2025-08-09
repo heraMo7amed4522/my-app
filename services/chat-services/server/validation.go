@@ -6,7 +6,6 @@ import (
 	"unicode/utf8"
 )
 
-// ValidateMessageContent validates message content
 func ValidateMessageContent(content string) bool {
 	if len(strings.TrimSpace(content)) == 0 {
 		return false
@@ -17,7 +16,6 @@ func ValidateMessageContent(content string) bool {
 	return true
 }
 
-// ValidateUserID validates user ID format
 func ValidateUserID(userID string) bool {
 	if len(strings.TrimSpace(userID)) == 0 {
 		return false
@@ -27,7 +25,6 @@ func ValidateUserID(userID string) bool {
 	return uuidRegex.MatchString(userID)
 }
 
-// ValidateGroupName validates group name
 func ValidateGroupName(name string) bool {
 	name = strings.TrimSpace(name)
 	if len(name) < 1 || len(name) > 100 {
@@ -36,7 +33,6 @@ func ValidateGroupName(name string) bool {
 	return true
 }
 
-// ValidateGroupDescription validates group description
 func ValidateGroupDescription(description string) bool {
 	if utf8.RuneCountInString(description) > 500 {
 		return false
@@ -44,7 +40,6 @@ func ValidateGroupDescription(description string) bool {
 	return true
 }
 
-// ValidateEmail validates email format
 func ValidateEmail(email string) bool {
 	if len(email) < 5 || len(email) > 254 {
 		return false
@@ -53,7 +48,6 @@ func ValidateEmail(email string) bool {
 	return emailRegex.MatchString(email)
 }
 
-// ValidateLimit validates pagination limit
 func ValidateLimit(limit int32) int32 {
 	if limit <= 0 || limit > 100 {
 		return 20 // Default limit
@@ -61,7 +55,6 @@ func ValidateLimit(limit int32) int32 {
 	return limit
 }
 
-// ValidateOffset validates pagination offset
 func ValidateOffset(offset int32) int32 {
 	if offset < 0 {
 		return 0
@@ -69,7 +62,6 @@ func ValidateOffset(offset int32) int32 {
 	return offset
 }
 
-// ValidateSearchQuery validates search query
 func ValidateSearchQuery(query string) bool {
 	query = strings.TrimSpace(query)
 	if len(query) < 1 || len(query) > 100 {
@@ -78,7 +70,6 @@ func ValidateSearchQuery(query string) bool {
 	return true
 }
 
-// ValidatePollQuestion validates poll question
 func ValidatePollQuestion(question string) bool {
 	question = strings.TrimSpace(question)
 	if len(question) < 1 || len(question) > 500 {
@@ -87,7 +78,6 @@ func ValidatePollQuestion(question string) bool {
 	return true
 }
 
-// ValidatePollOptions validates poll options
 func ValidatePollOptions(options []string) bool {
 	if len(options) < 2 || len(options) > 10 {
 		return false

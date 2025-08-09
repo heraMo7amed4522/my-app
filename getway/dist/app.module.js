@@ -15,6 +15,13 @@ const auth_module_1 = require("./auth/auth.module");
 const card_module_1 = require("./card/card.module");
 const transaction_module_1 = require("./transaction/transaction.module");
 const wallet_module_1 = require("./wallet/wallet.module");
+const pharaoh_module_1 = require("./pharaoh/pharaoh.module");
+const history_template_module_1 = require("./history-template/history-template.module");
+const quiz_module_1 = require("./quiz/quiz.module");
+const feedback_module_1 = require("./feedback/feedback.module");
+const user_progress_module_1 = require("./user-progress/user-progress.module");
+const upload_module_1 = require("./upload/upload.module");
+const chat_module_1 = require("./chat/chat.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -32,6 +39,13 @@ exports.AppModule = AppModule = __decorate([
             card_module_1.CardModule,
             transaction_module_1.TransactionModule,
             wallet_module_1.WalletModule,
+            pharaoh_module_1.PharaohModule,
+            history_template_module_1.HistoryTemplateModule,
+            quiz_module_1.QuizModule,
+            feedback_module_1.FeedbackModule,
+            user_progress_module_1.UserProgressModule,
+            upload_module_1.UploadModule,
+            chat_module_1.ChatModule,
         ],
     })
 ], AppModule);

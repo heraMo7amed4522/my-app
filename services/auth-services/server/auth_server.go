@@ -28,24 +28,19 @@ type AuthServer struct {
 }
 
 func NewAuthServer(firebaseCredentials, userServiceAddr, jwtSecret string) (*AuthServer, error) {
-	// on init for firebase
 	opt := option.WithCredentialsFile(firebaseCredentials)
-	// check if the firebase will inizield or not
 	app, err := firebase.NewApp(context.Background(), nil, opt)
 	if err != nil {
 		return nil, fmt.Errorf("error initializing firebase app: %v", err)
 	}
-	// check auth services in firebase with google and apple and facebook will work or not
 	authClient, err := app.Auth(context.Background())
 	if err != nil {
 		return nil, fmt.Errorf("error getting firebase auth client: %v", err)
 	}
-	// connect to server is this vaild or not
 	conn, err := grpc.NewClient(userServiceAddr, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		return nil, fmt.Errorf("failed to connect to user service: %v", err)
 	}
-	// in the last we have already connect to firebase from ther server
 	userClient := userpb.NewUserServiceClient(conn)
 
 	return &AuthServer{
@@ -57,13 +52,11 @@ func NewAuthServer(firebaseCredentials, userServiceAddr, jwtSecret string) (*Aut
 	}, nil
 }
 
-// this func with to check if the user was exist or not
 func (s *AuthServer) getUserByEmail(ctx context.Context, email string) (*userpb.User, error) {
 	req := &userpb.GetUserByEmailRequest{
 		Email: email,
 	}
 	resp, err := s.userServiceClient.GetUserByEmail(ctx, req)
-	// if the user not exist what will show like this
 	if err != nil {
 		return nil, fmt.Errorf("failed to get user by email: %v", err)
 	}
@@ -80,14 +73,12 @@ func (s *AuthServer) getUserByEmail(ctx context.Context, email string) (*userpb.
 	}
 }
 
-// this func we communicate with user-services to show that the user if not exist in auth create new one
 func (s *AuthServer) createNewUser(ctx context.Context, fullName, email, password string) (*userpb.User, error) {
 	req := &userpb.CreateNewUserRequest{
 		FullName: fullName,
 		Email:    email,
 		Password: password,
 	}
-	// user servise side will create the user
 	resp, err := s.userServiceClient.CreateNewUser(ctx, req)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create new user: %v", err)
@@ -102,7 +93,6 @@ func (s *AuthServer) createNewUser(ctx context.Context, fullName, email, passwor
 	}
 }
 
-// for close the connection  with firebase  and server to protect
 func (s *AuthServer) Close() error {
 	if s.userServiceConn != nil {
 		return s.userServiceConn.Close()
@@ -110,7 +100,6 @@ func (s *AuthServer) Close() error {
 	return nil
 }
 
-// auth with google or apple or facbook any one you can try deponed on provide
 func (s *AuthServer) AuthenticateWithFirebase(ctx context.Context, req *pb.FirebaseAuthRequest) (*pb.FirebaseAuthResponse, error) {
 	token, err := s.firebaseAuth.VerifyIDToken(ctx, req.IdToken)
 	if err != nil {
@@ -158,7 +147,6 @@ func (s *AuthServer) AuthenticateWithFirebase(ctx context.Context, req *pb.Fireb
 			}, nil
 		}
 	}
-	// to access new token because the user in this state will not go to login screen to create a vaild token
 	accessToken, err := generateTokens(user.Id, user.Email, user.Role)
 	if err != nil {
 		return &pb.FirebaseAuthResponse{
@@ -192,7 +180,6 @@ func (s *AuthServer) AuthenticateWithFirebase(ctx context.Context, req *pb.Fireb
 	}, nil
 }
 
-// Standardize all JWT secret handling
 func getJWTSecret() string {
 	jwtSecret := os.Getenv("JWT_SECRET")
 	if jwtSecret == "" {
@@ -207,7 +194,6 @@ func generateTokens(userID, email, role string) (string, error) {
 		jwtSecret = "your-super-secret-jwt-key-change-this-in-production"
 		log.Println("Warning: Using default JWT secret. Set JWT_SECRET environment variable in production.")
 	}
-	// Generate access token (1 hour expiry)
 	accessClaims := jwt.MapClaims{
 		"user_id": userID,
 		"email":   email,

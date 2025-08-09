@@ -27,7 +27,6 @@ func NewChatServer() *ChatServer {
 	if err != nil {
 		log.Fatalf("Failed to create user service client: %v", err)
 	}
-
 	return &ChatServer{
 		db:         NewDatabase(),
 		userClient: userClient,
@@ -38,7 +37,6 @@ func (s *ChatServer) extractTokenFromContext(ctx context.Context) (string, error
 	if !ok {
 		return "", fmt.Errorf("no metadata found")
 	}
-
 	auth := md.Get("authorization")
 	if len(auth) == 0 {
 		return "", fmt.Errorf("no authorization header found")
@@ -3582,12 +3580,14 @@ func (s *ChatServer) sendPushNotification(userID, title, content string) error {
 	notification := onesignal.NewNotification(os.Getenv("ONESIGNAL_APP_ID"))
 	notification.SetAppId(os.Getenv("ONESIGNAL_APP_ID"))
 
-	headings := onesignal.StringMap{}
-	headings.Set("en", title)
+	headings := onesignal.StringMap{
+		En: &title,
+	}
 	notification.SetHeadings(headings)
 
-	contents := onesignal.StringMap{}
-	contents.Set("en", content)
+	contents := onesignal.StringMap{
+		En: &content,
+	}
 	notification.SetContents(contents)
 
 	notification.SetIncludeExternalUserIds([]string{userID})

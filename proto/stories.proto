@@ -60,7 +60,7 @@ message CreateStoryResponse {
     }
 }
 
-// Get Story by ID
+
 message GetStoryByIdRequest {
     string story_id = 1;
 }
@@ -74,12 +74,12 @@ message GetStoryByIdResponse {
     }
 }
 
-// Get Stories by User
+
 message GetStoriesByUserRequest {
     string user_id = 1;
     int32 page = 2;
     int32 limit = 3;
-    string status = 4; // Optional filter
+    string status = 4; 
 }
 
 message GetStoriesByUserResponse {
@@ -91,12 +91,12 @@ message GetStoriesByUserResponse {
     }
 }
 
-// Get All Stories
+
 message GetAllStoriesRequest {
     int32 page = 1;
     int32 limit = 2;
-    string category = 3; // Optional filter
-    string status = 4; // Optional filter
+    string category = 3; 
+    string status = 4; 
     bool featured_only = 5;
 }
 
@@ -135,7 +135,7 @@ message UpdateStoryResponse {
     }
 }
 
-// Delete Story
+
 message DeleteStoryRequest {
     string story_id = 1;
     string user_id = 2;
@@ -147,7 +147,7 @@ message DeleteStoryResponse {
     ErrorDetails error = 3;
 }
 
-// Publish Story
+
 message PublishStoryRequest {
     string story_id = 1;
     string user_id = 2;
@@ -162,7 +162,7 @@ message PublishStoryResponse {
     }
 }
 
-// React to Story
+
 message ReactToStoryRequest {
     string story_id = 1;
     string user_id = 2;

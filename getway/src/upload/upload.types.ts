@@ -1,5 +1,6 @@
 import { ObjectType, Field, InputType, Int, registerEnumType } from '@nestjs/graphql';
 import { Readable } from 'stream';
+import { ErrorDetails } from '../shared/shared.types';
 
 // Define FileUpload interface
 export interface FileUpload {
@@ -55,20 +56,9 @@ export class URLSuccess {
   expiresAt: string;
 }
 
-@ObjectType()
-export class ErrorDetails {
-  @Field(() => Int)
-  code: number;
 
-  @Field()
-  message: string;
-
-  @Field(() => [String])
-  details: string[];
-
-  @Field()
-  timestamp: string;
-}
+// Remove the duplicate ErrorDetails definition (lines 58-70)
+// The ErrorDetails class should be imported from shared.types.ts instead
 
 @ObjectType()
 export class UploadFileResponse {

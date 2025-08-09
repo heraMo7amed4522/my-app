@@ -16,7 +16,7 @@ RUN go mod download
 COPY . .
 
 # Build the application
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o user-progress-service .
 
 # Final stage
 FROM alpine:latest
@@ -32,6 +32,7 @@ COPY --from=builder /app/user-progress-service .
 
 # Copy .env file
 COPY --from=builder /app/.env .
+
 # Expose port
 EXPOSE 50060
 
